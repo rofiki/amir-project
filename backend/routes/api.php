@@ -20,10 +20,19 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::get('/test', function () {
 
-    $payload = [
+    $test = [
         "users_id"=>1,
-        "firstname"=>'Rofiki Harong i love suraida taleh'
+        "firstname"=>'Rofiki Harong'
     ];
 
-    return $payload;
+    return $test;
 });
+
+// Route::prefix('company')->group(function () {
+//     Route::get('/', [AreaController::class, 'gets']);
+//     Route::get('/{id}', [AreaController::class, 'get']);    
+
+//     Route::post('/', [AreaController::class, 'create']);    
+//     Route::put('/', [AreaController::class, 'update']);    
+//     Route::delete('/{id}', [AreaController::class, 'delete']);    
+// });
