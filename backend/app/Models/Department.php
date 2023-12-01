@@ -13,8 +13,11 @@ class Department extends Model
     protected $table = "departments";
     
     protected $fillable = [
-        'id',
         'company_id' , 'name', 'description'
+    ];
+
+    protected $hidden = [
+        'updated_at'
     ];
 
     public function company(){
