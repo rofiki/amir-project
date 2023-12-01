@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\CompanyController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -28,11 +29,7 @@ Route::get('/test', function () {
     return $test;
 });
 
-// Route::prefix('company')->group(function () {
-//     Route::get('/', [AreaController::class, 'gets']);
-//     Route::get('/{id}', [AreaController::class, 'get']);    
+Route::prefix('company')->group(function () {
+    Route::get('/', [CompanyController::class, 'index']);  
 
-//     Route::post('/', [AreaController::class, 'create']);    
-//     Route::put('/', [AreaController::class, 'update']);    
-//     Route::delete('/{id}', [AreaController::class, 'delete']);    
-// });
+});

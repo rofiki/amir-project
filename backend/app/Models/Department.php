@@ -9,6 +9,14 @@ class Department extends Model
 {
     use HasFactory;
 
+    protected $primaryKey = "id";
+    protected $table = "departments";
+    
+    protected $fillable = [
+        'id',
+        'company_id' , 'name', 'description'
+    ];
+
     public function company(){
         return $this->belongsTo(Company::class);
     }
