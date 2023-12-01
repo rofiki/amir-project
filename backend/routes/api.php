@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\CompanyController;
 use App\Http\Controllers\Api\DepartmentController;
+use App\Http\Controllers\Api\JobPositionController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -32,6 +33,7 @@ Route::get('/test', function () {
 
 Route::apiResource('company', CompanyController::class);
 Route::apiResource('department', DepartmentController::class);
+Route::apiResource('jobposition', JobPositionController::class);
 
 
     // ->only(['index', 'show']);
