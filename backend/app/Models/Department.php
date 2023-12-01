@@ -24,4 +24,8 @@ class Department extends Model
         return $this->belongsTo(Company::class);
     }
 
+    public function jobPosition(){
+        return $this->hasMany(JobPosition::class);
+    }
+
 }
