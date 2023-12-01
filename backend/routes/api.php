@@ -22,14 +22,16 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::get('/test', function () {
 
     $test = [
-        "users_id"=>1,
-        "firstname"=>'Rofiki Harong'
+        "users_id" => 1,
+        "firstname" => 'Rofiki Harong'
     ];
 
     return $test;
 });
 
-Route::prefix('company')->group(function () {
-    Route::get('/', [CompanyController::class, 'index']);  
+Route::apiResource('company', CompanyController::class);
+    // ->only(['index', 'show']);
+// Route::prefix('company')->group(function () {
+//     Route::get('/', [CompanyController::class, 'index']);  
 
-});
+// });
