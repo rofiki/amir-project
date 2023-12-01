@@ -28,4 +28,8 @@ class Department extends Model
         return $this->hasMany(JobPosition::class,'id','id');
     }
 
+    public function jobPosition(){
+        return $this->hasMany(JobPosition::class);
+    }
+
 }
