@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\CompanyController;
 use App\Http\Controllers\Api\DepartmentController;
 use App\Http\Controllers\Api\JobPositionController;
+use App\Http\Controllers\Api\ProvinceController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -34,9 +35,8 @@ Route::get('/test', function () {
 Route::apiResource('company', CompanyController::class);
 Route::apiResource('department', DepartmentController::class);
 Route::apiResource('jobposition', JobPositionController::class);
+Route::apiResource('province', ProvinceController::class)->only(['index', 'show']);
 
-
-    // ->only(['index', 'show']);
 // Route::prefix('company')->group(function () {
 //     Route::get('/', [CompanyController::class, 'index']);  
 
