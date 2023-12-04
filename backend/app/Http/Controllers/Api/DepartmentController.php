@@ -13,52 +13,38 @@ use Illuminate\Support\Facades\Validator;
 class DepartmentController extends Controller
 {
 
-    public $sub2;
     public function index(Request $request) // show all
     {
         $departmentSub = new DepartmentSub;
         $db = new Department;
 
-
         $limit = $request->input('limit') ?? 10;
         $search = $request->input('search');
 
-        $items = $db->paginate((int)$limit);
+        // แผนกหลักขึ้นก่อน
+        $dep_sub = $departmentSub
+            ->leftJoin('departments', 'department_sub.department_sub_id', '=', 'departments.id')
+            ->where('department_main_id', '=', '0')->paginate((int)$limit);
 
-        foreach ($items as $key => $value) {
-            $items_2[$key] = $value;
-            $items_2[$key]['department_sub'] = $this->getSub($value->id);
+        //แทรกแผนกย่อย
+        foreach ($dep_sub as $key => $value) {
+            $items[$key] = $value;
+            $items[$key]['department_sub'] = $this->getSub($value->id);
         }
-        return new DepartmentCollection($items_2);
+        return new DepartmentCollection($items);
     }
 
     function getSub($id)
     {
-        
-
-        $items_2 = null;
-        // $query = $this->db->leftJoin('tb_users_detail', 'tb_users.users_id', '=', 'tb_users_detail.users_id');
-        // $query->where('users_usersname', 'LIKE', '%' . $search . '%')
-        //     ->where('isActive', 1);
-        // $count = $query->count();
-        // $item = $query
-        //     ->offset($start)
-        //     ->limit($limit)
-        //     ->orderBy('users_usersname', 'ASC')->get();
-
-
-        $items = DepartmentSub::leftJoin('departments', 'department_sub.department_sub_id', '=', 'departments.id')
+        $items = null;
+        $dep_sub = DepartmentSub::leftJoin('departments', 'department_sub.department_sub_id', '=', 'departments.id')
             ->where('department_sub.department_main_id', $id)->get();
 
-        foreach ($items as $key => $value) {
-            $items_2[$key] = $value;
-            // $items_2[$key]['department_sub'] = $this->getSub($value->id);
-            $this->sub2[$key] = $value;
+        foreach ($dep_sub as $key => $value) {
+            $items[$key] = $value;
+            $items[$key]['department_sub'] = $this->getSub($value->id) ?? [];
         }
-
-        // $sub = DepartmentSub::where('department_main_id', $id)->get();
-        // $main = Department::where('', '')->get();
-        return $items_2;
+        return $items;
     }
 
     public function show(Request $request, Department $department) //show by id
@@ -88,7 +74,7 @@ class DepartmentController extends Controller
                 'name' => $request->name,
                 'description' => $request->description
             ]);
-            $updateDepSub = DepartmentSub::create([
+            DepartmentSub::create([
                 'department_main_id' => $dep_main_id,
                 'department_sub_id' => $department->id
             ]);
@@ -99,6 +85,7 @@ class DepartmentController extends Controller
 
     public function update(Request $request, Department $department) // update
     {
+        $dep_sub = new DepartmentSub;
         $validated = Validator::make($request->all(), [
             'name' => 'required|min:2|max:255'
         ]);
@@ -112,6 +99,13 @@ class DepartmentController extends Controller
                 'name' => $request->name,
                 'description' => $request->description
             ]);
+
+            // update ใน department_usb
+            DepartmentSub::where('department_sub_id', $department->id)
+                ->update([
+                    'department_main_id' => $request->department_main_id
+                ]);
+
             $response = new DepartmentResource($department);
         }
         return $response;
@@ -119,6 +113,10 @@ class DepartmentController extends Controller
 
     public function destroy(Request $request, Department $department) // delete
     {
+        // 1. ตรวจสอบ location_job มีค้างใน department ไหม
+        // 2. ถ้ามี location_job ลบไม่ได้
+        // 3. ถ้าไม่มีลบได้ และลบใน department_sub ด้วย
+
         try {
             $department->delete();
             return response()->json(['status' => true,], 200);

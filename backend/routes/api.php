@@ -36,7 +36,7 @@ Route::get('/test', function () {
 
 Route::apiResource('company', CompanyController::class);
 Route::apiResource('department', DepartmentController::class);
-Route::apiResource('departmentsub', DepartmentSub::class)->only(['store', 'show', 'update', 'destroy']);
+// Route::apiResource('departmentsub', DepartmentSub::class)->only(['store', 'show', 'update', 'destroy']);
 Route::apiResource('jobposition', JobPositionController::class);
 Route::apiResource('province', ProvinceController::class)->only(['index', 'show']);
 Route::apiResource('amphur', ProvinceController::class)->only(['show']);
