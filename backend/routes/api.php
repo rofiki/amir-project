@@ -25,15 +25,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/test', function () {
-
-    $test = [
-        "users_id" => 1,
-        "firstname" => 'Rofiki Harong'
-    ];
-
-    return $test;
-});
 Route::post('login', [AuthController::class, 'login']);  
 
 Route::apiResource('company', CompanyController::class);
@@ -47,5 +38,4 @@ Route::apiResource('amphur', ProvinceController::class)->only(['show']);
 
 // Route::prefix('company')->group(function () {
 //     Route::get('/', [CompanyController::class, 'index']);  
-// testtesttesttestddd
 // });
