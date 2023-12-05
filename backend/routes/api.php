@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CompanyController;
 use App\Http\Controllers\Api\DepartmentController;
 use App\Http\Controllers\Api\JobPositionController;
@@ -33,6 +34,7 @@ Route::get('/test', function () {
 
     return $test;
 });
+Route::post('login', [AuthController::class, 'login']);  
 
 Route::apiResource('company', CompanyController::class);
 Route::apiResource('department', DepartmentController::class);
