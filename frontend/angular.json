@@ -29,6 +29,7 @@
               "node_modules/ngx-toastr/toastr.css",
               "node_modules/admin-lte/dist/css/adminlte.css",
               "node_modules/admin-lte/plugins/overlayScrollbars/css/OverlayScrollbars.css"
+              
 
             ],
             "scripts": [
