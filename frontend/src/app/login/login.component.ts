@@ -58,7 +58,7 @@ export class LoginComponent implements OnInit {
         setTimeout(() =>{
           window.location.href = this.BASE_URL + 'admin';
           this.isProcess = false;
-        }, 2000);
+        }, 1500);
         
       } else {
         console.log('login failed');
