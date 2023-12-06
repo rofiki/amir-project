@@ -47,17 +47,31 @@ export class LoginComponent implements OnInit {
     this.auth.login(params).subscribe(res => {
       console.log('res', res);
       if (res.status) {
+
         localStorage.setItem('token', res.token);
         localStorage.setItem('loginDate', res.loginDate);
 
         let user:any = jwtDecode(res.token);
 
-        this.toastr.success('ยินดีต้อนรับ: '+ user.user.firstname, 'เข้าสู่ระบบสำเร็จ');
-        this.router.navigate(['/admin']);
+        this.toastr.success('ยินดีต้อนรับ: '+ user.user.firstname, 'เข้าสู่ระบบสำเร็จ',{timeOut: 1500,progressBar:true,});
+        
+        setTimeout(() =>{
+          window.location.href = this.BASE_URL + 'admin';
+          this.isProcess = false;
+        }, 2000);
+        
       } else {
         console.log('login failed');
       }
-    });
+    }, error => {
+      this.isProcess = false;
+      if(error.status === 401){
+        console.log('error',error);
+        this.toastr.error('Email หรือ Password ของคุณไม่ถูกต้อง', 'เข้าสู่ระบบไม่สำเร็จ',{timeOut: 1500,progressBar:true,});
+        this.loginForm.reset();
+      }
+      
+});
 
   }
 
