@@ -27,5 +27,10 @@ class Employee extends Model
         'active', 
     ];
 
+    protected $hidden = [
+        'idcard',
+        'users_login_id'
+    ];
+
     // protected $hidden = [];
 }

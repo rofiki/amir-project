@@ -8,6 +8,8 @@ import { HeaderComponent } from './layout/header/header.component';
 import { FooterComponent } from './layout/footer/footer.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
+import { Bootstrap5Module } from 'src/app/modules/bootstrap5/bootstrap5.module';
+
 
 @NgModule({
   declarations: [
@@ -20,7 +22,9 @@ import { ReactiveFormsModule } from '@angular/forms';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    Bootstrap5Module, // all ngx-bootstrap module
+
   ],
   providers: [],
   bootstrap: [AppComponent]

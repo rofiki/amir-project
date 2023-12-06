@@ -3,11 +3,13 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Employee;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use Jerry\JWT\JWT;
 
 class AuthController extends Controller
 {
@@ -26,9 +28,24 @@ class AuthController extends Controller
 
         $user = User::where('email', $validated['email'])->first();
 
+        $getUser = Employee::where('users_login_id', $user->id)->first();
+        $access_token = $user->createToken('api_token')->plainTextToken;
+        $token_type = 'Bearer';
+        $role = null;
+
+        $response = array(
+            'access_token' => $access_token,
+            'token_type' => $token_type,
+            'user' => $getUser,
+            'role' => $role,
+        );
+
+        $token = JWT::encode($response);
+
         return response()->json([
-            'access_token' => $user->createToken('api_token')->plainTextToken,
-            'token_type' => 'Bearer',
+            'token' => $token,
+            'loginDate' => date("Y-m-d H:i:s"),
+            'status' => true,
         ]);
     }
 

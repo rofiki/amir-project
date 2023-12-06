@@ -167,6 +167,7 @@ return [
         /*
          * Package Service Providers...
          */
+        Jerry\JWT\Providers\JWTProvider::class,
 
         /*
          * Application Service Providers...

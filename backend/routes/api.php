@@ -25,8 +25,12 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('login', [AuthController::class, 'login']);  
-Route::post('register', [AuthController::class, 'register']);  
+Route::middleware('auth:sanctum')->group(function () {
+    Route::apiResource('employee', EmployeeController::class);
+});
+
+Route::post('login', [AuthController::class, 'login']);
+Route::post('register', [AuthController::class, 'register']);
 
 
 Route::apiResource('company', CompanyController::class);
@@ -35,7 +39,6 @@ Route::apiResource('department', DepartmentController::class);
 Route::apiResource('jobposition', JobPositionController::class);
 Route::apiResource('province', ProvinceController::class)->only(['index', 'show']);
 Route::apiResource('amphur', ProvinceController::class)->only(['show']);
-// Route::apiResource('employee', EmployeeController::class);
 
 
 // Route::prefix('company')->group(function () {
