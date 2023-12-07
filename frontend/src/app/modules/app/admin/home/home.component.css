@@ -1,0 +1,15 @@
+.form-control-dark {
+    color: #fff;
+    background-color: rgba(255, 255, 255, .1);
+    border-color: rgba(255, 255, 255, .1);
+
+
+}
+.form-control-dark::placeholder {
+    color: rgb(136, 135, 135);
+    opacity: 1; /* Firefox */
+  }
+  
+  .form-control-dark::-ms-input-placeholder { /* Edge 12 -18 */
+    color: rgb(136, 135, 135);
+  }
