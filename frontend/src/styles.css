@@ -4,8 +4,8 @@
 /* Importing Datepicker SCSS file. */
 @import "node_modules/ngx-bootstrap/datepicker/bs-datepicker";
 
-/* body {
-    margin: 0;
-    font-size: 14px;
+body {
+    /* margin: 0; */
+    font-size: 16px;
     font-family: "Prompt", sans-serif;
-} */
+}
