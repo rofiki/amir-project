@@ -16,7 +16,7 @@ import { Bootstrap5Module } from 'src/app/modules/bootstrap5/bootstrap5.module';
     AppComponent,
     LoginComponent,
     HeaderComponent,
-    FooterComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,

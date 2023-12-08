@@ -6,6 +6,7 @@ import { AdminRoutingModule } from './admin-routing.module';
 import { HomeComponent } from './home/home.component';
 import { HeaderComponent } from '../layout/header/header.component';
 import { FooterComponent } from '../layout/footer/footer.component';
+import { SidebarComponent } from '../layout/sidebar/sidebar.component';
 
 
 
@@ -18,7 +19,8 @@ import { FooterComponent } from '../layout/footer/footer.component';
     AdminRoutingModule,
     // Bootstrap5Module, // all ngx-bootstrap module
     HeaderComponent,
-    FooterComponent
+    FooterComponent,
+    SidebarComponent
   ],
   providers: [] 
 })

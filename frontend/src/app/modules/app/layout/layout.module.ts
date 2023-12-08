@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
-
+import { SidebarComponent } from './sidebar/sidebar.component';
 
 
 @NgModule({
@@ -10,11 +10,13 @@ import { FooterComponent } from './footer/footer.component';
   imports: [
     CommonModule,
     HeaderComponent,
-    FooterComponent
+    FooterComponent,
+    SidebarComponent
   ],
   exports:[
     HeaderComponent,
-    FooterComponent
+    FooterComponent,
+    SidebarComponent
   ]
 })
 export class LayoutModule { }
