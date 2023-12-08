@@ -6,7 +6,7 @@
   <nav class="small" id="toc">
     <ul class="list-unstyled">
       <li class="my-2">
-        <button class="btn d-inline-flex align-items-center collapsed border-0" data-bs-toggle="collapse"
+        <button class="btn d-inline-flex align-items-center collapsed border-0" data-bs-toggle="collapse" [routerLink]="BASE_URL + '/admin/home'" routerLinkActive="active"
           aria-expanded="true" data-bs-target="#contents-home" aria-controls="contents-home"><i
             class="fa-solid fa-genderless pe-2"></i> หน้าหลัก</button>
 
@@ -16,16 +16,22 @@
           aria-expanded="true" data-bs-target="#contents-collapse1" aria-controls="contents-collapse1"><i
             class="fa-solid fa-genderless pe-2"></i> จัดการข้อมูล</button>
         <ul class="list-unstyled ps-3 collapse" id="contents-collapse1">
-          <li class="p-1"><i class="fa-solid fa-genderless"></i><a
-              class="d-inline-flex align-items-center rounded text-decoration-none" href="#typography">บุคลากร</a>
+          <li class="p-1"><i class="fa-solid fa-genderless"></i>
+            <a href="javascript:void(0)" [routerLink]="[BASE_URL + '/admin/employee']" routerLinkActive="active"
+              class="d-inline-flex align-items-center rounded text-decoration-none">บุคลากร</a>
           </li>
-          <li class="p-1"><i class="fa-solid fa-genderless"></i><a
-              class="d-inline-flex align-items-center rounded text-decoration-none" href="#images">แผนก</a></li>
-          <li class="p-1"><i class="fa-solid fa-genderless"></i><a
-              class="d-inline-flex align-items-center rounded text-decoration-none" href="#tables">ตำแหน่ง</a></li>
-          <li class="p-1"><i class="fa-solid fa-genderless"></i><a
-              class="d-inline-flex align-items-center rounded text-decoration-none"
-              href="#figures">กำหนดสิทธิ์การใช้งาน</a></li>
+          <li class="p-1"><i class="fa-solid fa-genderless"></i>
+            <a href="javascript:void(0)" [routerLink]="[BASE_URL + '/admin/department']" routerLinkActive="active"
+              class="d-inline-flex align-items-center rounded text-decoration-none">แผนก</a></li>
+          <li class="p-1"><i class="fa-solid fa-genderless"></i>
+            <a href="javascript:void(0)" [routerLink]="[BASE_URL + '/admin/jobposition']" routerLinkActive="active"
+              class="d-inline-flex align-items-center rounded text-decoration-none">ตำแหน่ง</a></li>
+          <li class="p-1"><i class="fa-solid fa-genderless"></i>
+            <a href="javascript:void(0)" [routerLink]="[BASE_URL + '/admin/role']" routerLinkActive="active"
+              class="d-inline-flex align-items-center rounded text-decoration-none" >กำหนดสิทธิ์การใช้งาน</a></li>
+              <li class="p-1"><i class="fa-solid fa-genderless"></i>
+                <a href="javascript:void(0)" [routerLink]="[BASE_URL + '/admin/useradmin']" routerLinkActive="active"
+                  class="d-inline-flex align-items-center rounded text-decoration-none" >ผู้ดูแลระบบ</a></li>              
         </ul>
       </li>
       <li class="my-2">

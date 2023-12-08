@@ -7,12 +7,22 @@ import { HomeComponent } from './home/home.component';
 import { HeaderComponent } from '../layout/header/header.component';
 import { FooterComponent } from '../layout/footer/footer.component';
 import { SidebarComponent } from '../layout/sidebar/sidebar.component';
+import { EmployeeComponent } from './employee/employee.component';
+import { DepartmentComponent } from './department/department.component';
+import { JobPositionComponent } from './job-position/job-position.component';
+import { RoleComponent } from './role/role.component';
+import { UserAdminComponent } from './user-admin/user-admin.component';
 
 
 
 @NgModule({
   declarations: [
-    HomeComponent
+    HomeComponent,
+    EmployeeComponent,
+    DepartmentComponent,
+    JobPositionComponent,
+    RoleComponent,
+    UserAdminComponent
   ],
   imports: [
     CommonModule,

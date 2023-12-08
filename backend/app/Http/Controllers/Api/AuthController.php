@@ -32,7 +32,8 @@ class AuthController extends Controller
         $access_token = $user->createToken('api_token')->plainTextToken;
         $token_type = 'Bearer';
         $role = null;
-
+        $getUser['email'] = $validated['email'];
+        
         $response = array(
             'access_token' => $access_token,
             'token_type' => $token_type,
@@ -71,5 +72,14 @@ class AuthController extends Controller
             // 'access_token' => $user->createToken('api_token')->plainTextToken,
             // 'token_type' => 'Bearer',
         ], 201);
+    }
+
+    public function logoff(Request $request)
+    {
+        $result = auth('sanctum')->user()->currentAccessToken()->delete();
+        return response()->json([
+            'status'=>$result
+        ]);
+        
     }
 }

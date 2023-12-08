@@ -1,10 +1,9 @@
 <main class="form-signin m-auto center-screen ">
     <div class="border center-white p-4 shadow" style="background-color: #f5f9ff;">
-      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <i class="fa-brands fa-slack" style="font-size: 85px;"></i>
+      <h1 class="h3 mb-3 fw-normal">Login เข้าสู่ระบบ</h1>
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" > <!-- *ngIf="!user"-->
             <!-- <img class="mb-4" src="/docs/5.3/assets/brand/bootstrap-logo.svg" alt="" width="72" height="57"> -->
-            <i class="fa-brands fa-slack" style="font-size: 85px;"></i>
-            <h1 class="h3 mb-3 fw-normal">Login เข้าสู่ระบบ</h1>
-        
             <div class="form-floating">
               <input type="email" class="form-control" placeholder="name@example.com" formControlName="email"
               [class.is-invalid]="(loginForm.get('email')?.invalid && (loginForm.get('email')?.dirty || loginForm.get('email')?.touched))"
@@ -26,9 +25,12 @@
             </div>
             <button class="btn btn-primary w-100 py-2" type="submit"  [disabled]="loginForm.invalid" *ngIf="!isProcess">Sign in</button>
             <button class="btn btn-primary w-100 py-2" type="submit"  [disabled]="true" *ngIf="isProcess"><i class="fa-solid fa-spinner fa-spin"></i></button>
-            <p class="mt-3 mb-1 text-body-secondary">&copy; Rofiki Harong</p>
+          
           </form>
+          <p class="mt-3 mb-1 text-body-secondary">&copy; Rofiki Harong</p>
+
     </div>
 
   </main>
+  
   <!-- d-flex align-items-center py-4 bg-body-tertiary -->

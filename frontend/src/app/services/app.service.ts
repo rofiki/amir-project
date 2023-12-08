@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 })
 export class AppService {
 
-  public BASE_URL:string = '/';
+  public BASE_URL:string = '';
 
   constructor() { }
 }

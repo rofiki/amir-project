@@ -11,53 +11,29 @@ import { jwtDecode } from 'jwt-decode';
 })
 export class AuthService {
 
-  private apiUrl: string = this.dbService.getServiceURL() + '/login';
-  private headers: any = {
-    headers: new HttpHeaders()
-      .set('content-type', 'application/json')
-      .set('Authorization', 'Bearer ')
-  }
+  private apiUrl: string = this.dbService.getServiceURL();
 
   constructor(
     private http: HttpClient,
     private dbService: DbService,
   ) { }
 
+
   public login(params: {}): Observable<any> {
-    return this.http.post(this.apiUrl, params, this.headers);
-  }
-
-  public isLoginToken() {
-
-    let token: any = localStorage.getItem('token');
-
-    if (token) {
-      let tokenDecode: any = jwtDecode(token);
-      let token_type = tokenDecode.token_type;
-
-      return {
-        token: token,
-        user: tokenDecode.user,
-        headers: token_type + ' ' + tokenDecode.access_token
+    return this.http.post(this.apiUrl + '/login', params, {
+      headers: {
+        'content-type': 'application/json'
       }
-    } else {
-      return null;
-    }
-    return null;
+    });
   }
 
-  // public token(): Observable<any> {
-  //   let token:any = localStorage.getItem('token');
-  //   // jwtDecode(token);
-  //   return token;
-  // }
 
-  public token = {
-    test: 'test'
+  public logout(headers: any): Observable<any> {
+    return this.http.delete(this.apiUrl + '/logout', {
+      headers: {
+        'content-type': 'application/json',
+        'Authorization': 'Bearer ' + headers
+      }
+    });
   }
-
-  // public logout(params: {}): Observable<any> {
-  // {
-  //   return {}
-  // }
 }

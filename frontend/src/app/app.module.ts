@@ -10,13 +10,19 @@ import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { Bootstrap5Module } from 'src/app/modules/bootstrap5/bootstrap5.module';
 
+import { ThaiDatePipe } from './pipe/thaidate.pipe';
+import { LogoutComponent } from './logout/logout.component';
+
 
 @NgModule({
   declarations: [
     AppComponent,
+    ThaiDatePipe,
     LoginComponent,
     HeaderComponent,
-    FooterComponent
+    FooterComponent,
+    LogoutComponent,
+    
   ],
   imports: [
     BrowserModule,
