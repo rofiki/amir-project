@@ -32,29 +32,8 @@ export class LoginComponent implements OnInit {
   ) { }
 
   ngOnInit():void {
-    console.log(localStorage.getItem('token'))
+    // console.log(localStorage.getItem('token'))
     this.checkIsLogin();
-    // const token: any = localStorage.getItem('token');
-    // this.getToken = jwtDecode(token);
-    // console.log('token', token)
-    // if (token) {
-    //   this.gettoken = jwtDecode('kk');
-    //   console.log(this.gettoken);
-    // }
-
-    // this.auth.tokenDecode();
-
-    // console.log(this.auth.token)
-    // if(this.auth.tokenDecode()){
-    //   this.auth.tokenDecode()?.jti;
-    //   console.log('sss')
-    // // แสดงหน้า html
-    // this.user = this.auth.decodeToken;
-    // console.log('getUser',this.user)
-    // // this.loginDate = this.auth.getLoginDate();
-    // // this.role = this.auth.getRole();
-    // }
-
 
     //form login
     this.loginForm = this.fb.group({
@@ -115,7 +94,7 @@ export class LoginComponent implements OnInit {
 
   }
 
-  checkIsLogin()
+  checkIsLogin() // ถ้าอยู่ใน สถานะ login ให้ไม่ต้องlogin ซ้ำ
   {
     if(localStorage.getItem('token'))
     {

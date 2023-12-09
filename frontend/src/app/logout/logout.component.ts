@@ -4,6 +4,7 @@ import { AppService } from '../services/app.service';
 import { ToastrService } from 'ngx-toastr';
 import { jwtDecode } from 'jwt-decode';
 import { AuthService } from '../services/app/auth.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-logout',
@@ -24,7 +25,9 @@ export class LogoutComponent implements OnInit {
   constructor(
     private appService: AppService,
     private toastr: ToastrService,
-    private auth: AuthService
+    private auth: AuthService,
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
   ) { }
 
   ngOnInit(): void {
@@ -35,7 +38,6 @@ export class LogoutComponent implements OnInit {
     } else {
       this.getToken = jwtDecode(token);
     }
-
   }
 
   logout() {
@@ -54,7 +56,8 @@ export class LogoutComponent implements OnInit {
           this.toastr.warning('ออกจากระบบ', 'คุณได้ออกจากระบบเรียบร้อย', { timeOut: 1000, progressBar: true, });
 
           setTimeout(() => {
-            //   // window.location.href = this.BASE_URL + 'login';  
+              // window.location.href = this.BASE_URL + '/login';  
+              this.router.navigate(['/login'], { relativeTo: this.activatedRoute });
           }, 1000);
         }
 

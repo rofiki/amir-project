@@ -11,6 +11,8 @@ import { jwtDecode } from 'jwt-decode';
 })
 export class AuthService {
 
+  // public tokenDecode:any;
+
   private apiUrl: string = this.dbService.getServiceURL();
 
   constructor(
@@ -27,7 +29,6 @@ export class AuthService {
     });
   }
 
-
   public logout(headers: any): Observable<any> {
     return this.http.delete(this.apiUrl + '/logout', {
       headers: {
@@ -35,5 +36,15 @@ export class AuthService {
         'Authorization': 'Bearer ' + headers
       }
     });
+  }
+
+  private decode()
+  {
+    const token: any = localStorage.getItem('token');
+    if (!token) {
+      return null;
+    } else {
+      return jwtDecode(token);
+    }
   }
 }

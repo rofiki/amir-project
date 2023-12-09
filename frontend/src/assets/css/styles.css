@@ -10858,6 +10858,7 @@ body.sb-sidenav-toggled #wrapper #sidebar-wrapper {
   #page-content-wrapper {
     min-width: 0;
     width: 100%;
+    border-top: #000 1px solid;
   }
   body.sb-sidenav-toggled #wrapper #sidebar-wrapper {
     margin-left: -15rem;
