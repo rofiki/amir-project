@@ -12,6 +12,7 @@ import { Bootstrap5Module } from 'src/app/modules/bootstrap5/bootstrap5.module';
 
 import { ThaiDatePipe } from './pipe/thaidate.pipe';
 import { LogoutComponent } from './logout/logout.component';
+import { NotFoundComponent } from './not-found/not-found.component';
 
 
 @NgModule({
@@ -22,6 +23,7 @@ import { LogoutComponent } from './logout/logout.component';
     HeaderComponent,
     FooterComponent,
     LogoutComponent,
+    NotFoundComponent,
     
   ],
   imports: [

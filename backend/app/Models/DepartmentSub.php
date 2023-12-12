@@ -10,12 +10,11 @@ class DepartmentSub extends Model
     use HasFactory;
 
     protected $primaryKey = "id";
-    protected $table = "department_sub";
+    protected $table = "tbDepartmentSub";
     
     protected $fillable = [
         'department_main_id' , 
         'department_sub_id', 
     ];
 
-    public $timestamps = false;
 }

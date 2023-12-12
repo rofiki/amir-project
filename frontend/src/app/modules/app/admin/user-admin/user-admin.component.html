@@ -1,1 +1,57 @@
-<p>user-admin works!</p>
+<div class="d-flex bg-content" id="wrapper">
+    <!-- Sidebar-->
+    <div class="shadow bg-body-tertiary " id="sidebar-wrapper">
+        <app-sidebar></app-sidebar>
+    </div>
+
+    <!-- Page content wrapper-->
+    <div id="page-content-wrapper">
+        <!-- Top navigation-->
+        <app-header></app-header>
+        <!-- Page content-->
+        <div class="container-fluid ps-md-5 pe-md-5">
+            <h1 class="mt-4">ผู้ดูแลระบบ</h1>
+            <p>ระบบจัดการสิทธิ์ใช้งานระบบ</p>
+
+            <div class="row border shadow-sm bg-body-tertiary p-md-3">
+                <div class="col-md-12">
+                    <div class="row border-bottom pt-3 pb-3">
+                        <div class="col-md-6 h5">รายชื่อผู้ดูแลระบบ</div>
+                        <div class="col-md-6 text-md-end"><a class="btn btn-primary btn-sm" href="javascript:void(0)" [routerLink]="[BASE_URL + '/admin/admin/add']">เพิ่มผู้ดูแลระบบ</a></div>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="row pt-3">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-hover table-striped">
+                                <thead>
+                                  <tr>
+                                    <th scope="col">ชื่อ-นามสกุล</th>
+                                    <th scope="col">อีเมล์</th>
+                                    <th scope="col">สถานะ</th>
+                                    <th scope="col">สร้าง/แก้ไขล่าสุด</th>
+                                  </tr>
+                                </thead>
+                                <!-- <div *ngIf="(itemRef.length == 0); then showDataZero else showData"></div> -->
+                                <!-- <ng-template #showDataZero><tbody><tr><td colspan="25"><p class="text-center p-2"> - ไม่พบข้อมูล - </p></td></tr></tbody></ng-template> -->
+                                <!-- <ng-template #showData> -->
+                                  <tbody *ngIf="itemRef && itemRef.data">
+                                    <tr (click)="edit(element.id)" class="tr-edit" *ngFor="let element of itemRef.data">
+                                      <td>{{element.firstname}} {{element.lastname}}</td>
+                                      <td>{{element.email}}</td>
+                                      <td>{{element.active}}</td>
+                                      <td></td>
+                                    </tr>
+                                  </tbody>
+
+                                <!-- </ng-template> -->
+                              </table>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<app-footer></app-footer>

@@ -1,11 +1,14 @@
 <?php
 
+use App\Http\Controllers\Api\AdminController;
+use App\Http\Controllers\Api\AuthAdminController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CompanyController;
 use App\Http\Controllers\Api\DepartmentController;
 use App\Http\Controllers\Api\JobPositionController;
 use App\Http\Controllers\Api\ProvinceController;
 use App\Http\Controllers\Api\EmployeeController;
+use App\Models\Admin;
 use App\Models\DepartmentSub;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -26,14 +29,39 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::middleware('auth:sanctum')->group(function () {
-    Route::apiResource('employee', EmployeeController::class);
-    Route::delete('logout', [AuthController::class, 'logoff']);
+    Route::apiResource('employee', EmployeeController::class); // รอลบ
+
+    //auth
+    Route::prefix('auth')->group(function () {
+        Route::delete('logout', [AuthController::class, 'logoff']);
+        Route::put('/', [AuthController::class, 'updatePassword']);
+    });
+
+    //admin
+    Route::prefix('admin')->group(function () {
+        Route::get('/', [AdminController::class, 'index']);
+        Route::get('/{id}', [AdminController::class, 'show']);
+        Route::put('/', [AdminController::class, 'update']);
+        Route::delete('/{id}', [AdminController::class, 'destroy']);
+        Route::post('/register', [AdminController::class, 'store']);
+    });
+
+    // Route::apiResource('admin', EmployeeController::class);
+
+
+
+    // employee
+    Route::post('register', [AuthController::class, 'register']);
+
+    // Route::get('admin', [AdminController::class, 'index']);
+    // Route::get('admin/{id}', [AuthAdminController::class, 'show']);
+    // Route::put('admin', [AuthAdminController::class, 'update']);
+    // Route::put('adminchangepassword', [AuthAdminController::class, 'updatePassword']);
 });
 
+//Login
 Route::post('login', [AuthController::class, 'login']);
-Route::post('register', [AuthController::class, 'register']);
-
-
+// Route::post('loginadmin', [AuthAdminController::class, 'login']);
 
 Route::apiResource('company', CompanyController::class);
 Route::apiResource('department', DepartmentController::class);
@@ -46,3 +74,4 @@ Route::apiResource('amphur', ProvinceController::class)->only(['show']);
 // Route::prefix('company')->group(function () {
 //     Route::get('/', [CompanyController::class, 'index']);  
 // });
+

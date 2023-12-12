@@ -23,7 +23,7 @@ class DepartmentController extends Controller
 
         // แผนกหลักขึ้นก่อน
         $dep_sub = $departmentSub
-            ->leftJoin('departments', 'department_sub.department_sub_id', '=', 'departments.id')
+            ->leftJoin('tbDepartments', 'tbDepartmentSub.department_sub_id', '=', 'tbDepartments.id')
             ->where('department_main_id', '=', '0')->paginate((int)$limit);
 
         //แทรกแผนกย่อย
@@ -37,8 +37,8 @@ class DepartmentController extends Controller
     function getSub($id)
     {
         $items = null;
-        $dep_sub = DepartmentSub::leftJoin('departments', 'department_sub.department_sub_id', '=', 'departments.id')
-            ->where('department_sub.department_main_id', $id)->get();
+        $dep_sub = DepartmentSub::leftJoin('tbDepartments', 'tbDepartmentSub.department_sub_id', '=', 'tbDepartments.id')
+            ->where('tbDepartmentSub.department_main_id', $id)->get();
 
         foreach ($dep_sub as $key => $value) {
             $items[$key] = $value;

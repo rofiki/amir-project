@@ -53,7 +53,7 @@ class EmployeeController extends Controller
             $response = response()->json(['status' => false, 'error' => $validated->messages()], 422);
         } else {
             $employee = Employee::create([
-                'users_login_id' => $request->users_login_id,
+                'users_id' => $request->users_login_id,
                 'employee_code' => $request->employee_code,
                 'prefix_id' => $request->prefix_id,
                 'firstname' => $request->firstname,

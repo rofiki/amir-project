@@ -10,7 +10,7 @@ class Company extends Model
     use HasFactory;
 
     protected $primaryKey = "id";
-    protected $table = "companies";
+    protected $table = "tbCompanies";
     
     protected $fillable = [
         'name'

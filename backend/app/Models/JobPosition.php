@@ -10,7 +10,7 @@ class JobPosition extends Model
     use HasFactory;
 
     protected $primaryKey = "id";
-    protected $table = "job_position";
+    protected $table = "tbJobPosition";
     
     protected $fillable = [
         'department_id' , 'name', 'description'

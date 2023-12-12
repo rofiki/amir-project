@@ -4,16 +4,18 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Employee extends Model
 {
-    use HasFactory;
+    // use HasFactory;
+    use SoftDeletes;
 
     protected $primaryKey = "id";
-    protected $table = "employee";
+    protected $table = "tbEmployee";
     
     protected $fillable = [
-        'users_login_id' , 
+        'user_id' , 
         'employee_code', 
         'prefix_id', 
         'firstname', 
@@ -29,8 +31,7 @@ class Employee extends Model
 
     protected $hidden = [
         'idcard',
-        'users_login_id'
+        'user_id'
     ];
 
-    // protected $hidden = [];
 }

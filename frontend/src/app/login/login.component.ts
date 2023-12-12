@@ -31,7 +31,7 @@ export class LoginComponent implements OnInit {
     private toastr: ToastrService
   ) { }
 
-  ngOnInit():void {
+  ngOnInit(): void {
     // console.log(localStorage.getItem('token'))
     this.checkIsLogin();
 
@@ -67,20 +67,37 @@ export class LoginComponent implements OnInit {
         console.log('login failed');
       }
     }, error => {
-      this.isProcess = false;
-      if (error.status === 401) {
+
+      this.auth.loginAdmin(params).subscribe(resAdmin => {
+        if (resAdmin.status) {
+          localStorage.setItem('token', resAdmin.token);
+          localStorage.setItem('loginDate', resAdmin.loginDate);
+
+          let user: any = jwtDecode(resAdmin.token);
+
+          this.toastr.success('ยินดีต้อนรับ: ' + user.user.firstname, 'เข้าสู่ระบบสำเร็จ', { timeOut: 1500, progressBar: true, });
+
+          setTimeout(() => {
+            window.location.href = this.BASE_URL + 'admin';
+            this.isProcess = false;
+          }, 1500);
+        }else { console.log('login failed')}
+
+      },  error =>{
+
+        this.isProcess = false;
         console.log('error', error);
         this.toastr.error('Email หรือ Password ของคุณไม่ถูกต้อง', 'เข้าสู่ระบบไม่สำเร็จ', { timeOut: 1500, progressBar: true, });
         this.loginForm.reset();
-      }
+
+      });
 
     });
 
   }
 
-  logout()
-  {
-    if(confirm('ยืนยันออกจากระบบ!')){
+  logout() {
+    if (confirm('ยืนยันออกจากระบบ!')) {
 
       localStorage.removeItem("token");
       localStorage.removeItem("loginDate");
@@ -89,15 +106,14 @@ export class LoginComponent implements OnInit {
       setTimeout(() => {
         window.location.reload();
         this.isProcess = false;
-      }, 1500);      
+      }, 1500);
     }
 
   }
 
   checkIsLogin() // ถ้าอยู่ใน สถานะ login ให้ไม่ต้องlogin ซ้ำ
   {
-    if(localStorage.getItem('token'))
-    {
+    if (localStorage.getItem('token')) {
       window.location.href = this.BASE_URL + '/logout';
     }
   }

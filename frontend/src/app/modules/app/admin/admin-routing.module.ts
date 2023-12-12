@@ -5,6 +5,10 @@ import { EmployeeComponent } from './employee/employee.component';
 import { DepartmentComponent } from './department/department.component';
 import { JobPositionComponent } from './job-position/job-position.component';
 import { RoleComponent } from './role/role.component';
+import { UserAdminComponent } from './user-admin/user-admin.component';
+import { AddComponent } from './user-admin/add/add.component';
+import { EditComponent } from './user-admin/edit/edit.component';
+import { ResetPasswordComponent } from './user-admin/reset-password/reset-password.component';
 
 const routes: Routes = [
 
@@ -14,7 +18,12 @@ const routes: Routes = [
   { path: 'department', component: DepartmentComponent },
   { path: 'jobposition', component: JobPositionComponent },
   { path: 'role', component: RoleComponent },
-  { path: 'useradmin', component: RoleComponent },
+
+  // useradmin
+  { path: 'admin', component: UserAdminComponent },
+  { path: 'admin/add', component: AddComponent },
+  { path: 'admin/edit/:id', component: EditComponent },
+  { path: 'admin/resetpassword/:id', component: ResetPasswordComponent },
   
 ];
 

@@ -29,8 +29,9 @@ export class AuthService {
     });
   }
 
+
   public logout(headers: any): Observable<any> {
-    return this.http.delete(this.apiUrl + '/logout', {
+    return this.http.delete(this.apiUrl + '/auth/logout', {
       headers: {
         'content-type': 'application/json',
         'Authorization': 'Bearer ' + headers
@@ -38,13 +39,72 @@ export class AuthService {
     });
   }
 
-  private decode()
-  {
-    const token: any = localStorage.getItem('token');
-    if (!token) {
-      return null;
-    } else {
-      return jwtDecode(token);
-    }
+  // private decode()
+  // {
+  //   const token: any = localStorage.getItem('token');
+  //   if (!token) {
+  //     return null;
+  //   } else {
+  //     return jwtDecode(token);
+  //   }
+  // }
+
+
+
+
+
+// ##############################################################
+  //Admin
+  public loginAdmin(params: {}): Observable<any> {
+    return this.http.post(this.apiUrl + '/loginadmin', params, {
+      headers: {
+        'content-type': 'application/json'
+      }
+    });
+  }
+
+  public registerAdmin(params: {}, headers:any): Observable<any> {
+    return this.http.post(this.apiUrl + '/admin/register', params, {
+      headers: {
+        'content-type': 'application/json',
+        'Authorization': 'Bearer ' + headers
+      }
+    });
+  }
+
+  public findAll(headers:any): Observable<any> {
+    return this.http.get(this.apiUrl + '/admin', {
+      headers: {
+        'content-type': 'application/json',
+        'Authorization': 'Bearer ' + headers
+      }
+    });
+  }
+
+  public findById(id:any, headers:any): Observable<any> {
+    return this.http.get(this.apiUrl + '/admin/' + id, {
+      headers: {
+        'content-type': 'application/json',
+        'Authorization': 'Bearer ' + headers
+      }
+    });
+  }
+
+  public update(params: {}, headers:any): Observable<any> {
+    return this.http.put(this.apiUrl + '/admin', params, {
+      headers: {
+        'content-type': 'application/json',
+        'Authorization': 'Bearer ' + headers
+      }
+    });
+  }
+
+  public updatePassword(params: {}, headers:any): Observable<any> {
+    return this.http.put(this.apiUrl + '/auth', params, {
+      headers: {
+        'content-type': 'application/json',
+        'Authorization': 'Bearer ' + headers
+      }
+    });
   }
 }
