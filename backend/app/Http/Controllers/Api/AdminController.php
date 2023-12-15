@@ -17,12 +17,12 @@ class AdminController extends Controller
 {
     public function index(Request $request)
     {
-
+        // ->whereNull('deleted_at')
         // $start = $request->input('start') ?? 0;
-        $limit = $request->input('limit') ?? 10;
+        $limit = $request->input('limit') ?? 25;
         $search = $request->input('search');
 
-        $items = Admin::paginate((int)$limit);
+        $items = Admin::whereNull('deleted_at')->paginate((int)$limit);
         try {
             return new AdminCollection($items);
         } catch (\Exception $e) {
@@ -41,7 +41,6 @@ class AdminController extends Controller
 
     public function showByCondition()
     {
-        
     }
 
     public function store(Request $request)
@@ -60,7 +59,7 @@ class AdminController extends Controller
         } else {
 
             $user = User::create([
-                'name' => $request->firstname . " ". $request->lastname,
+                'name' => $request->firstname . " " . $request->lastname,
                 'email' => $request->email,
                 'password' => Hash::make($request->password),
                 'remember_token' => Str::random(10),
@@ -105,32 +104,33 @@ class AdminController extends Controller
             ], 200);
         }
     }
+    
     public function destroy($id)
     {
         $id = (int)$id;
-        if(!$id){
+        if (!$id) {
             return response()->json([
-                'status'=>false,
-                'message'=> 'Not Found!', 
-                'log' =>1
-            ],404);
+                'status' => false,
+                'message' => 'Not Found!',
+                'log' => 1
+            ], 404);
         }
 
-        $item = Admin::where('id',$id)->get()->first();
+        $item = Admin::where('id', $id)->get()->first();
         $uid = $item['user_id'];
 
-        if(!$item->delete()){
+        if (!$item->delete()) {
             return response()->json([
-                'status'=>false,
-                'message'=> 'Not Found!', 
+                'status' => false,
+                'message' => 'Not Found!',
                 'log' => 2
-            ],404);
+            ], 404);
         } else {
             User::where('id', $uid)->delete();
             return response()->json([
-                'status'=>true,
+                'status' => true,
                 'test' => $uid,
-                'message'=> 'Delete Success!',200
+                'message' => 'Delete Success!', 200
             ]);
         }
     }

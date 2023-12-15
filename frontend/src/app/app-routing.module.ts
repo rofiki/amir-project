@@ -9,7 +9,10 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'logout', component: LogoutComponent },
 
+  // App Administrator
   { path: 'admin', loadChildren: () => import('./modules/app/admin/admin.module').then((m) => m.AdminModule) },
+
+  { path: 'homemaker', loadChildren: () => import('./modules/homemaker/homemaker.module').then((m) => m.HomemakerModule) },
 
   { path: '**', component: NotFoundComponent }
 ];

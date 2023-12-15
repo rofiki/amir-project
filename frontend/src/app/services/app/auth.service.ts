@@ -30,14 +30,20 @@ export class AuthService {
   }
 
 
-  public logout(headers: any): Observable<any> {
-    return this.http.delete(this.apiUrl + '/auth/logout', {
-      headers: {
-        'content-type': 'application/json',
-        'Authorization': 'Bearer ' + headers
-      }
-    });
+  public logout(token: any): Observable<any> {
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + token
+      })
+    };
+    return this.http.delete(this.apiUrl + '/auth/logout', httpOptions);
   }
+
+  // public chkLogin(token:any) :Observable<any> {
+  //   return null;
+  // }
 
   // private decode()
   // {

@@ -19,7 +19,8 @@
 
 .bd-aside .btn {
   padding: .25rem .5rem;
-  font-weight: 600;
+  
+  font-weight: 400;
   color: var(--bs-body-color);
 }
 

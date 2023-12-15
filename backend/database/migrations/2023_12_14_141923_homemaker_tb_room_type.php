@@ -13,10 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('tbDepartmentSub', function (Blueprint $table) {
+        // ตารางประเภทห้อง
+        Schema::create('homemaker_tbRoomType', function (Blueprint $table) {
             $table->id();
-            $table->integer('department_main_id'); // แผนกหลัก
-            $table->integer('department_sub_id'); // แผนกย่อย
+            $table->string('type_text');
+            $table->string('description');
 
             $table->timestamps();
             $table->softDeletes();
@@ -30,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        // Schema::dropIfExists('tbDepartmentSub');
+        Schema::dropIfExists('homemaker_tbRoomType');
     }
 };

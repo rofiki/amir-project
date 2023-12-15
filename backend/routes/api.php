@@ -8,8 +8,7 @@ use App\Http\Controllers\Api\DepartmentController;
 use App\Http\Controllers\Api\JobPositionController;
 use App\Http\Controllers\Api\ProvinceController;
 use App\Http\Controllers\Api\EmployeeController;
-use App\Models\Admin;
-use App\Models\DepartmentSub;
+use App\Http\Controllers\Api\HomeMaker\RoomTypeController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -31,13 +30,13 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('employee', EmployeeController::class); // รอลบ
 
-    //auth
+    // auth
     Route::prefix('auth')->group(function () {
         Route::delete('logout', [AuthController::class, 'logoff']);
         Route::put('/', [AuthController::class, 'updatePassword']);
     });
 
-    //admin
+    // tbAdmin
     Route::prefix('admin')->group(function () {
         Route::get('/', [AdminController::class, 'index']);
         Route::get('/{id}', [AdminController::class, 'show']);
@@ -46,32 +45,38 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/register', [AdminController::class, 'store']);
     });
 
+    // tbCompanies บริษัท/องค์กร
+    Route::apiResource('company', CompanyController::class);
+
+    // tbDepartment แผนก
+    Route::apiResource('department', DepartmentController::class);
+
+    // tbJobPosition ตำแหน่งงาน
+    Route::apiResource('jobposition', JobPositionController::class);
+
+    // province & amphur
+    Route::apiResource('province', ProvinceController::class)->only(['index', 'show']);
+    Route::apiResource('amphur', ProvinceController::class)->only(['show']);
+
     // Route::apiResource('admin', EmployeeController::class);
 
-
-
     // employee
-    Route::post('register', [AuthController::class, 'register']);
-
-    // Route::get('admin', [AdminController::class, 'index']);
-    // Route::get('admin/{id}', [AuthAdminController::class, 'show']);
-    // Route::put('admin', [AuthAdminController::class, 'update']);
-    // Route::put('adminchangepassword', [AuthAdminController::class, 'updatePassword']);
+    Route::post('register', [AuthController::class, 'register']); // ค่อยมาทำ เพราะมีเปลี่ยนแปลง
 });
 
-//Login
+//Login เข้าสู่ระบบ สำหรับ Admin และ บุคลากร
 Route::post('login', [AuthController::class, 'login']);
 // Route::post('loginadmin', [AuthAdminController::class, 'login']);
 
-Route::apiResource('company', CompanyController::class);
-Route::apiResource('department', DepartmentController::class);
-// Route::apiResource('departmentsub', DepartmentSub::class)->only(['store', 'show', 'update', 'destroy']);
-Route::apiResource('jobposition', JobPositionController::class);
-Route::apiResource('province', ProvinceController::class)->only(['index', 'show']);
-Route::apiResource('amphur', ProvinceController::class)->only(['show']);
+##### ระบบติดตามแม่บ้าน #####
+Route::middleware('auth:sanctum')->group(function () {
+
+    // tbRoomType ประเภทห้อง
+    Route::prefix('homemaker')->group(function () {
+        Route::apiResource('roomtype', RoomTypeController::class);
+    });
+    
+});
 
 
-// Route::prefix('company')->group(function () {
-//     Route::get('/', [CompanyController::class, 'index']);  
-// });
 

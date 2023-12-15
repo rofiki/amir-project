@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('employee', function (Blueprint $table) {
+        Schema::create('tbEmployee', function (Blueprint $table) {
             $table->id();
             $table->integer('users_login_id');
             $table->string('employee_code')->unique(); // รหัสพนักงาน
@@ -29,6 +29,7 @@ return new class extends Migration
             $table->string('active')->default('active'); // active, deactive
 
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

@@ -18,7 +18,7 @@
         <button class="btn d-inline-flex align-items-center collapsed border-0" data-bs-toggle="collapse"
           aria-expanded="true" data-bs-target="#contents-collapse1" aria-controls="contents-collapse1"><i
             class="fa-solid fa-genderless pe-2"></i> จัดการข้อมูล</button>
-        <ul class="list-unstyled ps-3 collapse show" id="contents-collapse1">
+        <ul class="list-unstyled ps-3 collapse" id="contents-collapse1">
           <li class="ps-1"><i class="fa-solid fa-genderless"></i>
             <a href="javascript:void(0)" [routerLink]="[BASE_URL + '/admin/employee']" routerLinkActive="active"
               class="d-inline-flex align-items-center rounded text-decoration-none">บุคลากร</a>
@@ -50,13 +50,13 @@
         <button class="btn d-inline-flex align-items-center collapsed border-0" data-bs-toggle="collapse"
           aria-expanded="true" data-bs-target="#r3" aria-controls="r3"><i
             class="fa-solid fa-genderless pe-2"></i> ตั้งค่า</button>
-        <ul class="list-unstyled ps-3 collapse" id="r3">
+        <ul class="list-unstyled ps-3 collapse show" id="r3">
           <li class="ps-1"><i class="fa-solid fa-genderless"></i>
-            <a href="javascript:void(0)" [routerLink]="[BASE_URL + '/admin/employee']" routerLinkActive="active"
+            <a href="javascript:void(0)" [routerLink]="[BASE_URL + '/homemaker/admin/homemaker']" routerLinkActive="active"
               class="d-inline-flex align-items-center rounded text-decoration-none">ข้อมูลแม่บ้าน</a>
           </li>
           <li class="ps-1"><i class="fa-solid fa-genderless"></i>
-            <a href="javascript:void(0)" [routerLink]="[BASE_URL + '/admin/employee']" routerLinkActive="active"
+            <a href="javascript:void(0)" [routerLink]="[BASE_URL + '/homemaker/admin/room']" routerLinkActive="active"
               class="d-inline-flex align-items-center rounded text-decoration-none">ห้อง</a>
           </li>
           <li class="ps-1"><i class="fa-solid fa-genderless"></i>
@@ -64,11 +64,7 @@
               class="d-inline-flex align-items-center rounded text-decoration-none">ประเภทห้อง</a>
           </li>
           <li class="ps-1"><i class="fa-solid fa-genderless"></i>
-            <a href="javascript:void(0)" [routerLink]="[BASE_URL + '/homemaker/admin/supplies']" routerLinkActive="active"
-              class="d-inline-flex align-items-center rounded text-decoration-none">ข้อมูลพัสดุ</a>
-          </li>
-          <li class="ps-1"><i class="fa-solid fa-genderless"></i>
-            <a href="javascript:void(0)" [routerLink]="[BASE_URL + '/admin/employee']" routerLinkActive="active"
+            <a href="javascript:void(0)" [routerLink]="[BASE_URL + '/homemaker/admin/checklist']" routerLinkActive="active"
               class="d-inline-flex align-items-center rounded text-decoration-none">Check List สำหรับแม่บ้าน</a>
           </li>
         </ul>
@@ -76,8 +72,8 @@
     </ul>
 
 
-
-    <!-- <ul class="list-unstyled">
+<!-- 
+    <ul class="list-unstyled">
       <li class="">
         <button class="btn d-inline-flex align-items-center collapsed border-0" data-bs-toggle="collapse"
           aria-expanded="true" data-bs-target="#r4" aria-controls="r4"><i
@@ -117,7 +113,8 @@
           </li>
         </ul>
       </li>
-    </ul> -->
+    </ul> 
+  -->
 
   </nav>
 </aside>

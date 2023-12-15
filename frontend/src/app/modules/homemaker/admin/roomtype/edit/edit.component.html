@@ -1,0 +1,76 @@
+<div class="d-flex bg-content" id="wrapper" >
+    <!-- Sidebar-->
+    <div class="shadow bg-body-tertiary " id="sidebar-wrapper">
+        <app-sidebar></app-sidebar>
+    </div>
+
+    <!-- Page content wrapper-->
+    <div id="page-content-wrapper">
+        <!-- Top navigation-->
+        <app-header></app-header>
+        <!-- Page content-->
+        <div class="container-fluid ps-md-5 pe-md-5">
+            <h1 class="mt-4">ประเภทห้อง</h1>
+            <p>ระบบติดตามงานแม่บ้าน</p>
+
+            <div class="row border shadow-sm bg-body-tertiary p-md-3">
+                <div class="col-md-4">
+                    <div class="border-bottom mb-2 h5"><strong>เพิ่มประเภท</strong></div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <form style="filter: blur(1px);">
+                                <div class="mb-3">
+                                    <label for="" class="form-label">ประเภทห้อง</label>
+                                    <input type="text" class="form-control" id="" placeholder="ประเภทห้อง" [disabled]="true"
+                                    > 
+                                  </div>
+                                  <div class="mb-3">
+                                    <label for="" class="form-label">รายละเอียด</label>
+                                    <input type="text" class="form-control" id="desc" placeholder="รายละเอียด"
+                                    [disabled]="true"
+                                    >
+                                  </div>
+                                  <div class="mb-3">
+                                    <button type="submit" class="btn btn-primary btn-sm me-1 ps-3 pe-3" [disabled]="true">บันทึก</button>
+                                    <button type="reset" class="btn btn-secondary btn-sm ps-3 pe-3" [disabled]="true">รีเซ็ต</button>
+                                  </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="border-bottom mb-2 h5"><strong>แก้ไขประเภท</strong></div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <form [formGroup]="frm" (ngSubmit)="onSubmit()" *ngIf="itemRef" >
+                                <div class="mb-3">
+                                    <label for="" class="form-label">ประเภทห้อง</label>
+                                    <input type="text" class="form-control" id="name" placeholder="ประเภทห้อง"
+                                    formControlName="name" [(ngModel)]="itemRef!.type_text"
+                                    [class.is-invalid]="(frm.get('name')?.invalid && (frm.get('name')?.dirty || frm.get('name')?.touched))"
+                                    >
+                                    <div *ngIf="(frm.get('name')?.invalid && (frm.get('name')?.dirty || frm.get('name')?.touched))">
+                                        <small class="text-danger" *ngIf="frm.get('name')?.hasError('required')">กรุณากรอกประเภท</small>
+                                    </div>  
+                                  </div>
+                                  <div class="mb-3">
+                                    <label for="" class="form-label">รายละเอียด</label>
+                                    <input type="text" class="form-control" id="desc" placeholder="รายละเอียด"
+                                    formControlName="desc"  [(ngModel)]="itemRef!.description"
+                                    >
+                                  </div>
+                                  <div class="mb-3">
+                                    <button type="submit" class="btn btn-primary btn-sm me-1 ps-3 pe-3" [disabled]="frm.invalid" *ngIf="!isProcess">บันทึก</button>
+                                    <button type="submit" class="btn btn-primary btn-sm me-1 ps-3 pe-3" [disabled]="true"  *ngIf="isProcess">
+                                        <i class="fa-solid fa-spinner fa-spin"></i>
+                                    </button>
+                                    <a class="btn btn-secondary btn-sm ps-3 pe-3" [routerLink]="[BASE_URL + '/homemaker/admin/roomtype']">ยกเลิก</a>
+                                  </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <app-footer></app-footer>
