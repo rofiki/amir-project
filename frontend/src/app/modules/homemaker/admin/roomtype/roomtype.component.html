@@ -50,7 +50,7 @@
                     <div class="border-bottom mb-2 h5"><strong>รายการประเภท</strong></div>
                     <div class="row">
                         <div class="col-md-12">
-                            <table class="table table-bordered table-striped mt-1" *ngIf="itemRef && itemRef.data">
+                            <table class="table table-striped border-top mt-1" *ngIf="itemRef && itemRef.data">
                                 <thead>
                                     <tr>
                                         <th>ประเภทห้อง</th>
@@ -62,10 +62,11 @@
                                 <ng-template #showDataZero><tbody><tr><td colspan="25"><p class="text-center p-2"> - ไม่พบข้อมูล - </p></td></tr></tbody></ng-template>
                                 <ng-template #showData>
                                 <tbody >
+                                    <tr *ngIf="loadingData"><td colspan="10"><i class="fa-solid fa-spinner fa-spin"></i> Loading...</td></tr>
                                     <tr *ngFor="let element of itemRef.data">
-                                        <td>{{element.type_text}}</td>
-                                        <td>{{element.description}}</td>
-                                        <td class="text-center">
+                                        <td class="w-auto">{{element.type_text}}</td>
+                                        <td class="w-auto">{{element.description}}</td>
+                                        <td class="text-center" style="width: 100px;">
                                             <a class="btn btn-secondary btn-xs me-1" [routerLink]="[BASE_URL + '/homemaker/admin/roomtype/edit',element.id]"><i class="fa-solid fa-pen"></i></a>
                                             <a class="btn btn-secondary btn-xs" (click)="del(element.id)"><i class="fa-solid fa-trash"></i></a>
                                         </td>

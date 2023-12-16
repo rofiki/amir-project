@@ -13,19 +13,24 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('tbEmployee', function (Blueprint $table) {
+        // ตารางประเภทห้อง
+        Schema::create('homemaker_tbHomemaker', function (Blueprint $table) {
             $table->id();
-            $table->integer('users_login_id');
-            $table->string('employee_code')->unique(); // รหัสพนักงาน
+            $table->integer('user_id');
+            // $table->string('homemaker_code')->unique(); // รหัสพนักงาน (เผื่อต้องใช้)
             $table->integer('prefix_id'); // คำนำหน้าชื่อ
             $table->string('firstname')->nullable();
             $table->string('lastname')->nullable();
             $table->string('nickname')->nullable();
             $table->string('gendar'); // man, woman
-            $table->date('date_of_birth')->nullable();
+            $table->string('address')->nullable();
             $table->string('idcard')->unique();
-            $table->date('date_of_sign'); // วันที่บรรจุ
-            $table->date('date_of_resign'); // วันที่ลาออก
+            $table->string('lineId')->nullable();
+            $table->string('phoneNumber')->nullable();
+            $table->string('email')->nullable();
+
+            $table->timestamp('date_of_sign')->nullable();; // วันที่บรรจุ
+            $table->timestamp('date_of_resign')->nullable();; // วันที่ลาออก
             $table->string('active')->default('active'); // active, deactive
 
             $table->timestamps();
@@ -40,6 +45,6 @@ return new class extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('homemaker_tbHomemaker');
     }
 };

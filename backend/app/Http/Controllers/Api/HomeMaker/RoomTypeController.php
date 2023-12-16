@@ -29,9 +29,9 @@ class RoomTypeController extends Controller
 
     public function show($id) //show by id
     {
-        $admin = tbRoomType::where('id', $id)->get()->first();
-        if ($admin) {
-            return new RoomTypeResource($admin);
+        $item = tbRoomType::where('id', $id)->get()->first();
+        if ($item) {
+            return new RoomTypeResource($item);
         }
         return response()->json(['message' => 'Not Found!'], 404);
     }

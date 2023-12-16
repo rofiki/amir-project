@@ -19,7 +19,7 @@ export class RoomtypeComponent implements OnInit {
 
   public BASE_URL: string = this.appService.BASE_URL;
   public isProcess: boolean = false;
-  public loadData: boolean = false;
+  public loadingData: boolean = false;
 
   public frm!: FormGroup;
   public getToken: any;
@@ -58,9 +58,13 @@ export class RoomtypeComponent implements OnInit {
 
   async getData() {
 
+    this.loadingData = true;
     const token = this.getToken.access_token;
-    // this.service.findAll(token).
-    this.itemRef = await lastValueFrom(this.service.findAll(token));
+    this.service.findAll(token).subscribe( r => {
+      this.itemRef = r;
+      this.loadingData = false;
+    });
+    // this.itemRef = await lastValueFrom(this.service.findAll(token));
     // console.log(this.itemRef)
   }
 

@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\DepartmentController;
 use App\Http\Controllers\Api\JobPositionController;
 use App\Http\Controllers\Api\ProvinceController;
 use App\Http\Controllers\Api\EmployeeController;
+use App\Http\Controllers\Api\HomeMaker\HomemakerController;
 use App\Http\Controllers\Api\HomeMaker\RoomTypeController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -23,9 +24,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('employee', EmployeeController::class); // รอลบ
@@ -74,6 +75,7 @@ Route::middleware('auth:sanctum')->group(function () {
     // tbRoomType ประเภทห้อง
     Route::prefix('homemaker')->group(function () {
         Route::apiResource('roomtype', RoomTypeController::class);
+        Route::apiResource('homemaker', HomemakerController::class);
     });
     
 });

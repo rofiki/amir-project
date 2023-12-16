@@ -63,6 +63,7 @@ class AdminController extends Controller
                 'email' => $request->email,
                 'password' => Hash::make($request->password),
                 'remember_token' => Str::random(10),
+                'user_type' => 'admin',
                 'email_verified_at' => now(),
             ]);
 
@@ -96,7 +97,7 @@ class AdminController extends Controller
             $admin->update([
                 'firstname' => $request->firstname,
                 'lastname' => $request->lastname,
-                'active' => 'Active'
+                'active' => 'active'
             ]);
             return response()->json([
                 'status' => true,
