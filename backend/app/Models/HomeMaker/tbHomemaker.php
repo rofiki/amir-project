@@ -17,7 +17,7 @@ class tbHomemaker extends Model
     protected $fillable = [
         'user_id' , 
         'homemaker_code', 
-        'prefix_id', 
+        'prename_id', 
         'firstname', 
         'lastname', 
         'nickname', 

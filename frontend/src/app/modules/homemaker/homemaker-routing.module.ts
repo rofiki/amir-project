@@ -6,7 +6,8 @@ import { ChecklistComponent } from './admin/checklist/checklist.component';
 import { RoomComponent } from './admin/room/room.component';
 import { HomemakerComponent } from './admin/homemaker/homemaker.component';
 import { EditComponent } from './admin/roomtype/edit/edit.component';
-// import { EditComponent } from './admin/homemaker/edit/edit.component';
+import { HomemakerAddComponent } from './admin/homemaker/homemaker-add/homemaker-add.component';
+import { HomemakerEditComponent } from './admin/homemaker/homemaker-edit/homemaker-edit.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -17,7 +18,11 @@ const routes: Routes = [
   
   { path: 'admin/checklist', component: ChecklistComponent },
   { path: 'admin/room', component: RoomComponent },
+
+  // แม่บ้าน
   { path: 'admin/homemaker', component: HomemakerComponent },
+  { path: 'admin/homemaker/add', component: HomemakerAddComponent },
+  { path: 'admin/homemaker/edit/:id', component: HomemakerEditComponent },
 
 
 ];

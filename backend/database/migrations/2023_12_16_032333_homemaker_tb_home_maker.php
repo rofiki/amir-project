@@ -18,7 +18,7 @@ return new class extends Migration
             $table->id();
             $table->integer('user_id');
             // $table->string('homemaker_code')->unique(); // รหัสพนักงาน (เผื่อต้องใช้)
-            $table->integer('prefix_id'); // คำนำหน้าชื่อ
+            $table->integer('prename_id'); // คำนำหน้าชื่อ
             $table->string('firstname')->nullable();
             $table->string('lastname')->nullable();
             $table->string('nickname')->nullable();

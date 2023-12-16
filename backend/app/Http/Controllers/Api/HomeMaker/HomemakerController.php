@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\HomeMaker\HomemakerCollection;
 use App\Http\Resources\HomeMaker\HomemakerResource;
 use App\Models\HomeMaker\tbHomemaker;
+use App\Models\Prename;
 use App\Models\User;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Password;
@@ -18,12 +19,18 @@ class HomemakerController extends Controller
 {
     public function index(Request $request) // show all
     {
+        $prename = new Prename;
         $model = new tbHomemaker;
+
+        $tbPrename = $prename->getTable();
+        $tbHomemaker = $model->getTable();
+
         // $start = $request->input('start') ?? 0;
         $limit = $request->input('limit') ?? 25;
         $search = $request->input('search');
 
-        $items = $model->paginate((int)$limit); 
+        $items = $model->leftJoin($tbPrename, $tbHomemaker . '.prename_id', $tbPrename . '.id')
+            ->paginate((int)$limit);
 
         try {
             return new HomemakerCollection($items);
@@ -34,7 +41,17 @@ class HomemakerController extends Controller
 
     public function show($id) //show by id
     {
-        $item = tbHomemaker::where('id', $id)->get()->first();
+
+        $prename = new Prename;
+        $model = new tbHomemaker;
+
+        $tbPrename = $prename->getTable();
+        $tbHomemaker = $model->getTable();
+
+        $item = $model->leftJoin($tbPrename, $tbHomemaker . '.prename_id', $tbPrename . '.id')
+            ->where($tbHomemaker.'.id', $id)->get()->first();
+
+        // $item = tbHomemaker::where('id', $id)->get()->first();
         if ($item) {
             return new HomemakerResource($item);
         }
@@ -46,9 +63,9 @@ class HomemakerController extends Controller
 
         $validated = Validator::make($request->all(), [
             // 'homemaker_code' => 'required|min:2|max:255',
-            'prefix_id' => 'required',
-            'firstname' => 'required|min:2|max:255',
-            'lastname' => 'required|min:2|max:255',
+            'prename' => 'required',
+            'fname' => 'required|min:2|max:255',
+            'lname' => 'required|min:2|max:255',
             // 'nickname' => 'required|min:2|max:255',
             'gendar' => 'required',
             'idcard' => 'required|digits_between:13,13|numeric',
@@ -57,7 +74,7 @@ class HomemakerController extends Controller
             // 'date_of_resign' => 'required|min:2|max:255',
             'email' => 'required|max:255|email|unique:users,email',
             'password' => 'required|min:4|max:12',
-           
+
         ]);
 
         if ($validated->fails()) {
@@ -65,7 +82,7 @@ class HomemakerController extends Controller
         } else {
 
             $user = User::create([
-                'name' => $request->firstname . " " . $request->lastname,
+                'name' => $request->fname . " " . $request->lname,
                 'email' => $request->email,
                 'password' => Hash::make($request->password),
                 'remember_token' => Str::random(10),
@@ -76,20 +93,20 @@ class HomemakerController extends Controller
             $create = tbHomemaker::create([
                 'user_id' => $user->id,
                 'homemaker_code' => null,
-                'prefix_id' => $request->prefix_id,
-                'firstname' => $request->firstname,
-                'lastname' => $request->lastname,
-                'nickname' => $request->nickname,
+                'prename_id' => $request->prename,
+                'firstname' => $request->fname,
+                'lastname' => $request->lname,
+                'nickname' => $request->nname,
                 'address' => $request->address,
                 'gendar' => $request->gendar,
-                'date_of_birth' => $request->bdate,
+                // 'date_of_birth' => $request->bdate,
                 'idcard' => $request->idcard,
                 'lineId' => $request->lineId,
                 'phoneNumber' => $request->phone,
                 'email' => $request->email,
                 'date_of_sign' => $request->date_of_sign,
                 'date_of_resign' => null,
-                'active' => 'active',
+                'active' => $request->active,
             ]);
             $response = response()->json(['status' => true, 'data' => $create], 200);
         }
@@ -100,7 +117,7 @@ class HomemakerController extends Controller
     {
         $validated = Validator::make($request->all(), [
             // 'homemaker_code' => 'required|min:2|max:255',
-            'prefix_id' => 'required',
+            'prename_id' => 'required',
             'firstname' => 'required|min:2|max:255',
             'lastname' => 'required|min:2|max:255',
             // 'nickname' => 'required|min:2|max:255',
@@ -124,7 +141,7 @@ class HomemakerController extends Controller
             $update->update([
                 // 'user_id' => $user->id,
                 // 'homemaker_code' => null,
-                'prefix_id' => $request->prefix_id,
+                'prename_id' => $request->prename_id,
                 'firstname' => $request->firstname,
                 'lastname' => $request->lastname,
                 'nickname' => $request->nickname,
@@ -145,6 +162,7 @@ class HomemakerController extends Controller
         }
     }
 
+    // ยังไม่เรียบร้อย
     public function updatePassword(Request $request) // update
     {
         $validated = Validator::make($request->all(), [

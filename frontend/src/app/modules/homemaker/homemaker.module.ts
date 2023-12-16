@@ -16,6 +16,8 @@ import { HomemakerComponent } from './admin/homemaker/homemaker.component';
 import { RoomComponent } from './admin/room/room.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
+import { HomemakerAddComponent } from './admin/homemaker/homemaker-add/homemaker-add.component';
+import { HomemakerEditComponent } from './admin/homemaker/homemaker-edit/homemaker-edit.component';
 
 
 
@@ -27,7 +29,9 @@ import { ReactiveFormsModule } from '@angular/forms';
     EditComponent,
     ChecklistComponent,
     HomemakerComponent,
-    RoomComponent
+    RoomComponent,
+    HomemakerAddComponent,
+    HomemakerEditComponent
   ],
   imports: [
     CommonModule,

@@ -10,6 +10,7 @@ use App\Http\Controllers\Api\ProvinceController;
 use App\Http\Controllers\Api\EmployeeController;
 use App\Http\Controllers\Api\HomeMaker\HomemakerController;
 use App\Http\Controllers\Api\HomeMaker\RoomTypeController;
+use App\Http\Controllers\PrenameController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -79,6 +80,8 @@ Route::middleware('auth:sanctum')->group(function () {
     });
     
 });
+
+Route::apiResource('prename', PrenameController::class);
 
 
 

@@ -37,7 +37,7 @@ class EmployeeController extends Controller
         $validated = Validator::make($request->all(), [
             // 'department_id' => 'required',
             'employee_code' => 'required|min:2|max:255',
-            'prefix_id' => 'required',
+            'prename_id' => 'required',
             'firstname' => 'required|min:2|max:255',
             'lastname' => 'required|min:2|max:255',
             // 'nickname' => 'required|min:2|max:255',
@@ -55,7 +55,7 @@ class EmployeeController extends Controller
             $employee = Employee::create([
                 'users_id' => $request->users_login_id,
                 'employee_code' => $request->employee_code,
-                'prefix_id' => $request->prefix_id,
+                'prename_id' => $request->prefix_id,
                 'firstname' => $request->firstname,
                 'lastname' => $request->lastname,
                 'nickname' => $request->nickname,
@@ -73,7 +73,7 @@ class EmployeeController extends Controller
 
         // users_login_id
         // employee_code
-        // prefix_id
+        // prename_id
         // firstname
         // lastname
         // nickname
@@ -85,26 +85,26 @@ class EmployeeController extends Controller
         // active
     }
 
-    public function update(Request $request, Employee $employee) // update
-    {
-        $validated = Validator::make($request->all(), [
-            'name' => 'required|min:2|max:255'
-        ]);
+    // public function update(Request $request, Employee $employee) // update
+    // {
+    //     $validated = Validator::make($request->all(), [
+    //         'name' => 'required|min:2|max:255'
+    //     ]);
         
-        if ($validated->fails()) {
-            $response = response()->json(['status' => false, 'error' => $validated->messages()], 422);
-        } else {
+    //     if ($validated->fails()) {
+    //         $response = response()->json(['status' => false, 'error' => $validated->messages()], 422);
+    //     } else {
 
-            $employee->update([
-                'department_id' => $request->department_id,
-                'name' => $request->name,
-                'description' => $request->description
-            ]);
+    //         $employee->update([
+    //             'department_id' => $request->department_id,
+    //             'name' => $request->name,
+    //             'description' => $request->description
+    //         ]);
 
-            $response = new EmployeeResource($employee);
-        }
-        return $response;
-    }
+    //         $response = new EmployeeResource($employee);
+    //     }
+    //     return $response;
+    // }
 
     public function destroy(Request $request, Employee $employee) // delete
     {

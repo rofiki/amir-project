@@ -1,6 +1,6 @@
 /* Importing Bootstrap SCSS file. */
-@import 'node_modules/bootstrap/dist/css/bootstrap.css'; 
- 
+@import 'node_modules/bootstrap/dist/css/bootstrap.css';
+
 /* Importing Datepicker SCSS file. */
 @import "node_modules/ngx-bootstrap/datepicker/bs-datepicker";
 
@@ -10,9 +10,30 @@ body {
     font-family: "Prompt", sans-serif;
 }
 
-.btn-group-xs > .btn, .btn-xs {
+.btn-group-xs>.btn,
+.btn-xs {
     padding: 0px 5px;
     font-size: 12px;
     line-height: 1.5;
     border-radius: 3px;
-    }
+}
+
+.form-control::placeholder {
+    /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: rgb(191, 191, 191);
+    opacity: 1;
+    /* Firefox */
+    font-size: small;
+}
+
+.form-control:-ms-input-placeholder {
+    /* Internet Explorer 10-11 */
+    color: rgb(191, 191, 191);
+    font-size: small;
+}
+
+.form-control::-ms-input-placeholder {
+    /* Microsoft Edge */
+    color: rgb(191, 191, 191);
+    font-size: small;
+}
