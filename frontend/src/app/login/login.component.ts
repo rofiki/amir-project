@@ -36,10 +36,6 @@ export class LoginComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.test();
-
-
-
 
     // console.log(localStorage.getItem('token'))
     this.checkIsLogin();
@@ -125,13 +121,6 @@ export class LoginComponent implements OnInit {
     if (localStorage.getItem('token')) {
       window.location.href = this.BASE_URL + '/logout';
     }
-  }
-
-  public testa:any;
-  public getToken: any;
-  test(){
-    const headers = '7|sZCkhfJJk1wxOHSultAMxvnPCgh2QYPaRsr4ctom';
-    this.homemekerService.findAll(headers).subscribe(res =>{ this.testa = res});
   }
 
 }
