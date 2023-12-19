@@ -23,11 +23,14 @@ export class AuthService {
 
 
   public login(params: {}): Observable<any> {
-    return this.http.post(this.apiUrl + '/login', params, {
-      headers: {
-        'content-type': 'application/json'
-      }
-    });
+
+    let headers = new HttpHeaders({ 'Accept': 'application/json', });
+    return this.http.post(this.apiUrl + '/login', params, { headers });
+    //   headers: {
+    //     'content-type': 'application/json',
+    //     'Accept': 'application/json',
+    //   }
+    // });
   }
 
 
@@ -36,6 +39,7 @@ export class AuthService {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
+        'Accept': 'application/json',
         Authorization: 'Bearer ' + token
       })
     };
@@ -88,11 +92,19 @@ export class AuthService {
 // ##############################################################
   //Admin
   public loginAdmin(params: {}): Observable<any> {
-    return this.http.post(this.apiUrl + '/loginadmin', params, {
-      headers: {
-        'content-type': 'application/json'
-      }
-    });
+
+    let headers = new HttpHeaders({ 'Accept': 'application/json', });
+    
+    return this.http.post(this.apiUrl + '/loginadmin', params, { headers });
+
+
+
+
+      // headers: {
+      //   'content-type': 'application/json',
+      //   'Accept': 'application/json',
+      // }
+    // });
   }
 
   public registerAdmin(params: {}, headers:any): Observable<any> {

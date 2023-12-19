@@ -27,6 +27,7 @@ export class HomemakerService {
   }
 
   public findAll(headers:any): Observable<any> {
+
     return this.http.get(this.apiUrl + '/homemaker', {
       headers: {
         'content-type': 'application/json',
@@ -34,6 +35,7 @@ export class HomemakerService {
       }
     });
   }
+
 
   public findById(id:any, headers:any): Observable<any> {
     return this.http.get(this.apiUrl + '/homemaker/' + id, {

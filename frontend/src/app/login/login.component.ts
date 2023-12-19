@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 
 import { ToastrService } from 'ngx-toastr';
 import { jwtDecode } from 'jwt-decode';
+import { HomemakerService } from '../services/homemaker/homemaker.service';
 
 @Component({
   selector: 'app-login',
@@ -28,10 +29,18 @@ export class LoginComponent implements OnInit {
     private fb: FormBuilder,
     private router: Router,
 
-    private toastr: ToastrService
+    private toastr: ToastrService,
+
+
+    private homemekerService:HomemakerService
   ) { }
 
   ngOnInit(): void {
+    this.test();
+
+
+
+
     // console.log(localStorage.getItem('token'))
     this.checkIsLogin();
 
@@ -116,6 +125,13 @@ export class LoginComponent implements OnInit {
     if (localStorage.getItem('token')) {
       window.location.href = this.BASE_URL + '/logout';
     }
+  }
+
+  public testa:any;
+  public getToken: any;
+  test(){
+    const headers = '7|sZCkhfJJk1wxOHSultAMxvnPCgh2QYPaRsr4ctom';
+    this.homemekerService.findAll(headers).subscribe(res =>{ this.testa = res});
   }
 
 }
