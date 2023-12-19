@@ -8,22 +8,28 @@ import { HomemakerComponent } from './admin/homemaker/homemaker.component';
 import { EditComponent } from './admin/roomtype/edit/edit.component';
 import { HomemakerAddComponent } from './admin/homemaker/homemaker-add/homemaker-add.component';
 import { HomemakerEditComponent } from './admin/homemaker/homemaker-edit/homemaker-edit.component';
+import { RoomAddComponent } from './admin/room/room-add/room-add.component';
+import { RoomEditComponent } from './admin/room/room-edit/room-edit.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
 
+  //ประเภทห้อง
   { path: 'admin/roomtype', component: RoomtypeComponent },
   { path: 'admin/roomtype/edit/:id', component: EditComponent },
-  
+
   { path: 'admin/checklist', component: ChecklistComponent },
+
+  //ห้อง
   { path: 'admin/room', component: RoomComponent },
+  { path: 'admin/room/add', component: RoomAddComponent },
+  { path: 'admin/room/edit/:id', component: RoomEditComponent },
 
   // แม่บ้าน
   { path: 'admin/homemaker', component: HomemakerComponent },
   { path: 'admin/homemaker/add', component: HomemakerAddComponent },
   { path: 'admin/homemaker/edit/:id', component: HomemakerEditComponent },
-
 
 ];
 

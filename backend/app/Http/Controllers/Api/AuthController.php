@@ -36,7 +36,7 @@ class AuthController extends Controller
         $getUser = Admin::where('user_id', $user->id)->first();
         $access_token = $user->createToken('api_token')->plainTextToken;
         $token_type = 'Bearer';
-        $role = ['admin' => 'admin'];
+        $role = ['admin' => $getUser['admin_role']];
         $getUser['email'] = $validated['email'];
 
         $response = array(
@@ -92,29 +92,53 @@ class AuthController extends Controller
                 'log' => '1',
             ], 422);
         } else {
-            // $auth = Auth::where('id', $request->id);
-            // // $auth->update([
-            // //     'password' => Hash::make($validated['password']),
-            // //     'remember_token' => Str::random(10),
-            // // ]);
-            // return response()->json([
-            //     'status' => true,
-            //     'test'=> $auth
-            // ], 200);
+            $updatePass = User::where('id', $request->id);
+            $updatePass->update([
+                'password' => Hash::make($request->password),
+                'remember_token' => Str::random(10),
+            ]);
+            return response()->json([
+                'status' => true,
+            ], 200);
 
-            $status = Password::reset(
-                $request->only('password'),
-                function (User $user, string $password) {
-                    $user->forceFill([
-                        'password' => Hash::make($password)
-                    ])->setRememberToken(Str::random(60));
+            // $status = Password::reset(
+            //     $request->only('password'),
+            //     function (User $user, string $password) {
+            //         $user->forceFill([
+            //             'password' => Hash::make($password)
+            //         ])->setRememberToken(Str::random(60));
 
-                    $user->save();
+            //         $user->save();
 
-                    event(new PasswordReset($user));
-                }
-            );
-            return $status;
+            //         event(new PasswordReset($user));
+            //     }
+            // );
+            // return $status;
+        }
+    }
+
+    // update password ของแม่บ้าน
+    public function aaaupdatePassword(Request $request) // update
+    {
+        $validated = Validator::make($request->all(), [
+            'password' => 'required|min:4|max:12',
+        ]);
+
+        if ($validated->fails()) {
+            return response()->json([
+                'status' => false,
+                'error' => $validated->messages(),
+                'log' => '1',
+            ], 422);
+        } else {
+            $updatePass = User::where('id', $request->id);
+            $updatePass->update([
+                'password' => Hash::make($request->password),
+                'remember_token' => Str::random(10),
+            ]);
+            return response()->json([
+                'status' => true,
+            ], 200);
         }
     }
 

@@ -58,10 +58,9 @@ export class HomemakerComponent implements OnInit {
     this.service.findAll(token).subscribe(r => {
       this.itemRef = r;
       this.loadingData = false;
-      console.log(this.itemRef)
     });
     // this.itemRef = await lastValueFrom(this.service.findAll(token));
-    // console.log(this.itemRef)
+    
   }
 
   del(id: any) { }

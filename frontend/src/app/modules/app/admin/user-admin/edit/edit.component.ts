@@ -14,10 +14,11 @@ import { jwtDecode } from 'jwt-decode';
   templateUrl: './edit.component.html',
   styleUrls: ['./edit.component.css']
 })
-export class EditComponent implements OnInit {
+export class UserAdminEditComponent implements OnInit {
 
   public BASE_URL: string = this.appService.BASE_URL;
   public isProcess: boolean = false;
+  public loadingDel: boolean = false;
 
   public frm!: FormGroup;
   public getToken: any;
@@ -89,9 +90,27 @@ export class EditComponent implements OnInit {
 
   }
 
-  delAdmin(id:any)
-  {
-    console.log('delete:',id)
+  // delAdmin(id:any)
+  // {
+  //   console.log('delete:',id)
+  // }
+
+  
+
+  delAdmin(id: any) {
+
+    if (confirm('ยืนยันการทำรายการ!')) {
+      this.loadingDel = true;
+      const headers = this.getToken.access_token;
+      this.auth.delete(id, headers).subscribe(res => {
+
+        if (res.status) {
+          this.loadingDel = false;
+          this.toastr.success('บันทึกข้อมูล', 'ลบข้อมูลสำเร็จ', { timeOut: 1000, progressBar: true, });
+          this.router.navigate([this.BASE_URL + '/admin/admin'], { relativeTo: this.activatedRoute });
+        }
+      });
+    }
   }
 
 }

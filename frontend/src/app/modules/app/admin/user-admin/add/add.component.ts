@@ -12,7 +12,7 @@ import { jwtDecode } from 'jwt-decode';
   templateUrl: './add.component.html',
   styleUrls: ['./add.component.css']
 })
-export class AddComponent implements OnInit {
+export class UserAdminAddComponent implements OnInit {
 
   public BASE_URL: string = this.appService.BASE_URL;
   public isProcess: boolean = false;

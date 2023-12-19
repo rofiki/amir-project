@@ -32,11 +32,14 @@ class AdminController extends Controller
 
     public function show($id) //show by id
     {
-        $admin = Admin::where('id', $id)->get()->first();
+        $admin = Admin::where('id', $id)
+            ->whereNull('deleted_at')->get()->first();
         if ($admin) {
             return new AdminResource($admin);
         }
         return response()->json(['message' => 'Not Found!'], 404);
+
+
     }
 
     public function showByCondition()
@@ -135,4 +138,37 @@ class AdminController extends Controller
             ]);
         }
     }
+
+        // ลบ แม่บ้าน
+        // public function zzzdestroy($id)
+        // {
+        //     $id = (int)$id;
+        //     if (!$id) {
+        //         return response()->json([
+        //             'status' => false,
+        //             'message' => 'Not Found!',
+        //             'log' => 1
+        //         ], 404);
+        //     }
+    
+        //     // 1 ลบแม่บ้าน
+        //     $item = tbHomemaker::where('id', $id)->get()->first();
+        //     $uid = $item['user_id'];
+    
+        //     if (!$item->delete()) {
+        //         return response()->json([
+        //             'status' => false,
+        //             'message' => 'Not Found!',
+        //             'log' => 2
+        //         ], 404);
+        //     } else {
+                
+        //         // 2 ลบ user
+        //         User::where('id', $uid)->delete();
+        //         return response()->json([
+        //             'status' => true,
+        //             'message' => 'Delete Success!', 200
+        //         ]);
+        //     }
+        // }
 }

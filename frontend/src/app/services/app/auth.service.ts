@@ -14,6 +14,7 @@ export class AuthService {
   // public tokenDecode:any;
 
   private apiUrl: string = this.dbService.getServiceURL();
+  public token:any = localStorage.getItem('token');
 
   constructor(
     private http: HttpClient,
@@ -40,6 +41,31 @@ export class AuthService {
     };
     return this.http.delete(this.apiUrl + '/auth/logout', httpOptions);
   }
+
+  public checkToken () {
+    if(!this.token){
+      localStorage.removeItem("token");
+      localStorage.removeItem("loginDate");
+      window.location.href = '/login';
+    }
+  }
+
+  public getToken(){
+    let decode:any = jwtDecode(this.token);
+    return decode.access_token;
+  }
+
+
+  public getRole(){
+    let decode:any = jwtDecode(this.token);
+    return decode.role;
+  }
+
+  public getUser(){
+    let decode:any = jwtDecode(this.token);
+    return decode.user;
+  }
+
 
   // public chkLogin(token:any) :Observable<any> {
   //   return null;
@@ -105,8 +131,19 @@ export class AuthService {
     });
   }
 
-  public updatePassword(params: {}, headers:any): Observable<any> {
-    return this.http.put(this.apiUrl + '/auth', params, {
+  // แก้ไขรหัสผ่านของ admin
+  public updatePassword(params: {},uid:any, headers:any): Observable<any> {
+    return this.http.put(this.apiUrl + '/auth/reset/password/' + uid, params, {
+      headers: {
+        'content-type': 'application/json',
+        'Authorization': 'Bearer ' + headers
+      }
+    });
+  }
+
+  // ลบ admin
+  public delete(id: any, headers:any): Observable<any> {
+    return this.http.delete<any>(this.apiUrl + '/admin/' + id,{
       headers: {
         'content-type': 'application/json',
         'Authorization': 'Bearer ' + headers

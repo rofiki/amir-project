@@ -18,6 +18,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HomemakerAddComponent } from './admin/homemaker/homemaker-add/homemaker-add.component';
 import { HomemakerEditComponent } from './admin/homemaker/homemaker-edit/homemaker-edit.component';
+import { HomemakerResetPasswordComponent } from './admin/homemaker/homemaker-reset-password/homemaker-reset-password.component';
+import { RoomAddComponent } from './admin/room/room-add/room-add.component';
+import { RoomEditComponent } from './admin/room/room-edit/room-edit.component';
 
 
 
@@ -31,7 +34,10 @@ import { HomemakerEditComponent } from './admin/homemaker/homemaker-edit/homemak
     HomemakerComponent,
     RoomComponent,
     HomemakerAddComponent,
-    HomemakerEditComponent
+    HomemakerEditComponent,
+    HomemakerResetPasswordComponent,
+    RoomAddComponent,
+    RoomEditComponent
   ],
   imports: [
     CommonModule,

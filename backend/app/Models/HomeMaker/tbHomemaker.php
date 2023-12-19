@@ -33,8 +33,8 @@ class tbHomemaker extends Model
     ];
 
     protected $hidden = [
-        'user_id',
-        'idcard',
+        // 'user_id',
+        // 'idcard',
         'deleted_at'
     ];
 }

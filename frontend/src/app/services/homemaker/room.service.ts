@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class HomemakerService {
+export class RoomService {
 
   private apiUrl: string = this.dbService.getServiceURL() + '/homemaker';
 
@@ -18,7 +18,7 @@ export class HomemakerService {
 
   public create(params: {}, headers:any): Observable<any> {
 
-    return this.http.post(this.apiUrl + '/homemaker',params, {
+    return this.http.post(this.apiUrl + '/room',params, {
       headers: {
         'content-type': 'application/json',
         'Authorization': 'Bearer ' + headers
@@ -27,7 +27,7 @@ export class HomemakerService {
   }
 
   public findAll(headers:any): Observable<any> {
-    return this.http.get(this.apiUrl + '/homemaker', {
+    return this.http.get(this.apiUrl + '/room', {
       headers: {
         'content-type': 'application/json',
         'Authorization': 'Bearer ' + headers
@@ -36,7 +36,7 @@ export class HomemakerService {
   }
 
   public findById(id:any, headers:any): Observable<any> {
-    return this.http.get(this.apiUrl + '/homemaker/' + id, {
+    return this.http.get(this.apiUrl + '/room/' + id, {
       headers: {
         'content-type': 'application/json',
         'Authorization': 'Bearer ' + headers
@@ -45,17 +45,7 @@ export class HomemakerService {
   }
 
   public update(params: {}, id:any, headers:any): Observable<any> {
-    return this.http.put(this.apiUrl + '/homemaker/' + id, params, {
-      headers: {
-        'content-type': 'application/json',
-        'Authorization': 'Bearer ' + headers
-      }
-    });
-  }
-
-  // จะไปใช้ updatePassword ของ auth
-  public updatePassword(params: {}, id:any, headers:any): Observable<any> {
-    return this.http.put(this.apiUrl + '/reset/password/' + id, params, {
+    return this.http.put(this.apiUrl + '/room/' + id, params, {
       headers: {
         'content-type': 'application/json',
         'Authorization': 'Bearer ' + headers
@@ -64,7 +54,7 @@ export class HomemakerService {
   }
 
   public delete(id: any, headers:any): Observable<any> {
-    return this.http.delete<any>(this.apiUrl + '/homemaker/' + id,{
+    return this.http.delete<any>(this.apiUrl + '/room/' + id,{
       headers: {
         'content-type': 'application/json',
         'Authorization': 'Bearer ' + headers

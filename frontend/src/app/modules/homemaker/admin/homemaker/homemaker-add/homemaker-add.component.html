@@ -9,7 +9,7 @@
         <!-- Top navigation-->
         <app-header></app-header>
         <!-- Page content-->
-        <div class="container-fluid ps-md-5 pe-md-5">
+        <div class="container-fluid ps-md-5 pe-md-5 pb-5">
             <h1 class="mt-4">แม่บ้าน</h1>
             <p>ระบบติดตามงานแม่บ้าน</p>
 
@@ -86,7 +86,7 @@
                                 </div>
                                 <div class="col-md-12">
                                     <div class="row">
-                                        <div class="col-md-2">
+                                        <!-- <div class="col-md-2">
                                             <div class="mb-3">
                                                 <label for="gendar" class="form-label">เพศ</label>
                                                 <select *ngIf="gendarRef" name="gendar" id="gendar" class="form-control" formControlName="gendar"
@@ -103,8 +103,8 @@
                                                     <small class="text-danger m-2" *ngIf="frm.get('gendar')?.hasError('required')">กรุณาเลือกเพศ</small>
                                                 </div>  
                                             </div>
-                                        </div>
-                                        <div class="col-md-10">
+                                        </div> -->
+                                        <div class="col-md-12">
                                             <div class="mb-3">
                                                 <label for="address" class="form-label">ที่อยู่</label>
                                                 <input type="text" class="form-control" id="address" placeholder="ที่อยู่" maxlength="255"
@@ -150,7 +150,7 @@
                                                 </div> 
                                             </div>
                                         </div>
-                                        <div class="col-md-3">
+                                        <div class="col-md-4">
                                             <div class="mb-3">
                                                 <label for="phone" class="form-label">เบอร์โทรศัพท์</label>
                                                 <input type="text" class="form-control" id="phone" placeholder="เบอร์โทรศัพท์" maxlength="10"
@@ -200,7 +200,7 @@
                                     <div class="row">
                                         <div class="col-md-4">
                                             <div class="mb-3">
-                                                <label for="password" class="form-label">อีเมล​</label>
+                                                <label for="password" class="form-label">อีเมล์​</label>
                                                 <input type="text" disabled class="form-control" placeholder="อีเมล์" value="{{frm.get('email')!.value}}">
                                             </div>
                                         </div>
@@ -245,7 +245,7 @@
                                 </div>
                                 <div class="col-md-12">
                                     <div class="row">
-                                        <div class="col-md-2">{{frm.invalid}}
+                                        <div class="col-md-2">
                                             <div class="mb-3">
                                                 <button type="submit" class="btn btn-primary btn-sm me-1 ps-3 pe-3" [disabled]="frm.invalid" *ngIf="!isProcess">บันทึก</button>
                                             <button type="submit" class="btn btn-primary btn-sm me-1 ps-3 pe-3" [disabled]="true"  *ngIf="isProcess">

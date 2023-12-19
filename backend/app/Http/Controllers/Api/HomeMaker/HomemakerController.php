@@ -9,9 +9,8 @@ use App\Models\HomeMaker\tbHomemaker;
 use App\Models\Prename;
 use App\Models\User;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Password;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
@@ -30,6 +29,8 @@ class HomemakerController extends Controller
         $search = $request->input('search');
 
         $items = $model->leftJoin($tbPrename, $tbHomemaker . '.prename_id', $tbPrename . '.id')
+            ->select($tbHomemaker.'.*', $tbPrename.'.name', $tbPrename.'.gendar')
+            ->whereNull('deleted_at')
             ->paginate((int)$limit);
 
         try {
@@ -49,9 +50,10 @@ class HomemakerController extends Controller
         $tbHomemaker = $model->getTable();
 
         $item = $model->leftJoin($tbPrename, $tbHomemaker . '.prename_id', $tbPrename . '.id')
-            ->where($tbHomemaker.'.id', $id)->get()->first();
+            ->select($tbHomemaker.'.*', $tbPrename.'.name', $tbPrename.'.gendar')
+            ->where($tbHomemaker.'.id', $id)
+            ->whereNull('deleted_at')->get()->first();
 
-        // $item = tbHomemaker::where('id', $id)->get()->first();
         if ($item) {
             return new HomemakerResource($item);
         }
@@ -81,11 +83,12 @@ class HomemakerController extends Controller
             $response = response()->json(['status' => false, 'error' => $validated->messages()], 422);
         } else {
 
+            $remember_token = Str::random(10);
             $user = User::create([
                 'name' => $request->fname . " " . $request->lname,
                 'email' => $request->email,
                 'password' => Hash::make($request->password),
-                'remember_token' => Str::random(10),
+                'remember_token' => $remember_token,
                 'user_type' => 'homemaker',
                 'email_verified_at' => now(),
             ]);
@@ -108,7 +111,7 @@ class HomemakerController extends Controller
                 'date_of_resign' => null,
                 'active' => $request->active,
             ]);
-            $response = response()->json(['status' => true, 'data' => $create], 200);
+            $response = response()->json(['status' => true, 'data' => $create, 'remember_token' => $remember_token], 200);
         }
         return $response;
     }
@@ -117,9 +120,9 @@ class HomemakerController extends Controller
     {
         $validated = Validator::make($request->all(), [
             // 'homemaker_code' => 'required|min:2|max:255',
-            'prename_id' => 'required',
-            'firstname' => 'required|min:2|max:255',
-            'lastname' => 'required|min:2|max:255',
+            'prename' => 'required',
+            'fname' => 'required|min:2|max:255',
+            'lname' => 'required|min:2|max:255',
             // 'nickname' => 'required|min:2|max:255',
             'gendar' => 'required',
             'idcard' => 'required|digits_between:13,13|numeric',
@@ -141,10 +144,10 @@ class HomemakerController extends Controller
             $update->update([
                 // 'user_id' => $user->id,
                 // 'homemaker_code' => null,
-                'prename_id' => $request->prename_id,
-                'firstname' => $request->firstname,
-                'lastname' => $request->lastname,
-                'nickname' => $request->nickname,
+                'prename_id' => $request->prename,
+                'firstname' => $request->fname,
+                'lastname' => $request->lname,
+                'nickname' => $request->nname,
                 'address' => $request->address,
                 'gendar' => $request->gendar,
                 'idcard' => $request->idcard,
@@ -162,7 +165,7 @@ class HomemakerController extends Controller
         }
     }
 
-    // ยังไม่เรียบร้อย
+    // update password ของแม่บ้าน
     public function updatePassword(Request $request) // update
     {
         $validated = Validator::make($request->all(), [
@@ -176,32 +179,18 @@ class HomemakerController extends Controller
                 'log' => '1',
             ], 422);
         } else {
-            // $auth = Auth::where('id', $request->id);
-            // // $auth->update([
-            // //     'password' => Hash::make($validated['password']),
-            // //     'remember_token' => Str::random(10),
-            // // ]);
-            // return response()->json([
-            //     'status' => true,
-            //     'test'=> $auth
-            // ], 200);
-
-            $status = Password::reset(
-                $request->only('password'),
-                function (User $user, string $password) {
-                    $user->forceFill([
-                        'password' => Hash::make($password)
-                    ])->setRememberToken(Str::random(60));
-
-                    $user->save();
-
-                    // event(new PasswordReset($user));
-                }
-            );
-            return $status;
+            $updatePass = User::where('id', $request->id);
+            $updatePass->update([
+                    'password' => Hash::make($request->password),
+                    'remember_token' => Str::random(10),
+                ]);
+            return response()->json([
+                'status' => true,
+            ], 200);
         }
     }
 
+    // ลบ แม่บ้าน
     public function destroy($id)
     {
         $id = (int)$id;
@@ -213,6 +202,7 @@ class HomemakerController extends Controller
             ], 404);
         }
 
+        // 1 ลบแม่บ้าน
         $item = tbHomemaker::where('id', $id)->get()->first();
         $uid = $item['user_id'];
 
@@ -223,6 +213,8 @@ class HomemakerController extends Controller
                 'log' => 2
             ], 404);
         } else {
+            
+            // 2 ลบ user
             User::where('id', $uid)->delete();
             return response()->json([
                 'status' => true,

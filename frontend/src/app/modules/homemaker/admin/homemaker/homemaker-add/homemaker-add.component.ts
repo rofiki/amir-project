@@ -23,8 +23,8 @@ export class HomemakerAddComponent implements OnInit {
   public frm!: FormGroup;
   public getToken: any;
   public itemRef: any;
-  public prenameRef:any;
-  public gendarRef:any;
+  public prenameRef: any;
+  public gendarRef: any;
 
   constructor(
     private appService: AppService,
@@ -74,7 +74,7 @@ export class HomemakerAddComponent implements OnInit {
       lname: this.fb.control('', [Validators.required, Validators.pattern('^[a-zA-Zก-๙ \-\']+')]),
       nname: this.fb.control('', []),
       address: this.fb.control('', []),
-      gendar: this.fb.control('', [Validators.required]),
+      // gendar: this.fb.control('', [Validators.required]),
       idcard: this.fb.control('', [Validators.required, Validators.pattern("^[0-9]*$"), Validators.minLength(13)]),
       lineId: this.fb.control('', []),
       phone: this.fb.control('', [Validators.pattern("^[0-9]*$"), Validators.minLength(10)]),
@@ -94,10 +94,14 @@ export class HomemakerAddComponent implements OnInit {
     this.isProcess = true;
     let params = this.frm.value;
 
+    if (params.prename == 1) {
+      params.gendar = 1
+    } else {
+      params.gendar = 2;
+    }
+
     if (confirm('ยืนยันการทำรายการ!')) {
       const headers = this.getToken.access_token;
-      console.log(params);
-      console.log('headers',headers)
       this.service.create(params, headers).subscribe(res => {
         // console.log(res)
         if (res.status) {
@@ -115,7 +119,10 @@ export class HomemakerAddComponent implements OnInit {
   }
 
   getGendar() {
-    this.gendarRef = [{id:1,name:"ชาย"},{id:2,name:"หญิง"}]
+    this.gendarRef = [
+      { id: 1, name: "ชาย" },
+      { id: 2, name: "หญิง" }
+    ]
   }
 
 }

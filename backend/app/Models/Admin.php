@@ -20,6 +20,7 @@ class Admin extends Model
         'lastname',
         'email',
         'password',
+        'admin_role',
         'active'
 
     ];

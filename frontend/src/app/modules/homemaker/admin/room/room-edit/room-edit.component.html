@@ -1,0 +1,171 @@
+<div class="d-flex bg-content" id="wrapper">
+    <!-- Sidebar-->
+    <div class="shadow bg-body-tertiary " id="sidebar-wrapper">
+        <app-sidebar></app-sidebar>
+    </div>
+
+    <!-- Page content wrapper-->
+    <div id="page-content-wrapper">
+        <!-- Top navigation-->
+        <app-header></app-header>
+        <!-- Page content-->
+        <div class="container-fluid ps-md-5 pe-md-5 pb-5">
+            <h1 class="mt-4">ห้อง</h1>
+            <p>ระบบติดตามงานแม่บ้าน</p>
+
+            <div class="row border shadow-sm bg-body-tertiary p-md-3">
+                <div class="col-md-12">
+                    <div class="row border-bottom pt-1 pb-1">
+                        <div class="col-md-6 h5">แก้ไขห้อง</div>
+                    </div>
+                    <div class="col-md-12 pt-2">
+
+                        <form [formGroup]="frm" (ngSubmit)="onSubmit()" *ngIf="itemRef">
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="mb-3">
+                                                <label for="typeId" class="form-label">ประเภท</label>
+                                                <select *ngIf="roomTypeRef && roomTypeRef.data" name="typeId" id="typeId" class="form-control" formControlName="typeId" [(ngModel)]="itemRef.type_id"
+                                                [class.is-invalid]="(frm.get('typeId')?.invalid && (frm.get('typeId')?.dirty || frm.get('typeId')?.touched))"
+                                                [class.is-valid]="(frm.get('typeId')?.valid && (frm.get('typeId')?.dirty || frm.get('typeId')?.touched))"
+                                                >
+                                                    <option value="">- เลือก -</option>
+                                                    <ng-container *ngFor="let element of roomTypeRef.data">
+                                                        <option value="{{ element.id }}"> {{ element.type_text }}</option>
+                                                    </ng-container>
+                                                </select>     
+                    
+                                                <div *ngIf="frm.get('typeId')?.invalid && (frm.get('typeId')?.dirty || frm.get('typeId')?.touched)">
+                                                    <small class="text-danger m-2" *ngIf="frm.get('typeId')?.hasError('required')">กรุณาเลือกประเภท</small>
+                                                </div>  
+                                            </div>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <div class="mb-3">
+                                                <label for="name" class="form-label">ชื่อห้อง</label>
+                                                <input type="text" class="form-control" id="name" placeholder="ชื่อห้อง" maxlength="255"
+                                                formControlName="name" [(ngModel)]="itemRef.roomName"
+                                                [class.is-invalid]="(frm.get('name')?.invalid && (frm.get('name')?.dirty || frm.get('name')?.touched))"
+                                                [class.is-valid]="(frm.get('name')?.valid && (frm.get('name')?.dirty || frm.get('name')?.touched))"
+                                                >
+                                                <div *ngIf="frm.get('name')?.invalid && (frm.get('name')?.dirty || frm.get('name')?.touched)">
+                                                    <small class="text-danger m-2" *ngIf="frm.get('name')?.hasError('required')">กรุณากรอกชื่อห้อง</small>
+                                                </div> 
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="mb-3">
+                                                <label for="builder" class="form-label">อาคาร</label>
+                                                <input type="text" class="form-control" id="builder" placeholder="อาคาร" maxlength="255"
+                                                formControlName="builder" [(ngModel)]="itemRef.roomBuilder"
+                                                [class.is-invalid]="(frm.get('builder')?.invalid && (frm.get('builder')?.dirty || frm.get('builder')?.touched))"
+                                                [class.is-valid]="(frm.get('builder')?.valid && (frm.get('builder')?.dirty || frm.get('builder')?.touched))"
+                                                >
+                                                <div *ngIf="frm.get('builder')?.invalid && (frm.get('builder')?.dirty || frm.get('builder')?.touched)">
+                                                    <small class="text-danger m-2" *ngIf="frm.get('builder')?.hasError('required')">กรุณากรอกอาคาร</small>
+                                                </div> 
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="mb-3">
+                                                <label for="floor" class="form-label">ชั้น</label>
+                                                <input type="text" class="form-control" id="floor" placeholder="ชั้น" maxlength="255"
+                                                formControlName="floor" [(ngModel)]="itemRef.roomFloor"
+                                                [class.is-invalid]="(frm.get('floor')?.invalid && (frm.get('floor')?.dirty || frm.get('floor')?.touched))"
+                                                [class.is-valid]="(frm.get('floor')?.valid && (frm.get('floor')?.dirty || frm.get('floor')?.touched))"
+                                                >
+                                                <div *ngIf="frm.get('floor')?.invalid && (frm.get('floor')?.dirty || frm.get('floor')?.touched)">
+                                                    <div><small class="text-danger m-2" *ngIf="frm.get('floor')?.hasError('required')">กรุณากรอกชั้น</small></div>
+                                                    <div><small class="text-danger m-2" *ngIf="frm.get('floor')?.hasError('pattern')">กรอกเฉพาะตัวเลขเท่านั้น</small></div>
+                                                </div> 
+                                            </div>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <div class="mb-3">
+                                                <label for="location" class="form-label">ที่ตั้ง</label>
+                                                <input type="text" class="form-control" id="location" placeholder="ที่ตั้ง" maxlength="255"
+                                                formControlName="location" [(ngModel)]="itemRef.roomLocation"
+                                                [class.is-invalid]="(frm.get('location')?.invalid && (frm.get('location')?.dirty || frm.get('location')?.touched))"
+                                                [class.is-valid]="(frm.get('location')?.valid && (frm.get('location')?.dirty || frm.get('location')?.touched))"
+                                                >
+                                                <div *ngIf="frm.get('location')?.invalid && (frm.get('location')?.dirty || frm.get('location')?.touched)">
+                                                    <small class="text-danger m-2" *ngIf="frm.get('location')?.hasError('required')">กรุณากรอกที่ตั้ง</small>
+                                                </div> 
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="mb-3">
+                                                <label for="desc" class="form-label">รายละเอียด</label>
+                                                <input type="text" class="form-control" id="desc" placeholder="รายละเอียด" maxlength="255"
+                                                formControlName="desc" [(ngModel)]="itemRef.roomDescription"
+                                                [class.is-invalid]="(frm.get('desc')?.invalid && (frm.get('desc')?.dirty || frm.get('desc')?.touched))"
+                                                [class.is-valid]="(frm.get('desc')?.valid && (frm.get('desc')?.dirty || frm.get('desc')?.touched))"
+                                                >
+                                                <div *ngIf="frm.get('desc')?.invalid && (frm.get('desc')?.dirty || frm.get('desc')?.touched)">
+                                                    <small class="text-danger m-2" *ngIf="frm.get('desc')?.hasError('required')">กรุณากรอกอาคาร</small>
+                                                </div> 
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="row border-bottom pt-3">
+                                        <div class="col-md-6 h6">เพิ่มผู้ดูแลห้อง</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="mb-3">
+                                                <label for="xxx" class="form-label">coming soon...</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="row border-bottom pt-3">
+                                        <div class="col-md-6 h6">เพิ่มแม่บ้าน</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="mb-3">
+                                                <label for="xxx" class="form-label">coming soon...</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <div class="mb-3">
+                                                <button type="submit" class="btn btn-primary btn-sm me-1 ps-3 pe-3" [disabled]="frm.invalid" *ngIf="!isProcess">บันทึก</button>
+                                            <button type="submit" class="btn btn-primary btn-sm me-1 ps-3 pe-3" [disabled]="true"  *ngIf="isProcess">
+                                                <i class="fa-solid fa-spinner fa-spin"></i>
+                                            </button>
+                                                <a class="btn btn-secondary btn-sm ps-3 pe-3"
+                                                    [routerLink]="[BASE_URL + '/homemaker/admin/room']">ยกเลิก</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <app-footer></app-footer>

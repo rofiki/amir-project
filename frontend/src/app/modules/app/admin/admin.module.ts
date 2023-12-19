@@ -19,8 +19,8 @@ import { ThaiDatePipe } from 'src/app/pipe/thaidate.pipe';
 
 //Admin
 import { UserAdminComponent } from './user-admin/user-admin.component';
-import { EditComponent } from './user-admin/edit/edit.component';
-import { AddComponent } from './user-admin/add/add.component';
+import { UserAdminEditComponent } from './user-admin/edit/edit.component';
+import { UserAdminAddComponent } from './user-admin/add/add.component';
 import { ResetPasswordComponent } from './user-admin/reset-password/reset-password.component';
 
 import { HttpClientModule } from '@angular/common/http';
@@ -37,8 +37,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     JobPositionComponent,
     RoleComponent,
     UserAdminComponent,
-    EditComponent,
-    AddComponent,
+    UserAdminEditComponent,
+    UserAdminAddComponent,
     ResetPasswordComponent,
   ],
   imports: [

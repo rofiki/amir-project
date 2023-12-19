@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\JobPositionController;
 use App\Http\Controllers\Api\ProvinceController;
 use App\Http\Controllers\Api\EmployeeController;
 use App\Http\Controllers\Api\HomeMaker\HomemakerController;
+use App\Http\Controllers\Api\HomeMaker\RoomController;
 use App\Http\Controllers\Api\HomeMaker\RoomTypeController;
 use App\Http\Controllers\PrenameController;
 use Illuminate\Http\Request;
@@ -29,13 +30,14 @@ use Illuminate\Support\Facades\Route;
 //     return $request->user();
 // });
 
+##### ระบบสิทธิ์ผู้ใช้งานระบบ #####
 Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('employee', EmployeeController::class); // รอลบ
 
     // auth
     Route::prefix('auth')->group(function () {
         Route::delete('logout', [AuthController::class, 'logoff']);
-        Route::put('/', [AuthController::class, 'updatePassword']);
+        Route::put('/reset/password/{id}', [AuthController::class, 'updatePassword']);
     });
 
     // tbAdmin
@@ -66,21 +68,29 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('register', [AuthController::class, 'register']); // ค่อยมาทำ เพราะมีเปลี่ยนแปลง
 });
 
-//Login เข้าสู่ระบบ สำหรับ Admin และ บุคลากร
-Route::post('login', [AuthController::class, 'login']);
-// Route::post('loginadmin', [AuthAdminController::class, 'login']);
 
 ##### ระบบติดตามแม่บ้าน #####
 Route::middleware('auth:sanctum')->group(function () {
 
-    // tbRoomType ประเภทห้อง
     Route::prefix('homemaker')->group(function () {
+        // ประเภทห้อง
         Route::apiResource('roomtype', RoomTypeController::class);
+
+        // แม่บ้าน
         Route::apiResource('homemaker', HomemakerController::class);
+        Route::put('/reset/password/{id}', [HomemakerController::class, 'updatePassword']);
+
+        // ห้อง
+        Route::apiResource('room', RoomController::class);
     });
     
 });
 
+//Login เข้าสู่ระบบ สำหรับ Admin และ บุคลากร
+Route::post('login', [AuthController::class, 'login']);
+// Route::post('loginadmin', [AuthAdminController::class, 'login']);
+
+// คำนำหน้าชื่อ
 Route::apiResource('prename', PrenameController::class);
 
 
