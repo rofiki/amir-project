@@ -9,46 +9,93 @@
         <!-- Top navigation-->
         <app-header></app-header>
         <!-- Page content-->
-        <div class="container-fluid ps-5">
+        <div class="container-fluid ps-md-5 pe-md-5">
             <h1 class="mt-4">แผนก</h1>
             <p>ระบบจัดการสิทธิ์ใช้งานระบบ</p>
-            <div class="row p-3 col-12 border shadow-sm bg-body-tertiary">
-                <!-- <div class="col-md-12 border p-3"> -->
-                <div class="row">
-                    <div class="col-3 ">
-                        <div class="border-bottom h5 pb-2">เพิมแผนก</div>
-                        <div class="pt-2">
 
-                            <div class="mb-3">
-                                <label for="exampleFormControlInput1" class="form-label">แผนก</label>
-                                <input type="text" class="form-control" id="" placeholder="ชื่อแผนก">
-                            </div>
-                            <div class="mb-3">
-                                <label for="exampleFormControlInput1" class="form-label">อยู่ภายใต้แผนก</label>
-                                <select class="form-select" aria-label="Default select example">
-                                    <option selected>- เลือกแผนก -</option>
-                                    <option value="0">- ไม่มี -</option>
-                                    <option value="2">Two</option>
-                                    <option value="3">Three</option>
-                                </select>
-                            </div>
-                            <div class="mb-3">
-                                <button class="btn btn-primary m-1 btn-sm">บันทึก</button>
-                                <button class="btn btn-secondary btn-sm">รีเซ็ต</button>
-                            </div>
-
-
-
+            <div class="row border shadow-sm bg-body-tertiary p-md-3">
+                <div class="col-md-12">
+                    <div class="border-bottom mb-2 h5"><strong>เพิ่มแผนก</strong></div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <form [formGroup]="frm" (ngSubmit)="onSubmit()" >
+                                <div class="mb-3 col-md-6">
+                                    <label for="" class="form-label">ชื่อแผนก</label>
+                                    <input type="text" class="form-control" id="name" placeholder="ประเภทห้อง"
+                                    formControlName="name"
+                                    [class.is-invalid]="(frm.get('name')?.invalid && (frm.get('name')?.dirty || frm.get('name')?.touched))"
+                                    >
+                                    <div *ngIf="(frm.get('name')?.invalid && (frm.get('name')?.dirty || frm.get('name')?.touched))">
+                                        <small class="text-danger" *ngIf="frm.get('name')?.hasError('required')">กรุณากรอกแผนก</small>
+                                    </div>  
+                                </div>
+                                <div class="mb-3 col-md-6">
+                                    <label for="dep_main" class="form-label">อยู่ภายใต้แผนก</label>
+                                    <input type="text" class="form-control" id="dep_main"
+                                    formControlName="dep_main"
+                                    >
+                                </div>
+                                <div class="mb-3">
+                                    <button type="submit" class="btn btn-primary btn-sm me-1 ps-3 pe-3" [disabled]="frm.invalid" *ngIf="!isProcess">บันทึก</button>
+                                    <button type="submit" class="btn btn-primary btn-sm me-1 ps-3 pe-3" [disabled]="true"  *ngIf="isProcess">
+                                        <i class="fa-solid fa-spinner fa-spin"></i>
+                                    </button>
+                                    <button type="reset" class="btn btn-secondary btn-sm ps-3 pe-3">รีเซ็ต</button>
+                                </div>
+                            </form>
                         </div>
                     </div>
-                    <div class="col-9 ">
-                        <div class="border-bottom h5 pb-2">แสดงแผนก</div>
-                    </div>
                 </div>
-                <!-- </div> -->
+                <div class="col-md-12">
+                    <div class="border-bottom mb-2 h5"><strong>รายการแผนก</strong></div>
+
+                    <div class="row mt-3" *ngIf="itemRef && itemRef.data">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item"><a href="/">First</a></li>
+                            <li class="list-group-item"><a href="/">Second</a>
+                          
+                              <ul class="list-group my-2 list-group-flush">
+                                <li class="list-group-item"><a href="/">Level 2 - First</a></li>
+                                <li class="list-group-item"><a href="/">Level 2 - Second</a></li>
+                              </ul>
+                            </li>
+                            <li class="list-group-item"><a href="/">Third</a></li>
+                          </ul>
+
+
+                          {{itemRef | json}}
+                    </div>
+
+                    <!-- <div class="row">
+                        <div class="col-md-12">
+                            <table class="table table-striped border mt-1" *ngIf="itemRef && itemRef.data">
+                                <thead>
+                                    <tr>
+                                        <th>ประเภทห้อง</th>
+                                        <th>รายละเอียด</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <div *ngIf="(itemRef.meta.total == 0); then showDataZero else showData"></div>
+                                <ng-template #showDataZero><tbody><tr><td colspan="25"><p class="text-center p-2"> - ไม่พบข้อมูล - </p></td></tr></tbody></ng-template>
+                                <ng-template #showData>
+                                <tbody >
+                                    <tr *ngIf="loadingData"><td colspan="10"><i class="fa-solid fa-spinner fa-spin"></i> Loading...</td></tr>
+                                    <tr *ngFor="let element of itemRef.data">
+                                        <td class="w-auto">{{element.type_text}}</td>
+                                        <td class="w-auto">{{element.description}}</td>
+                                        <td class="text-center" style="width: 100px;">
+                                            <a class="btn btn-secondary btn-xs me-1" [routerLink]="[BASE_URL + '/homemaker/admin/roomtype/edit',element.id]"><i class="fa-solid fa-pen"></i></a>
+                                            <a class="btn btn-secondary btn-xs" (click)="del(element.id)"><i class="fa-solid fa-trash"></i></a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                </ng-template>
+                            </table>
+                        </div>
+                    </div> -->
+                </div>
             </div>
-            <p></p>
         </div>
     </div>
-</div>
-<app-footer></app-footer>
+    <app-footer></app-footer>

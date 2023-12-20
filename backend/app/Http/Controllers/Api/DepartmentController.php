@@ -59,10 +59,11 @@ class DepartmentController extends Controller
     public function store(Request $request) // add
     {
         // default param
-        $dep_main_id = $request->input('department_main_id') ?? 0;
+        $dep_main_id = $request->input('dep_main') ?? 0;
+        $company_id = 1; // default เป็น 1 = บริษัทแรก บริษัทเดียว
 
         $validated = Validator::make($request->all(), [
-            'company_id' => 'required',
+            // 'company_id' => 'required', บริษัท กรณีใช้งานกับหลายบริษัท สามารสร้างบริษัทอื่น ๆ ได้
             'name' => 'required|min:2|max:255',
         ]);
 
@@ -70,7 +71,8 @@ class DepartmentController extends Controller
             $response = response()->json(['status' => false, 'error' => $validated->messages()], 422);
         } else {
             $department = Department::create([
-                'company_id' => $request->company_id,
+                // 'company_id' => $request->company_id,
+                'company_id' => $company_id,
                 'name' => $request->name,
                 'description' => $request->description
             ]);
@@ -78,7 +80,7 @@ class DepartmentController extends Controller
                 'department_main_id' => $dep_main_id,
                 'department_sub_id' => $department->id
             ]);
-            $response = new DepartmentResource($department);
+            $response = response()->json(['status' => true, 'data' => $department], 200);
         }
         return $response;
     }

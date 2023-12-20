@@ -11,7 +11,6 @@ import { SidebarComponent } from '../layout/sidebar/sidebar.component';
 
 import { AdminRoutingModule } from './admin-routing.module';
 import { HomeComponent } from './home/home.component';
-import { EmployeeComponent } from './employee/employee.component';
 import { DepartmentComponent } from './department/department.component';
 import { JobPositionComponent } from './job-position/job-position.component';
 import { RoleComponent } from './role/role.component';
@@ -26,13 +25,16 @@ import { ResetPasswordComponent } from './user-admin/reset-password/reset-passwo
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 
+// pipe
+import { PrettyPrintPipe } from 'src/app/pipe/pretty-print.pipe';
+
 
 
 @NgModule({
   declarations: [
     // ThaiDatePipe,
+    PrettyPrintPipe,
     HomeComponent,
-    EmployeeComponent,
     DepartmentComponent,
     JobPositionComponent,
     RoleComponent,

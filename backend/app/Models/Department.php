@@ -17,7 +17,8 @@ class Department extends Model
     ];
 
     protected $hidden = [
-        'updated_at'
+        'updated_at',
+        'deleleted_at'
     ];
 
     public function company(){
