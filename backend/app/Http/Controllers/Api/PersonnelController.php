@@ -45,6 +45,7 @@ class PersonnelController extends Controller
     {
         $validated = Validator::make($request->all(), [
             // 'department_id' => 'required',
+            'jobPosition_id' => 'required',
             'personnel_code' => 'required|min:2|max:255',
             'prename_id' => 'required',
             'firstname' => 'required|min:2|max:255',
@@ -75,6 +76,7 @@ class PersonnelController extends Controller
 
             $personnel = tbPersonnel::create([
                 'user_id' => $user->id,
+                'jobPosition_id' => $request->jobPosition_id,
                 'personnel_code' => $request->personnel_code,
                 'prename_id' => $request->prefix_id,
                 'firstname' => $request->firstname,
@@ -98,6 +100,7 @@ class PersonnelController extends Controller
     {
         $validated = Validator::make($request->all(), [
             // 'department_id' => 'required',
+            'jobPosition_id' => 'required',
             'personnel_code' => 'required|min:2|max:255',
             'prename_id' => 'required',
             'firstname' => 'required|min:2|max:255',
@@ -120,6 +123,7 @@ class PersonnelController extends Controller
             $update = tbPersonnel::where('id', $id);
             $update->update([
                 // 'user_id' => $user->id,
+                'jobPosition_id' => $request->jobPosition_id,
                 'personnel_code' => $request->personnel_code,
                 'prename_id' => $request->prefix_id,
                 'firstname' => $request->firstname,

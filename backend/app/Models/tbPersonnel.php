@@ -16,6 +16,7 @@ class tbPersonnel extends Model
     
     protected $fillable = [
         'user_id' , 
+        'jobPosition_id',
         'personnel_code',  // รหัสผ่านงาน
         'prename_id', 
         'firstname', 
