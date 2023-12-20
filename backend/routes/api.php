@@ -13,6 +13,7 @@ use App\Http\Controllers\Api\HomeMaker\RoomTypeController;
 use App\Http\Controllers\Api\PersonnelController;
 use App\Http\Controllers\PrenameController;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -88,7 +89,10 @@ Route::middleware('auth:sanctum')->group(function () {
 
 //Login เข้าสู่ระบบ สำหรับ Admin และ บุคลากร
 Route::post('login', [AuthController::class, 'login']);
+// Http::post('login', [AuthController::class, 'login']);
 // Route::post('loginadmin', [AuthAdminController::class, 'login']);
+
+// Http::withOptions(['version' => 2.0])->post('login', [AuthController::class, 'login']);
 
 // คำนำหน้าชื่อ
 Route::apiResource('prename', PrenameController::class);
