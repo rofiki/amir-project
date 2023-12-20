@@ -7,10 +7,10 @@ use App\Http\Controllers\Api\CompanyController;
 use App\Http\Controllers\Api\DepartmentController;
 use App\Http\Controllers\Api\JobPositionController;
 use App\Http\Controllers\Api\ProvinceController;
-use App\Http\Controllers\Api\EmployeeController;
 use App\Http\Controllers\Api\HomeMaker\HomemakerController;
 use App\Http\Controllers\Api\HomeMaker\RoomController;
 use App\Http\Controllers\Api\HomeMaker\RoomTypeController;
+use App\Http\Controllers\Api\PersonnelController;
 use App\Http\Controllers\PrenameController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -32,7 +32,7 @@ use Illuminate\Support\Facades\Route;
 
 ##### ระบบสิทธิ์ผู้ใช้งานระบบ #####
 Route::middleware('auth:sanctum')->group(function () {
-    Route::apiResource('employee', EmployeeController::class); // รอลบ
+    Route::apiResource('personnel', PersonnelController::class); // บุคลากร หรือ ผู้ดูแลแม่บ้าน
 
     // auth
     Route::prefix('auth')->group(function () {
@@ -64,7 +64,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     // Route::apiResource('admin', EmployeeController::class);
 
-    // employee
+    // personnel
     Route::post('register', [AuthController::class, 'register']); // ค่อยมาทำ เพราะมีเปลี่ยนแปลง
 });
 

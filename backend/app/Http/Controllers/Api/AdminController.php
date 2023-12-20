@@ -38,8 +38,6 @@ class AdminController extends Controller
             return new AdminResource($admin);
         }
         return response()->json(['message' => 'Not Found!'], 404);
-
-
     }
 
     public function showByCondition()
@@ -133,42 +131,8 @@ class AdminController extends Controller
             User::where('id', $uid)->delete();
             return response()->json([
                 'status' => true,
-                'test' => $uid,
-                'message' => 'Delete Success!', 200
-            ]);
+                'message' => 'Delete Success!'
+            ],200);
         }
     }
-
-        // ลบ แม่บ้าน
-        // public function zzzdestroy($id)
-        // {
-        //     $id = (int)$id;
-        //     if (!$id) {
-        //         return response()->json([
-        //             'status' => false,
-        //             'message' => 'Not Found!',
-        //             'log' => 1
-        //         ], 404);
-        //     }
-    
-        //     // 1 ลบแม่บ้าน
-        //     $item = tbHomemaker::where('id', $id)->get()->first();
-        //     $uid = $item['user_id'];
-    
-        //     if (!$item->delete()) {
-        //         return response()->json([
-        //             'status' => false,
-        //             'message' => 'Not Found!',
-        //             'log' => 2
-        //         ], 404);
-        //     } else {
-                
-        //         // 2 ลบ user
-        //         User::where('id', $uid)->delete();
-        //         return response()->json([
-        //             'status' => true,
-        //             'message' => 'Delete Success!', 200
-        //         ]);
-        //     }
-        // }
 }

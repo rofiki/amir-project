@@ -100,20 +100,6 @@ class AuthController extends Controller
             return response()->json([
                 'status' => true,
             ], 200);
-
-            // $status = Password::reset(
-            //     $request->only('password'),
-            //     function (User $user, string $password) {
-            //         $user->forceFill([
-            //             'password' => Hash::make($password)
-            //         ])->setRememberToken(Str::random(60));
-
-            //         $user->save();
-
-            //         event(new PasswordReset($user));
-            //     }
-            // );
-            // return $status;
         }
     }
 
