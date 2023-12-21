@@ -8,13 +8,26 @@ import { UserAdminComponent } from './user-admin/user-admin.component';
 import { UserAdminAddComponent } from './user-admin/add/add.component';
 import { UserAdminEditComponent } from './user-admin/edit/edit.component';
 import { ResetPasswordComponent } from './user-admin/reset-password/reset-password.component';
+import { PersonnelComponent } from './personnel/personnel.component';
+import { PersonnelAddComponent } from './personnel/personnel-add/personnel-add.component';
+import { PersonnelEditComponent } from './personnel/personnel-edit/personnel-edit.component';
 
 const routes: Routes = [
 
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
+
+  // แผนก
   { path: 'department', component: DepartmentComponent },
+
+  // ตำแหน่ง
   { path: 'jobposition', component: JobPositionComponent },
+
+  //บุคลากร
+  { path: 'personnel', component: PersonnelComponent },
+  { path: 'personnel/add', component: PersonnelAddComponent },
+  { path: 'personnel/edit/:id', component: PersonnelEditComponent },
+
   { path: 'role', component: RoleComponent },
 
   // useradmin

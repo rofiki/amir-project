@@ -27,6 +27,9 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 // pipe
 import { PrettyPrintPipe } from 'src/app/pipe/pretty-print.pipe';
+import { PersonnelComponent } from './personnel/personnel.component';
+import { PersonnelAddComponent } from './personnel/personnel-add/personnel-add.component';
+import { PersonnelEditComponent } from './personnel/personnel-edit/personnel-edit.component';
 
 
 
@@ -42,6 +45,9 @@ import { PrettyPrintPipe } from 'src/app/pipe/pretty-print.pipe';
     UserAdminEditComponent,
     UserAdminAddComponent,
     ResetPasswordComponent,
+    PersonnelComponent,
+    PersonnelAddComponent,
+    PersonnelEditComponent,
   ],
   imports: [
     CommonModule,
