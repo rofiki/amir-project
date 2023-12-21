@@ -45,16 +45,16 @@ class PersonnelController extends Controller
     {
         $validated = Validator::make($request->all(), [
             // 'department_id' => 'required',
-            'jobPosition_id' => 'required',
-            'personnel_code' => 'required|min:2|max:255',
-            'prename_id' => 'required',
-            'firstname' => 'required|min:2|max:255',
-            'lastname' => 'required|min:2|max:255',
+            'jobPosition' => 'required',
+            // 'personnel_code' => 'required|min:2|max:255',
+            'prename' => 'required',
+            'fname' => 'required|min:2|max:255',
+            'lname' => 'required|min:2|max:255',
             // 'nickname' => 'required|min:2|max:255',
             'gendar' => 'required',
             'date_of_birth' => 'required|min:2|max:255',
             'idcard' => 'required|min:2|max:255',
-            'date_of_sign' => 'required|min:2|max:255',
+            // 'date_of_sign' => 'required|min:2|max:255',
             'password' => 'required|min:4',
             'email' => 'required|max:255|email|unique:users,email',
             // 'date_of_resign' => 'required|min:2|max:255',
@@ -65,7 +65,7 @@ class PersonnelController extends Controller
         } else {
 
             $user = User::create([
-                'name' => $request->firstname . " " . $request->lastname,
+                'name' => $request->fname . " " . $request->lname,
                 'email' => $request->email,
                 'password' => Hash::make($request->password),
                 'remember_token' => Str::random(10),
@@ -76,18 +76,18 @@ class PersonnelController extends Controller
 
             $personnel = tbPersonnel::create([
                 'user_id' => $user->id,
-                'jobPosition_id' => $request->jobPosition_id,
+                'jobPosition_id' => $request->jobPosition,
                 'personnel_code' => $request->personnel_code,
-                'prename_id' => $request->prefix_id,
-                'firstname' => $request->firstname,
-                'lastname' => $request->lastname,
-                'nickname' => $request->nickname,
+                'prename_id' => $request->prename,
+                'firstname' => $request->fname,
+                'lastname' => $request->lname,
+                'nickname' => $request->nname,
                 'gendar' => $request->gendar,
                 'email' => $request->email,
                 'date_of_birth' => $request->date_of_birth,
                 'idcard' => $request->idcard,
                 'date_of_sign' => $request->date_of_sign,
-                'date_of_resign' => $request->date_of_resign,
+                'date_of_resign' => null,
                 'active' => $request->active,
             ]);
             $response = response()->json(['status' => true, 'data' => $personnel], 200);
@@ -172,4 +172,5 @@ class PersonnelController extends Controller
             ],200);
         }
     }
+
 }

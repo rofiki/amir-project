@@ -1,1 +1,54 @@
-<p>personnel works!</p>
+<div class="d-flex bg-content" id="wrapper">
+    <!-- Sidebar-->
+    <div class="shadow bg-body-tertiary " id="sidebar-wrapper">
+        <app-sidebar></app-sidebar>
+    </div>
+
+    <!-- Page content wrapper-->
+    <div id="page-content-wrapper">
+        <!-- Top navigation-->
+        <app-header></app-header>
+        <!-- Page content-->
+        <div class="container-fluid ps-md-5 pe-md-5">
+            <h1 class="mt-4">บุคลากร</h1>
+            <p>ระบบจัดการสิทธิ์ของบุคลากร            </p>
+
+            <div class="row border shadow-sm bg-body-tertiary p-md-3">
+                <div class="col-md-12">
+                    <div class="row border-bottom pt-1 pb-1">
+                        <div class="col-md-6 h5">รายชื่อบุคลากร</div>
+                        <div class="col-md-6 text-md-end">
+                            <a class="btn btn-primary btn-sm" href="javascript:void(0)" [routerLink]="[BASE_URL + '/admin/personnel/add']">เพิ่มแม่บ้าน</a></div>
+                    </div>
+                </div>
+                <div class="col-md-12 pt-2">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <table class="table table-striped border-top mt-1" *ngIf="itemRef && itemRef.data">
+                                <thead>
+                                    <tr>
+                                        <th>ชื่อ-นามสกุล</th>
+                                        <th>xxxxx</th>
+                                    </tr>
+                                </thead>
+                                <div *ngIf="(itemRef.meta.total == 0); then showDataZero else showData"></div>
+                                <ng-template #showDataZero><tbody><tr><td colspan="25"><p class="text-center p-2"> - ไม่พบข้อมูล - </p></td></tr></tbody></ng-template>
+                                <ng-template #showData>
+                                <tbody >
+                                    <tr *ngIf="loadingData"><td colspan="10"><i class="fa-solid fa-spinner fa-spin"></i> Loading...</td></tr>
+                                    <tr *ngFor="let element of itemRef.data">
+                                        <td class="w-auto">
+                                            <a [routerLink]="[BASE_URL + '/admin/personnel/edit', element.id]" class="link-underline link-underline-opacity-0">{{element.name}}{{element.firstname}} {{element.lastname}}</a>
+                                        </td>
+                                        <td class="w-auto"></td>
+                                    </tr>
+                                </tbody>
+                                </ng-template>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<app-footer></app-footer>

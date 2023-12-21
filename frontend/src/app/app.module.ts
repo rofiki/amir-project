@@ -13,6 +13,11 @@ import { Bootstrap5Module } from 'src/app/modules/bootstrap5/bootstrap5.module';
 import { ThaiDatePipe } from './pipe/thaidate.pipe';
 import { LogoutComponent } from './logout/logout.component';
 import { NotFoundComponent } from './not-found/not-found.component';
+// import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+// import { ToastrModule } from 'ngx-toastr';
+// import { TooltipModule } from 'ngx-bootstrap/tooltip';
+
 
 
 @NgModule({
@@ -24,6 +29,7 @@ import { NotFoundComponent } from './not-found/not-found.component';
     FooterComponent,
     LogoutComponent,
     NotFoundComponent,
+
     
   ],
   imports: [
@@ -31,8 +37,10 @@ import { NotFoundComponent } from './not-found/not-found.component';
     AppRoutingModule,
     HttpClientModule,
     ReactiveFormsModule,
-    Bootstrap5Module, // all ngx-bootstrap module
+    Bootstrap5Module,
+    // BrowserAnimationsModule, // all ngx-bootstrap module
 
+    // ToastrModule.forRoot(), TooltipModule.forRoot(),
   ],
   providers: [],
   bootstrap: [AppComponent]

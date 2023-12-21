@@ -28,12 +28,14 @@ class tbPersonnel extends Model
         'idcard', 
         'date_of_sign', 
         'date_of_resign', 
+        
         'active', 
     ];
 
     protected $hidden = [
         'idcard',
-        'user_id'
+        'user_id',
+        'deleted_at',
     ];
 
 }

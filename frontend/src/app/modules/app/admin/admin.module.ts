@@ -1,8 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 
-// import { Bootstrap5Module } from 'src/app/modules/bootstrap5/bootstrap5.module';
-
 // ระบบ กำหนดสิทธิ์ใช้งานระบบของเจ้าหน้าที่
 // layout
 import { HeaderComponent } from '../layout/header/header.component';
@@ -31,6 +29,9 @@ import { PersonnelComponent } from './personnel/personnel.component';
 import { PersonnelAddComponent } from './personnel/personnel-add/personnel-add.component';
 import { PersonnelEditComponent } from './personnel/personnel-edit/personnel-edit.component';
 
+// ngx-bootstrap
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+
 
 
 @NgModule({
@@ -48,6 +49,7 @@ import { PersonnelEditComponent } from './personnel/personnel-edit/personnel-edi
     PersonnelComponent,
     PersonnelAddComponent,
     PersonnelEditComponent,
+    
   ],
   imports: [
     CommonModule,
@@ -61,7 +63,10 @@ import { PersonnelEditComponent } from './personnel/personnel-edit/personnel-edi
     HeaderComponent,
     FooterComponent,
     SidebarComponent,
+
+    // BrowserAnimationsModule,
+    BsDatepickerModule.forRoot(),
   ],
-  providers: []
+  providers: [DatePipe]
 })
 export class AdminModule { }
