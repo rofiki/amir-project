@@ -50,7 +50,7 @@
                     <div class="border-bottom mb-2 h5"><strong>รายการแผนก</strong></div>
 
                     <div class="row mt-3" *ngIf="itemRef && itemRef.data">
-                        <ul class="list-group list-group-flush">
+                        <!-- <ul class="list-group list-group-flush">
                             <li class="list-group-item"><a href="/">First</a></li>
                             <li class="list-group-item"><a href="/">Second</a>
                           
@@ -60,11 +60,20 @@
                               </ul>
                             </li>
                             <li class="list-group-item"><a href="/">Third</a></li>
-                          </ul>
+                          </ul> -->
 
 
-                          {{itemRef | json}}
+                          <!-- {{itemRef.data | json}} -->
+
+                          <div >
+                            <ul class="list-group list-group-flush" *ngFor="let element of itemRef.data">
+                                <li class="list-group-item"><a href="/">{{element.name}}</a></li>
+                              </ul>
+                          </div>
+
+
                     </div>
+
 
                     <!-- <div class="row">
                         <div class="col-md-12">

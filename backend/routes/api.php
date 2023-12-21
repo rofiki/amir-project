@@ -55,6 +55,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     // tbDepartment แผนก
     Route::apiResource('department', DepartmentController::class);
+    Route::get('/departmenttree', [DepartmentController::class, 'showDepartmentTree']);
 
     // tbJobPosition ตำแหน่งงาน
     Route::apiResource('jobposition', JobPositionController::class);

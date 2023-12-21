@@ -13,7 +13,44 @@ use Illuminate\Support\Facades\Validator;
 class DepartmentController extends Controller
 {
 
-    public function index(Request $request) // show all
+    public function aindex(Request $request) // show all
+    {
+        $departmentSub = new DepartmentSub;
+        $db = new Department;
+
+        $limit = $request->input('limit') ?? 10;
+        $search = $request->input('search');
+
+        // แผนกหลักขึ้นก่อน
+        $dep_sub = $departmentSub
+            ->leftJoin('tbDepartments', 'tbDepartmentSub.department_sub_id', '=', 'tbDepartments.id')
+            ->where('department_main_id', '=', '0')->paginate((int)$limit);
+
+        //แทรกแผนกย่อย
+        foreach ($dep_sub as $key => $value) {
+            $items[$key] = $value;
+            $items[$key]['department_sub'] = $this->getSub($value->id);
+        }
+        return new DepartmentCollection($items);
+    }
+
+    public function index(Request $request)
+    {
+        
+        $limit = $request->input('limit') ?? 25;
+        $search = $request->input('search');
+
+        $items = Department::where('name', 'Like', '%' . $search . '%')
+            ->whereNull('deleted_at')
+            ->paginate((int)$limit);
+        try {
+            return new DepartmentCollection($items); 
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Bad request'], 400);
+        }
+    }
+
+    public function showDepartmentTree(Request $request) // show all
     {
         $departmentSub = new DepartmentSub;
         $db = new Department;
