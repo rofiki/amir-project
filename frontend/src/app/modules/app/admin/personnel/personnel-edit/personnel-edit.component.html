@@ -1,1 +1,220 @@
-<p>personnel-edit works!</p>
+<div class="d-flex bg-content" id="wrapper">
+    <!-- Sidebar-->
+    <div class="shadow bg-body-tertiary " id="sidebar-wrapper">
+        <app-sidebar></app-sidebar>
+    </div>
+
+    <!-- Page content wrapper-->
+    <div id="page-content-wrapper">
+        <!-- Top navigation-->
+        <app-header></app-header>
+        <!-- Page content-->
+        <div class="container-fluid ps-md-5 pe-md-5 pb-5">
+            <h1 class="mt-4">บุคลากร</h1>
+            <p>ระบบจัดการสิทธิ์ของบุคลากร            </p>
+
+            <div class="row border shadow-sm bg-body-tertiary p-md-3">
+                <div class="col-md-12">
+                    <div class="row border-bottom pt-1 pb-1">
+                        <div class="col-md-6 h5">แก้ไขบุคลากร</div>
+                    </div>
+                    <div class="col-md-12 pt-2">
+
+                        <form [formGroup]="frm" (ngSubmit)="onSubmit()" >
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <div class="mb-3">
+                                                <label for="prename" class="form-label">คำนำหน้า</label>
+                                                <select *ngIf="prenameRef && prenameRef.data" name="prename" id="prename" class="form-control" formControlName="prename"
+                                                [class.is-invalid]="(frm.get('prename')?.invalid && (frm.get('prename')?.dirty || frm.get('prename')?.touched))"
+                                                [class.is-valid]="(frm.get('prename')?.valid && (frm.get('prename')?.dirty || frm.get('prename')?.touched))"
+                                                >
+                                                    <option value="">- เลือก -</option>
+                                                    <ng-container *ngFor="let element of prenameRef.data">
+                                                        <option value="{{ element.id }}"> {{ element.name }}</option>
+                                                    </ng-container>
+                                                </select>     
+                    
+                                                <div *ngIf="frm.get('prename')?.invalid && (frm.get('prename')?.dirty || frm.get('prename')?.touched)">
+                                                    <small class="text-danger m-2" *ngIf="frm.get('prename')?.hasError('required')">กรุณาเลือกคำนำหน้า</small>
+                                                </div>  
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="mb-3">
+                                                <label for="fname" class="form-label">ชื่อ</label>
+                                                <input type="text" class="form-control" id="fname" placeholder="ชื่อ" maxlength="50"
+                                                formControlName="fname"
+                                                [class.is-invalid]="(frm.get('fname')?.invalid && (frm.get('fname')?.dirty || frm.get('fname')?.touched))"
+                                                [class.is-valid]="(frm.get('fname')?.valid && (frm.get('fname')?.dirty || frm.get('fname')?.touched))"
+                                                >
+                                                <div *ngIf="frm.get('fname')?.invalid && (frm.get('fname')?.dirty || frm.get('fname')?.touched)">
+                                                    <small class="text-danger m-2" *ngIf="frm.get('fname')?.hasError('required')">กรุณากรอกชื่อ</small>
+                                                </div> 
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="mb-3">
+                                                <label for="lname" class="form-label">นามสกุล</label>
+                                                <input type="text" class="form-control" id="lname" placeholder="นามสกุล" maxlength="50"
+                                                formControlName="lname"
+                                                [class.is-invalid]="(frm.get('lname')?.invalid && (frm.get('lname')?.dirty || frm.get('lname')?.touched))"
+                                                [class.is-valid]="(frm.get('lname')?.valid && (frm.get('lname')?.dirty || frm.get('lname')?.touched))"
+                                                >
+                                                <div *ngIf="frm.get('lname')?.invalid && (frm.get('lname')?.dirty || frm.get('lname')?.touched)">
+                                                    <small class="text-danger m-2" *ngIf="frm.get('lname')?.hasError('required')">กรุณากรอกนามสกุล</small>
+                                                </div> 
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="mb-3">
+                                                <label for="nname" class="form-label">ชื่อเล่น</label>
+                                                <input type="text" class="form-control" id="nname" maxlength="50" placeholder="ชื่อเล่น"
+                                                formControlName="nname"
+                                                [class.is-invalid]="(frm.get('nname')?.invalid && (frm.get('nname')?.dirty || frm.get('nname')?.touched))"
+                                                [class.is-valid]="(frm.get('nname')?.valid && (frm.get('nname')?.dirty || frm.get('nname')?.touched))"
+                                                >
+                                                <div *ngIf="frm.get('nname')?.invalid && (frm.get('nname')?.dirty || frm.get('nname')?.touched)">
+                                                    <small class="text-danger m-2" *ngIf="frm.get('nname')?.hasError('required')">กรุณากรอกชื่อเล่น</small>
+                                                </div> 
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-8">
+                                            <div class="mb-3">
+                                                <label for="address" class="form-label">ที่อยู่</label>
+                                                <input type="text" class="form-control" id="address" placeholder="ที่อยู่" maxlength="255"
+                                                formControlName="address"
+                                                [class.is-invalid]="(frm.get('address')?.invalid && (frm.get('address')?.dirty || frm.get('address')?.touched))"
+                                                [class.is-valid]="(frm.get('address')?.valid && (frm.get('address')?.dirty || frm.get('address')?.touched))"
+                                                >
+                                                <div *ngIf="frm.get('address')?.invalid && (frm.get('address')?.dirty || frm.get('address')?.touched)">
+                                                    <small class="text-danger m-2" *ngIf="frm.get('address')?.hasError('required')">กรุณากรอกที่อยู่</small>
+                                                </div> 
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="mb-3">
+                                                <label for="date_of_birth" class="form-label">วัน/เดือน/ปี เกิด</label>
+                                                <input type="date_of_birth" class="form-control" id="date_of_birth" placeholder="วัน/เดือน/ปี เกิด" bsDatepicker
+                                                formControlName="date_of_birth"
+                                                [class.is-invalid]="(frm.get('date_of_birth')?.invalid && (frm.get('date_of_birth')?.dirty || frm.get('date_of_birth')?.touched))"
+                                                [class.is-valid]="(frm.get('date_of_birth')?.valid && (frm.get('date_of_birth')?.dirty || frm.get('date_of_birth')?.touched))"
+                                                >
+                                                <div *ngIf="frm.get('date_of_birth')?.invalid && (frm.get('date_of_birth')?.dirty || frm.get('date_of_birth')?.touched)">
+                                                    <div><small class="text-danger m-2" *ngIf="frm.get('idcard')?.hasError('required')">กรุณากรอก วัน/เดือน/ปี เกิด</small></div>
+                                                </div> 
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="mb-3">
+                                                <label for="idcard" class="form-label">เลขที่บัตรประชาชน</label>
+                                                <input type="idcard" class="form-control" id="idcard" placeholder="เลขที่บัตรประชาชน"
+                                                formControlName="idcard" 
+                                                [class.is-invalid]="(frm.get('idcard')?.invalid && (frm.get('idcard')?.dirty || frm.get('idcard')?.touched))"
+                                                [class.is-valid]="(frm.get('idcard')?.valid && (frm.get('idcard')?.dirty || frm.get('idcard')?.touched))"
+                                                >
+                                                <div *ngIf="frm.get('idcard')?.invalid && (frm.get('idcard')?.dirty || frm.get('idcard')?.touched)">
+                                                    <div><small class="text-danger m-2" *ngIf="frm.get('idcard')?.hasError('required')">กรุณากรอกเลขที่บัตรประชาชน</small></div>
+                                                    <div><small class="text-danger m-2" *ngIf="frm.get('idcard')?.hasError('pattern')">กรอกเฉพาะตัวเลขเท่านั้น</small></div>
+                                                    <div><small class="text-danger m-2" *ngIf="frm.get('idcard')?.hasError('email')">เลขที่บัตรประชาชนต้องมี 13 หลัก</small></div>
+                                                </div> 
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="mb-3">
+                                                <label for="email" class="form-label">อีเมล์</label>
+                                                <input type="email" class="form-control" id="email" placeholder="อีเมล์"
+                                                formControlName="email"
+                                                [class.is-invalid]="(frm.get('email')?.invalid && (frm.get('email')?.dirty || frm.get('email')?.touched))"
+                                                [class.is-valid]="(frm.get('email')?.valid && (frm.get('email')?.dirty || frm.get('email')?.touched))"
+                                                >
+                                                <div *ngIf="frm.get('email')?.invalid && (frm.get('email')?.dirty || frm.get('email')?.touched)">
+                                                    <div><small class="text-danger m-2" *ngIf="frm.get('email')?.hasError('required')">กรุณากรอกอีเมล์</small></div>
+                                                    <div><small class="text-danger m-2" *ngIf="frm.get('email')?.hasError('email')">รูปแบบอีเมล์ไม่ถูกต้อง</small></div>
+                                                </div> 
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="mb-3">
+                                                <label for="phone" class="form-label">เบอร์โทรศัพท์</label>
+                                                <input type="text" class="form-control" id="phone" placeholder="เบอร์โทรศัพท์" maxlength="10"
+                                                formControlName="phone"
+                                                [class.is-invalid]="(frm.get('phone')?.invalid && (frm.get('phone')?.dirty || frm.get('phone')?.touched))"
+                                                [class.is-valid]="(frm.get('phone')?.valid && (frm.get('phone')?.dirty || frm.get('phone')?.touched))"
+                                                >
+                                                <div *ngIf="frm.get('phone')?.invalid && (frm.get('phone')?.dirty || frm.get('phone')?.touched)">
+                                                    <div><small class="text-danger m-2" *ngIf="frm.get('phone')?.hasError('pattern')">กรุณากรอกเฉพาะตัวเลข</small></div>
+                                                    <div><small class="text-danger m-2" *ngIf="frm.get('phone')?.hasError('minLength')">เบอร์โทรศัพท์ต้องไม่น้อยกว่า 10 หลัก</small></div>
+                                                </div> 
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="mb-3">
+                                                <label for="jobPosition" class="form-label">ตำแหน่ง</label>
+                                                <input type="text" class="form-control" id="jobPosition" placeholder="ตำแหน่ง" maxlength="10"
+                                                formControlName="jobPosition"
+                                                [class.is-invalid]="(frm.get('jobPosition')?.invalid && (frm.get('jobPosition')?.dirty || frm.get('jobPosition')?.touched))"
+                                                [class.is-valid]="(frm.get('jobPosition')?.valid && (frm.get('jobPosition')?.dirty || frm.get('jobPosition')?.touched))"
+                                                >
+                                                <div *ngIf="frm.get('jobPosition')?.invalid && (frm.get('jobPosition')?.dirty || frm.get('jobPosition')?.touched)">
+                                                    <div><small class="text-danger m-2" *ngIf="frm.get('jobPosition')?.hasError('required')">กรุณาเลือกตำแหน่ง</small></div>
+                                                </div> 
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="mb-3">
+                                                <label for="active" class="form-label">Active</label>
+                                                <select name="active" id="active" class="form-control" formControlName="active"
+                                                [class.is-valid]="(frm.get('active')?.valid && (frm.get('active')?.dirty || frm.get('active')?.touched))"
+                                                >
+                                                    <option value="Active" selected>Active</option>
+                                                    <option value="Deactive">Deactive</option>
+                                                </select>  
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="mb-3">
+                                                <button type="submit" class="btn btn-primary btn-sm me-1 ps-3 pe-3" [disabled]="frm.invalid" *ngIf="!isProcess">บันทึก</button>
+                                            <button type="submit" class="btn btn-primary btn-sm me-1 ps-3 pe-3" [disabled]="true"  *ngIf="isProcess">
+                                                <i class="fa-solid fa-spinner fa-spin"></i>
+                                            </button>
+                                                <a class="btn btn-secondary btn-sm ps-3 pe-3"
+                                                    [routerLink]="[BASE_URL + '/homemaker/admin/homemaker']">ยกเลิก</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </form>
+                    <div>
+                        <div class="col-md-12">
+                            <div class="row border-bottom pt-3">
+                                <div class="col-md-6 h6">ข้อมูลสำหรับล๊อกอินเข้าระบบ</div>
+                            </div>
+                        </div>
+                    </div>                        
+                    </div>
+                </div>
+            </div>
+        </div>
+        <app-footer></app-footer>
