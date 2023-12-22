@@ -47,7 +47,7 @@ export class PersonnelService {
   }
 
   public update(params: {}, id:any, headers:any): Observable<any> {
-    return this.http.put(this.apiUrl + '/homemaker/' + id, params, {
+    return this.http.put(this.apiUrl + '/' + id, params, {
       headers: {
         'content-type': 'application/json',
         'Authorization': 'Bearer ' + headers

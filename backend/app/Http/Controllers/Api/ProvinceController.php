@@ -13,14 +13,10 @@ class ProvinceController extends Controller
 {
     public function index(Request $request) // show all
     {
-        $db = new Province;
-        $limit = $request->input('limit') ?? 25;
-        $search = $request->input('search');
-
-        $items = $db->paginate((int)$limit);
-
         try {
-            return new ProvinceCollection($items);
+            // return new ProvinceCollection($items);
+            $items = Province::get();
+            return response()->json(['status' => true, 'data' => $items], 200);
         } catch (\Exception $e) {
             return $this->returnError($e->getMessage());
         }
@@ -33,6 +29,7 @@ class ProvinceController extends Controller
         )->get();
 
         $province['amphur'] = $amphur;
-        return new ProvinceResource($province);
+        // return new ProvinceResource($province);
+        return response()->json(['status' => true, 'data' => $province], 200);
     }
 }

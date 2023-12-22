@@ -58,6 +58,11 @@ class PersonnelController extends Controller
             'password' => 'required|min:4',
             'email' => 'required|max:255|email|unique:users,email',
             // 'date_of_resign' => 'required|min:2|max:255',
+
+            'amphur' => 'required',
+            'province' => 'required',
+            'postCode' => 'required|min:5',
+            'phone' => 'required|min:10',
         ]);
         
         if ($validated->fails()) {
@@ -84,6 +89,13 @@ class PersonnelController extends Controller
                 'nickname' => $request->nname,
                 'gendar' => $request->gendar,
                 'email' => $request->email,
+
+                'address' => $request->address,
+                'amphur_id' => $request->amphur,
+                'province_id' => $request->province,
+                'postCode' => $request->postCode,
+                'phoneNunber' => $request->phone,
+
                 'date_of_birth' => $request->date_of_birth,
                 'idcard' => $request->idcard,
                 'date_of_sign' => $request->date_of_sign,
@@ -100,17 +112,22 @@ class PersonnelController extends Controller
     {
         $validated = Validator::make($request->all(), [
             // 'department_id' => 'required',
-            'jobPosition_id' => 'required',
-            'personnel_code' => 'required|min:2|max:255',
-            'prename_id' => 'required',
-            'firstname' => 'required|min:2|max:255',
-            'lastname' => 'required|min:2|max:255',
+            // 'department_id' => 'required',
+            'jobPosition' => 'required',
+            // 'personnel_code' => 'required|min:2|max:255',
+            'prename' => 'required',
+            'fname' => 'required|min:2|max:255',
+            'lname' => 'required|min:2|max:255',
             // 'nickname' => 'required|min:2|max:255',
             'gendar' => 'required',
             'date_of_birth' => 'required|min:2|max:255',
             'idcard' => 'required|min:2|max:255',
-            'date_of_sign' => 'required|min:2|max:255',
-            // 'date_of_resign' => 'required|min:2|max:255',
+            // 'date_of_sign' => 'required|min:2|max:255',
+
+            'amphur' => 'required',
+            'province' => 'required',
+            'postCode' => 'required|min:5',
+            'phone' => 'required|min:10',
         ]);
 
         if ($validated->fails()) {
@@ -122,21 +139,27 @@ class PersonnelController extends Controller
         } else {
             $update = tbPersonnel::where('id', $id);
             $update->update([
-                // 'user_id' => $user->id,
-                'jobPosition_id' => $request->jobPosition_id,
+                'jobPosition_id' => $request->jobPosition,
                 'personnel_code' => $request->personnel_code,
-                'prename_id' => $request->prefix_id,
-                'firstname' => $request->firstname,
-                'lastname' => $request->lastname,
-                'nickname' => $request->nickname,
+                'prename_id' => $request->prename,
+                'firstname' => $request->fname,
+                'lastname' => $request->lname,
+                'nickname' => $request->nname,
                 'gendar' => $request->gendar,
                 // 'email' => $request->email,
                 'date_of_birth' => $request->date_of_birth,
                 'idcard' => $request->idcard,
                 'date_of_sign' => $request->date_of_sign,
-                'date_of_resign' => $request->date_of_resign,
+                'date_of_resign' => null,
                 'active' => $request->active,
+
+                'address' => $request->address,
+                'amphur_id' => $request->amphur,
+                'province_id' => $request->province,
+                'postCode' => $request->postCode,
+                'phoneNumber' => $request->phone,
             ]);
+
             return response()->json([
                 'status' => true,
                 'data' => $update->get(),

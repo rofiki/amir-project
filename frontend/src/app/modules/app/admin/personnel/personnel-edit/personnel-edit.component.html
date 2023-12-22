@@ -16,11 +16,11 @@
             <div class="row border shadow-sm bg-body-tertiary p-md-3">
                 <div class="col-md-12">
                     <div class="row border-bottom pt-1 pb-1">
-                        <div class="col-md-6 h5">แก้ไขบุคลากร</div>
+                        <div class="col-md-6 h5">แก้ไขบุคลากร {{loadingPage}}</div>
                     </div>
                     <div class="col-md-12 pt-2">
 
-                        <form [formGroup]="frm" (ngSubmit)="onSubmit()" >
+                        <form [formGroup]="frm" (ngSubmit)="onSubmit()"  *ngIf="itemRef">
 
                             <div class="row">
                                 <div class="col-md-12">
@@ -29,6 +29,7 @@
                                             <div class="mb-3">
                                                 <label for="prename" class="form-label">คำนำหน้า</label>
                                                 <select *ngIf="prenameRef && prenameRef.data" name="prename" id="prename" class="form-control" formControlName="prename"
+                                                [(ngModel)]="itemRef.prename_id"
                                                 [class.is-invalid]="(frm.get('prename')?.invalid && (frm.get('prename')?.dirty || frm.get('prename')?.touched))"
                                                 [class.is-valid]="(frm.get('prename')?.valid && (frm.get('prename')?.dirty || frm.get('prename')?.touched))"
                                                 >
@@ -47,7 +48,7 @@
                                             <div class="mb-3">
                                                 <label for="fname" class="form-label">ชื่อ</label>
                                                 <input type="text" class="form-control" id="fname" placeholder="ชื่อ" maxlength="50"
-                                                formControlName="fname"
+                                                formControlName="fname" [(ngModel)]="itemRef.firstname"
                                                 [class.is-invalid]="(frm.get('fname')?.invalid && (frm.get('fname')?.dirty || frm.get('fname')?.touched))"
                                                 [class.is-valid]="(frm.get('fname')?.valid && (frm.get('fname')?.dirty || frm.get('fname')?.touched))"
                                                 >
@@ -60,7 +61,7 @@
                                             <div class="mb-3">
                                                 <label for="lname" class="form-label">นามสกุล</label>
                                                 <input type="text" class="form-control" id="lname" placeholder="นามสกุล" maxlength="50"
-                                                formControlName="lname"
+                                                formControlName="lname" [(ngModel)]="itemRef.lastname"
                                                 [class.is-invalid]="(frm.get('lname')?.invalid && (frm.get('lname')?.dirty || frm.get('lname')?.touched))"
                                                 [class.is-valid]="(frm.get('lname')?.valid && (frm.get('lname')?.dirty || frm.get('lname')?.touched))"
                                                 >
@@ -73,7 +74,7 @@
                                             <div class="mb-3">
                                                 <label for="nname" class="form-label">ชื่อเล่น</label>
                                                 <input type="text" class="form-control" id="nname" maxlength="50" placeholder="ชื่อเล่น"
-                                                formControlName="nname"
+                                                formControlName="nname" [(ngModel)]="itemRef.nickname"
                                                 [class.is-invalid]="(frm.get('nname')?.invalid && (frm.get('nname')?.dirty || frm.get('nname')?.touched))"
                                                 [class.is-valid]="(frm.get('nname')?.valid && (frm.get('nname')?.dirty || frm.get('nname')?.touched))"
                                                 >
@@ -86,11 +87,11 @@
                                 </div>
                                 <div class="col-md-12">
                                     <div class="row">
-                                        <div class="col-md-8">
+                                        <div class="col-md-6">
                                             <div class="mb-3">
                                                 <label for="address" class="form-label">ที่อยู่</label>
                                                 <input type="text" class="form-control" id="address" placeholder="ที่อยู่" maxlength="255"
-                                                formControlName="address"
+                                                formControlName="address" [(ngModel)]="itemRef.address"
                                                 [class.is-invalid]="(frm.get('address')?.invalid && (frm.get('address')?.dirty || frm.get('address')?.touched))"
                                                 [class.is-valid]="(frm.get('address')?.valid && (frm.get('address')?.dirty || frm.get('address')?.touched))"
                                                 >
@@ -99,7 +100,64 @@
                                                 </div> 
                                             </div>
                                         </div>
-                                        <div class="col-md-4">
+                                        <div class="col-md-2">
+                                            <div class="mb-3">
+                                                <label for="province" class="form-label">จังหวัด</label>
+                                                <select *ngIf="provinceRef && provinceRef.data" name="province" id="province" class="form-control" formControlName="province"
+                                                [(ngModel)]="itemRef.province_id" (ngModelChange)="_change($event)"
+                                                [class.is-invalid]="(frm.get('province')?.invalid && (frm.get('province')?.dirty || frm.get('province')?.touched))"
+                                                [class.is-valid]="(frm.get('province')?.valid && (frm.get('province')?.dirty || frm.get('province')?.touched))"
+                                                >
+                                                    <option value="">- เลือก -</option>
+                                                    <ng-container *ngFor="let element of provinceRef.data">
+                                                        <option value="{{ element.province_id }}"> {{ element.province_name }}</option>
+                                                    </ng-container>
+                                                </select>     
+                    
+                                                <div *ngIf="frm.get('province')?.invalid && (frm.get('province')?.dirty || frm.get('province')?.touched)">
+                                                    <small class="text-danger m-2" *ngIf="frm.get('province')?.hasError('required')">กรุณาเลือกจังหวัด</small>
+                                                </div>  
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="mb-3">
+                                                <label for="amphur" class="form-label">อำเภอ</label>
+                                                <select *ngIf="amphurRef && amphurRef.data.amphur" name="amphur" id="amphur" class="form-control" formControlName="amphur"
+                                                [(ngModel)]="itemRef.amphur_id"
+                                                [class.is-invalid]="(frm.get('amphur')?.invalid && (frm.get('amphur')?.dirty || frm.get('amphur')?.touched))"
+                                                [class.is-valid]="(frm.get('amphur')?.valid && (frm.get('amphur')?.dirty || frm.get('amphur')?.touched))"
+                                                >
+                                                    <!-- <option value="">- เลือก -</option> -->
+                                                    <ng-container *ngFor="let element of amphurRef.data.amphur">
+                                                        <option value="{{ element.amphur_id }}"> {{ element.amphur_name }}</option>
+                                                    </ng-container>
+                                                </select>     
+                    
+                                                <div *ngIf="frm.get('amphur')?.invalid && (frm.get('amphur')?.dirty || frm.get('amphur')?.touched)">
+                                                    <small class="text-danger m-2" *ngIf="frm.get('amphur')?.hasError('required')">กรุณาเลือกอำเภอ</small>
+                                                </div>  
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="mb-3">
+                                                <label for="postCode" class="form-label">รหัสไปรษณีย์</label>
+                                                <input type="text" class="form-control" id="postCode" placeholder="รหัสไปรษณีย์" maxlength="5"
+                                                formControlName="postCode" [(ngModel)]="itemRef.postCode"
+                                                [class.is-invalid]="(frm.get('postCode')?.invalid && (frm.get('postCode')?.dirty || frm.get('postCode')?.touched))"
+                                                [class.is-valid]="(frm.get('postCode')?.valid && (frm.get('postCode')?.dirty || frm.get('postCode')?.touched))"
+                                                >
+                                                <div *ngIf="frm.get('postCode')?.invalid && (frm.get('postCode')?.dirty || frm.get('postCode')?.touched)">
+                                                    <div><small class="text-danger m-2" *ngIf="frm.get('postCode')?.hasError('required')">กรุณากรอกรหัสไปรษณีย์</small></div>
+                                                    <div><small class="text-danger m-2" *ngIf="frm.get('postCode')?.hasError('pattern')">กรุณากรอกเฉพาะตัวเลข</small></div>
+                                                    <div><small class="text-danger m-2" *ngIf="frm.get('postCode')?.errors?.['minlength']">รหัสไปรษณีย์ต้อง 5 หลัก</small></div>
+                                                </div> 
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-3">
                                             <div class="mb-3">
                                                 <label for="date_of_birth" class="form-label">วัน/เดือน/ปี เกิด</label>
                                                 <input type="date_of_birth" class="form-control" id="date_of_birth" placeholder="วัน/เดือน/ปี เกิด" bsDatepicker
@@ -112,30 +170,26 @@
                                                 </div> 
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="row">
-                                        <div class="col-md-4">
+                                        <div class="col-md-3">
                                             <div class="mb-3">
                                                 <label for="idcard" class="form-label">เลขที่บัตรประชาชน</label>
                                                 <input type="idcard" class="form-control" id="idcard" placeholder="เลขที่บัตรประชาชน"
-                                                formControlName="idcard" 
+                                                formControlName="idcard" [(ngModel)]="itemRef.idcard"
                                                 [class.is-invalid]="(frm.get('idcard')?.invalid && (frm.get('idcard')?.dirty || frm.get('idcard')?.touched))"
                                                 [class.is-valid]="(frm.get('idcard')?.valid && (frm.get('idcard')?.dirty || frm.get('idcard')?.touched))"
                                                 >
                                                 <div *ngIf="frm.get('idcard')?.invalid && (frm.get('idcard')?.dirty || frm.get('idcard')?.touched)">
                                                     <div><small class="text-danger m-2" *ngIf="frm.get('idcard')?.hasError('required')">กรุณากรอกเลขที่บัตรประชาชน</small></div>
                                                     <div><small class="text-danger m-2" *ngIf="frm.get('idcard')?.hasError('pattern')">กรอกเฉพาะตัวเลขเท่านั้น</small></div>
-                                                    <div><small class="text-danger m-2" *ngIf="frm.get('idcard')?.hasError('email')">เลขที่บัตรประชาชนต้องมี 13 หลัก</small></div>
+                                                    <div><small class="text-danger m-2" *ngIf="frm.get('idcard')?.errors?.['minlength']">เลขที่บัตรประชาชนต้องมี 13 หลัก</small></div>
                                                 </div> 
                                             </div>
                                         </div>
-                                        <div class="col-md-4">
+                                        <div class="col-md-3">
                                             <div class="mb-3">
                                                 <label for="email" class="form-label">อีเมล์</label>
                                                 <input type="email" class="form-control" id="email" placeholder="อีเมล์"
-                                                formControlName="email"
+                                                formControlName="email" [(ngModel)]="itemRef.email"
                                                 [class.is-invalid]="(frm.get('email')?.invalid && (frm.get('email')?.dirty || frm.get('email')?.touched))"
                                                 [class.is-valid]="(frm.get('email')?.valid && (frm.get('email')?.dirty || frm.get('email')?.touched))"
                                                 >
@@ -145,17 +199,18 @@
                                                 </div> 
                                             </div>
                                         </div>
-                                        <div class="col-md-4">
+                                        <div class="col-md-3">
                                             <div class="mb-3">
                                                 <label for="phone" class="form-label">เบอร์โทรศัพท์</label>
                                                 <input type="text" class="form-control" id="phone" placeholder="เบอร์โทรศัพท์" maxlength="10"
-                                                formControlName="phone"
+                                                formControlName="phone" [(ngModel)]="itemRef.phoneNumber"
                                                 [class.is-invalid]="(frm.get('phone')?.invalid && (frm.get('phone')?.dirty || frm.get('phone')?.touched))"
                                                 [class.is-valid]="(frm.get('phone')?.valid && (frm.get('phone')?.dirty || frm.get('phone')?.touched))"
                                                 >
                                                 <div *ngIf="frm.get('phone')?.invalid && (frm.get('phone')?.dirty || frm.get('phone')?.touched)">
                                                     <div><small class="text-danger m-2" *ngIf="frm.get('phone')?.hasError('pattern')">กรุณากรอกเฉพาะตัวเลข</small></div>
-                                                    <div><small class="text-danger m-2" *ngIf="frm.get('phone')?.hasError('minLength')">เบอร์โทรศัพท์ต้องไม่น้อยกว่า 10 หลัก</small></div>
+                                                    <div><small class="text-danger m-2" *ngIf="frm.get('phone')?.errors?.['minlength']">เบอร์โทรศัพท์ต้องไม่น้อยกว่า 10 หลัก</small></div>
+                                                    <div><small class="text-danger m-2" *ngIf="frm.get('phone')?.hasError('required')">กรุณากรอกเบอร์โทรศัพท์</small></div>
                                                 </div> 
                                             </div>
                                         </div>
@@ -167,7 +222,7 @@
                                             <div class="mb-3">
                                                 <label for="jobPosition" class="form-label">ตำแหน่ง</label>
                                                 <input type="text" class="form-control" id="jobPosition" placeholder="ตำแหน่ง" maxlength="10"
-                                                formControlName="jobPosition"
+                                                formControlName="jobPosition" [(ngModel)]="itemRef.jobPosition_id"
                                                 [class.is-invalid]="(frm.get('jobPosition')?.invalid && (frm.get('jobPosition')?.dirty || frm.get('jobPosition')?.touched))"
                                                 [class.is-valid]="(frm.get('jobPosition')?.valid && (frm.get('jobPosition')?.dirty || frm.get('jobPosition')?.touched))"
                                                 >
@@ -178,13 +233,13 @@
                                         </div>
                                         <div class="col-md-2">
                                             <div class="mb-3">
-                                                <label for="active" class="form-label">Active</label>
-                                                <select name="active" id="active" class="form-control" formControlName="active"
-                                                [class.is-valid]="(frm.get('active')?.valid && (frm.get('active')?.dirty || frm.get('active')?.touched))"
-                                                >
-                                                    <option value="Active" selected>Active</option>
-                                                    <option value="Deactive">Deactive</option>
-                                                </select>  
+                                                <label for="active" class="form-label">อำเภอ</label>
+                                                <select *ngIf="activeRef" name="active" id="active" class="form-control" formControlName="active"
+                                                [(ngModel)]="itemRef.active">
+                                                    <ng-container *ngFor="let element of activeRef">
+                                                        <option value="{{ element.id }}"> {{ element.name }}</option>
+                                                    </ng-container>
+                                                </select>     
                                             </div>
                                         </div>
                                     </div>
@@ -193,12 +248,12 @@
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="mb-3">
-                                                <button type="submit" class="btn btn-primary btn-sm me-1 ps-3 pe-3" [disabled]="frm.invalid" *ngIf="!isProcess">บันทึก</button>
-                                            <button type="submit" class="btn btn-primary btn-sm me-1 ps-3 pe-3" [disabled]="true"  *ngIf="isProcess">
+                                                <button type="submit" class="btn btn-primary btn-sm me-1 ps-3 pe-3" [disabled]="frm.invalid" >บันทึก</button>
+                                            <button type="submit" class="btn btn-primary btn-sm me-1 ps-3 pe-3" [disabled]="true" *ngIf="isProcess">
                                                 <i class="fa-solid fa-spinner fa-spin"></i>
                                             </button>
                                                 <a class="btn btn-secondary btn-sm ps-3 pe-3"
-                                                    [routerLink]="[BASE_URL + '/homemaker/admin/homemaker']">ยกเลิก</a>
+                                                    [routerLink]="[BASE_URL + '/admin/personnel']">ยกเลิก</a>
                                             </div>
                                         </div>
                                     </div>

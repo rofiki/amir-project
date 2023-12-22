@@ -23,6 +23,13 @@ class tbPersonnel extends Model
         'lastname', 
         'nickname', 
         'gendar', 
+
+        'address',
+        'amphur_id',
+        'province_id',
+        'postCode',
+        'phoneNumber',
+
         'email',
         'date_of_birth', 
         'idcard', 
@@ -33,7 +40,7 @@ class tbPersonnel extends Model
     ];
 
     protected $hidden = [
-        'idcard',
+        // 'idcard',
         'user_id',
         'deleted_at',
     ];

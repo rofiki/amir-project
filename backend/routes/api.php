@@ -60,10 +60,6 @@ Route::middleware('auth:sanctum')->group(function () {
     // tbJobPosition ตำแหน่งงาน
     Route::apiResource('jobposition', JobPositionController::class);
 
-    // province & amphur
-    Route::apiResource('province', ProvinceController::class)->only(['index', 'show']);
-    Route::apiResource('amphur', ProvinceController::class)->only(['show']);
-
     // Route::apiResource('admin', EmployeeController::class);
 
     // personnel
@@ -85,7 +81,6 @@ Route::middleware('auth:sanctum')->group(function () {
         // ห้อง
         Route::apiResource('room', RoomController::class);
     });
-    
 });
 
 //Login เข้าสู่ระบบ สำหรับ Admin และ บุคลากร
@@ -98,5 +93,6 @@ Route::post('login', [AuthController::class, 'login']);
 // คำนำหน้าชื่อ
 Route::apiResource('prename', PrenameController::class);
 
-
-
+// province & amphur
+Route::apiResource('province', ProvinceController::class)->only(['index', 'show']);
+Route::apiResource('amphur', ProvinceController::class)->only(['show']);

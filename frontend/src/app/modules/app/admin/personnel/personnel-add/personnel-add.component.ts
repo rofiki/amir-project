@@ -49,10 +49,6 @@ export class PersonnelAddComponent implements OnInit {
 
     this.localeService.use('th');
 
-    console.log('getToken',this.auth.getToken());
-    console.log('getRole',this.auth.getRole());
-    console.log('getUser',this.auth.getUser());
-
     this.getPrename();
 
     // เช็ค password confirmpassword เหมือนกันไหม
