@@ -86,7 +86,7 @@
                                 </div>
                                 <div class="col-md-12">
                                     <div class="row">
-                                        <div class="col-md-8">
+                                        <div class="col-md-6">
                                             <div class="mb-3">
                                                 <label for="address" class="form-label">ที่อยู่</label>
                                                 <input type="text" class="form-control" id="address" placeholder="ที่อยู่" maxlength="255"
@@ -99,7 +99,67 @@
                                                 </div> 
                                             </div>
                                         </div>
-                                        <div class="col-md-4">
+                                        <div class="col-md-2">
+                                            <div class="mb-3">
+                                                <label for="province" class="form-label">จังหวัด</label>
+                                                <select *ngIf="provinceRef && provinceRef.data" name="province" id="province" class="form-control" formControlName="province"
+                                                 (ngModelChange)="_change($event)"
+                                                [class.is-invalid]="(frm.get('province')?.invalid && (frm.get('province')?.dirty || frm.get('province')?.touched))"
+                                                [class.is-valid]="(frm.get('province')?.valid && (frm.get('province')?.dirty || frm.get('province')?.touched))"
+                                                >
+                                                    <option value="">- เลือก -</option>
+                                                    <ng-container *ngFor="let element of provinceRef.data">
+                                                        <option value="{{ element.province_id }}"> {{ element.province_name }}</option>
+                                                    </ng-container>
+                                                </select>     
+                    
+                                                <div *ngIf="frm.get('province')?.invalid && (frm.get('province')?.dirty || frm.get('province')?.touched)">
+                                                    <small class="text-danger m-2" *ngIf="frm.get('province')?.hasError('required')">กรุณาเลือกจังหวัด</small>
+                                                </div>  
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="mb-3">
+                                                <label for="amphur" class="form-label">อำเภอ</label>
+                                                <select *ngIf="amphurRef && amphurRef.data.amphur" name="amphur" id="amphur" class="form-control" formControlName="amphur"
+                                                [class.is-invalid]="(frm.get('amphur')?.invalid && (frm.get('amphur')?.dirty || frm.get('amphur')?.touched))"
+                                                [class.is-valid]="(frm.get('amphur')?.valid && (frm.get('amphur')?.dirty || frm.get('amphur')?.touched))"
+                                                >
+                                                    <option value="">- เลือก -</option>
+                                                    <ng-container *ngFor="let element of amphurRef.data.amphur">
+                                                        <option value="{{ element.amphur_id }}"> {{ element.amphur_name }}</option>
+                                                    </ng-container>
+                                                </select>     
+                    
+                                                <select *ngIf="!amphurRef" class="form-control" >
+                                                    <option value="">- เลือกจังหวัดก่อน -</option>
+                                                </select> 
+
+                                                <div *ngIf="frm.get('amphur')?.invalid && (frm.get('amphur')?.dirty || frm.get('amphur')?.touched)">
+                                                    <small class="text-danger m-2" *ngIf="frm.get('amphur')?.hasError('required')">กรุณาเลือกอำเภอ</small>
+                                                </div>  
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="mb-3">
+                                                <label for="postCode" class="form-label">รหัสไปรษณีย์</label>
+                                                <input type="text" class="form-control" id="postCode" placeholder="รหัสไปรษณีย์" maxlength="5"
+                                                formControlName="postCode"
+                                                [class.is-invalid]="(frm.get('postCode')?.invalid && (frm.get('postCode')?.dirty || frm.get('postCode')?.touched))"
+                                                [class.is-valid]="(frm.get('postCode')?.valid && (frm.get('postCode')?.dirty || frm.get('postCode')?.touched))"
+                                                >
+                                                <div *ngIf="frm.get('postCode')?.invalid && (frm.get('postCode')?.dirty || frm.get('postCode')?.touched)">
+                                                    <div><small class="text-danger m-2" *ngIf="frm.get('postCode')?.hasError('required')">กรุณากรอกรหัสไปรษณีย์</small></div>
+                                                    <div><small class="text-danger m-2" *ngIf="frm.get('postCode')?.hasError('pattern')">กรุณากรอกเฉพาะตัวเลข</small></div>
+                                                    <div><small class="text-danger m-2" *ngIf="frm.get('postCode')?.errors?.['minlength']">รหัสไปรษณีย์ต้อง 5 หลัก</small></div>
+                                                </div> 
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-3">
                                             <div class="mb-3">
                                                 <label for="date_of_birth" class="form-label">วัน/เดือน/ปี เกิด</label>
                                                 <input type="date_of_birth" class="form-control" id="date_of_birth" placeholder="วัน/เดือน/ปี เกิด" bsDatepicker
@@ -112,30 +172,26 @@
                                                 </div> 
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="row">
-                                        <div class="col-md-4">
+                                        <div class="col-md-3">
                                             <div class="mb-3">
                                                 <label for="idcard" class="form-label">เลขที่บัตรประชาชน</label>
                                                 <input type="idcard" class="form-control" id="idcard" placeholder="เลขที่บัตรประชาชน"
-                                                formControlName="idcard" 
+                                                formControlName="idcard"
                                                 [class.is-invalid]="(frm.get('idcard')?.invalid && (frm.get('idcard')?.dirty || frm.get('idcard')?.touched))"
                                                 [class.is-valid]="(frm.get('idcard')?.valid && (frm.get('idcard')?.dirty || frm.get('idcard')?.touched))"
                                                 >
                                                 <div *ngIf="frm.get('idcard')?.invalid && (frm.get('idcard')?.dirty || frm.get('idcard')?.touched)">
                                                     <div><small class="text-danger m-2" *ngIf="frm.get('idcard')?.hasError('required')">กรุณากรอกเลขที่บัตรประชาชน</small></div>
                                                     <div><small class="text-danger m-2" *ngIf="frm.get('idcard')?.hasError('pattern')">กรอกเฉพาะตัวเลขเท่านั้น</small></div>
-                                                    <div><small class="text-danger m-2" *ngIf="frm.get('idcard')?.hasError('email')">เลขที่บัตรประชาชนต้องมี 13 หลัก</small></div>
+                                                    <div><small class="text-danger m-2" *ngIf="frm.get('idcard')?.errors?.['minlength']">เลขที่บัตรประชาชนต้องมี 13 หลัก</small></div>
                                                 </div> 
                                             </div>
                                         </div>
-                                        <div class="col-md-4">
+                                        <div class="col-md-3">
                                             <div class="mb-3">
                                                 <label for="email" class="form-label">อีเมล์</label>
                                                 <input type="email" class="form-control" id="email" placeholder="อีเมล์"
-                                                formControlName="email"
+                                                formControlName="email" 
                                                 [class.is-invalid]="(frm.get('email')?.invalid && (frm.get('email')?.dirty || frm.get('email')?.touched))"
                                                 [class.is-valid]="(frm.get('email')?.valid && (frm.get('email')?.dirty || frm.get('email')?.touched))"
                                                 >
@@ -145,7 +201,7 @@
                                                 </div> 
                                             </div>
                                         </div>
-                                        <div class="col-md-4">
+                                        <div class="col-md-3">
                                             <div class="mb-3">
                                                 <label for="phone" class="form-label">เบอร์โทรศัพท์</label>
                                                 <input type="text" class="form-control" id="phone" placeholder="เบอร์โทรศัพท์" maxlength="10"
@@ -155,7 +211,8 @@
                                                 >
                                                 <div *ngIf="frm.get('phone')?.invalid && (frm.get('phone')?.dirty || frm.get('phone')?.touched)">
                                                     <div><small class="text-danger m-2" *ngIf="frm.get('phone')?.hasError('pattern')">กรุณากรอกเฉพาะตัวเลข</small></div>
-                                                    <div><small class="text-danger m-2" *ngIf="frm.get('phone')?.hasError('minLength')">เบอร์โทรศัพท์ต้องไม่น้อยกว่า 10 หลัก</small></div>
+                                                    <div><small class="text-danger m-2" *ngIf="frm.get('phone')?.errors?.['minlength']">เบอร์โทรศัพท์ต้องไม่น้อยกว่า 10 หลัก</small></div>
+                                                    <div><small class="text-danger m-2" *ngIf="frm.get('phone')?.hasError('required')">กรุณากรอกเบอร์โทรศัพท์</small></div>
                                                 </div> 
                                             </div>
                                         </div>

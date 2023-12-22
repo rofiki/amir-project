@@ -94,7 +94,7 @@ class PersonnelController extends Controller
                 'amphur_id' => $request->amphur,
                 'province_id' => $request->province,
                 'postCode' => $request->postCode,
-                'phoneNunber' => $request->phone,
+                'phoneNumber' => $request->phone,
 
                 'date_of_birth' => $request->date_of_birth,
                 'idcard' => $request->idcard,

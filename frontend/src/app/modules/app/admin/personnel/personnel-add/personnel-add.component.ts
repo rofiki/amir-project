@@ -11,6 +11,7 @@ import { PersonnelService } from 'src/app/services/app/personnel.service';
 
 import { BsLocaleService } from 'ngx-bootstrap/datepicker';
 import { DatePipe } from '@angular/common';
+import { ProvinceService } from 'src/app/services/province.service';
 
 
 @Component({
@@ -29,19 +30,24 @@ export class PersonnelAddComponent implements OnInit {
   public itemRef: any;
   public prenameRef: any;
   public gendarRef: any;
+  public provinceRef: any;
+  public amphurRef: any;
+  public activeRef: any;
 
   constructor(
     private appService: AppService,
     private toastr: ToastrService,
     private auth: AuthService,
     private service: PersonnelService,
-    private prenameService: PrenameService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private fb: FormBuilder,
     private datePipe: DatePipe,
 
     private localeService: BsLocaleService,
+
+    private prenameService: PrenameService,
+    private provinceService: ProvinceService
 
   ) { }
 
@@ -50,6 +56,7 @@ export class PersonnelAddComponent implements OnInit {
     this.localeService.use('th');
 
     this.getPrename();
+    this.getProvince();
 
     // เช็ค password confirmpassword เหมือนกันไหม
     const matchpassword: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
@@ -71,13 +78,18 @@ export class PersonnelAddComponent implements OnInit {
       fname: this.fb.control('', [Validators.required, Validators.pattern('^[a-zA-Zก-๙ \-\']+')]),
       lname: this.fb.control('', [Validators.required, Validators.pattern('^[a-zA-Zก-๙ \-\']+')]),
       nname: this.fb.control('', []),
-      address: this.fb.control('', []),
       // gendar: this.fb.control('', [Validators.required]), //เพศ เลือกจากคำนำหน้า
       idcard: this.fb.control('', [Validators.required, Validators.pattern("^[0-9]*$"), Validators.minLength(13)]),
-      phone: this.fb.control('', [Validators.pattern("^[0-9]*$"), Validators.minLength(10)]),
       active: this.fb.control('Active', []),
       date_of_birth: this.fb.control('', []),
       jobPosition: this.fb.control('', [Validators.required]),
+
+      // ชุดนี้ต้องแยกตารางทีหลัง เพราะสามารถมีที่อยู่ได้มากกว่า 1
+      address: this.fb.control('', []),
+      province: this.fb.control('', [Validators.required]),
+      amphur: this.fb.control('', [Validators.required]),
+      postCode: this.fb.control('', [Validators.required, Validators.pattern("^[0-9]*$"), Validators.minLength(5)]),
+      phone: this.fb.control('', [Validators.required, Validators.pattern("^[0-9]*$"), Validators.minLength(10)]),
 
       // ส่วน user
       email: this.fb.control('', [Validators.required, Validators.email]),
@@ -92,7 +104,7 @@ export class PersonnelAddComponent implements OnInit {
   }
 
   onSubmit() {
-    this.isProcess = true;
+
     let params = this.frm.value;
     params.personnel_code = null; // รหัสพนักงาน ทำตั้งไว้เผื่อต้องทำ
     params.date_of_birth = this.datePipe.transform(params.date_of_birth, 'yyyy-MM-dd hh:mm:ss') ?? null;
@@ -104,6 +116,8 @@ export class PersonnelAddComponent implements OnInit {
     }
 
     if (confirm('ยืนยันการทำรายการ!')) {
+      this.isProcess = true;
+
       const headers = this.auth.getToken();
       this.service.create(params, headers).subscribe(res => {
         // console.log(res)
@@ -117,8 +131,26 @@ export class PersonnelAddComponent implements OnInit {
     }
   }
 
+  async getProvince() {
+
+    this.amphurRef = ''
+    this.provinceRef = await lastValueFrom(this.provinceService.findAll());
+    console.log(this.provinceRef)
+    console.log(this.amphurRef)
+  }
+
   async getPrename() {
     this.prenameRef = await lastValueFrom(this.prenameService.findAll());
+  }
+
+  getActive() {
+    this.activeRef = [{ id: 'Active', name: 'Active' }, { id: 'Deactive', name: 'Deactive' }];
+  }
+
+  _change(id: any) {
+    this.provinceService.findById(id).subscribe(res => {
+      this.amphurRef = res;
+    })
   }
 
 }
