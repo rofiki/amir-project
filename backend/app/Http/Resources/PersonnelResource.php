@@ -16,5 +16,9 @@ class PersonnelResource extends JsonResource
     {
         $data = parent::toArray($request);
         return $data;
+        // return [
+        //     'id' => $this->id,
+        //     'firstname' => $this->firstname,
+        // ];
     }
 }

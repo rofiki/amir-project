@@ -52,14 +52,9 @@ export class PersonnelEditComponent implements OnInit {
 
   ) { }
 
-  @ViewChild('item') item: any;
-
   ngOnInit(): void {
 
     this.localeService.use('th');
-
-    this.getData();
-    this.getActive();
 
     this.frm = this.fb.group({
       prename: this.fb.control('', [Validators.required]),
@@ -80,6 +75,11 @@ export class PersonnelEditComponent implements OnInit {
 
       email: this.fb.control('', [Validators.required, Validators.email]),
     });
+
+    this.getData();
+    this.getActive();
+
+
 
   }
 
@@ -104,9 +104,11 @@ export class PersonnelEditComponent implements OnInit {
             date_of_birth: new Date(this.itemRef.date_of_birth),
           });
         }
+
+        this.isProcess = false;
       }
 
-      this.isProcess = false;
+
     }
   }
 
@@ -125,6 +127,7 @@ export class PersonnelEditComponent implements OnInit {
   }
 
   onSubmit() {
+    
     let params = this.frm.value;
     params.personnel_code = null; // รหัสพนักงาน ทำตั้งไว้เผื่อต้องทำ
     params.date_of_birth = this.datePipe.transform(params.date_of_birth, 'yyyy-MM-dd hh:mm:ss') ?? null;
@@ -155,6 +158,7 @@ export class PersonnelEditComponent implements OnInit {
   del(id: any) {
 
     if (confirm('ยืนยันการทำรายการ!')) {
+
       this.loadingDel = true;
       const headers = this.auth.getToken();
 

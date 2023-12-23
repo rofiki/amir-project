@@ -1,4 +1,4 @@
-<div class="d-flex bg-content" id="wrapper">
+<div class="d-flex bg-content" id="wrapper"  *ngIf="itemRef">
     <!-- Sidebar-->
     <div class="shadow bg-body-tertiary " id="sidebar-wrapper">
         <app-sidebar></app-sidebar>
@@ -20,7 +20,7 @@
                     </div>
                     <div class="col-md-12 pt-2">
 
-                        <form [formGroup]="frm" (ngSubmit)="onSubmit()"  *ngIf="itemRef">
+                        <form [formGroup]="frm" (ngSubmit)="onSubmit()" >
 
                             <div class="row">
                                 <div class="col-md-12">
@@ -248,7 +248,7 @@
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="mb-3">
-                                                <button type="submit" class="btn btn-primary btn-sm me-1 ps-3 pe-3" [disabled]="frm.invalid" >บันทึก</button>
+                                                <button type="submit" class="btn btn-primary btn-sm me-1 ps-3 pe-3" [disabled]="frm.invalid" *ngIf="!isProcess">บันทึก</button>
                                             <button type="submit" class="btn btn-primary btn-sm me-1 ps-3 pe-3" [disabled]="true" *ngIf="isProcess">
                                                 <i class="fa-solid fa-spinner fa-spin"></i>
                                             </button>
@@ -261,13 +261,33 @@
                             </div>
 
                         </form>
-                    <div>
-                        <div class="col-md-12">
-                            <div class="row border-bottom pt-3">
-                                <div class="col-md-6 h6">ข้อมูลสำหรับล๊อกอินเข้าระบบ</div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="row border-bottom pt-3">
+                                            <div class="col-md-6 h6">ข้อมูลสำหรับล๊อกอินเข้าระบบ</div>
+                                        </div>
+                                    </div> 
+                                    <div class="col-md-12">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <!-- <app-homemaker-reset-password></app-homemaker-reset-password> -->
+                                                <app-personnel-reset-password></app-personnel-reset-password>
+                                            </div>
+                                        </div>
+                                    </div>    
+                                    <div class="col-md-12">
+                                        <div class="row">
+                                            <div class="col-md-12 bg-danger-subtle border border-danger">
+                                                <button type="button" class="btn btn-danger btn-sm mt-2 mb-2" (click)="del(this.id)" *ngIf="!loadingDel">ลบบุคลากร [{{itemRef.firstname}} {{itemRef.lastname}}]</button>
+                                                <button type="button" class="btn btn-danger btn-sm mt-2 mb-2" disabled  *ngIf="loadingDel"><i class="fa-solid fa-spinner fa-spin"></i></button>
+                                            </div>
+                                        </div>
+                                    </div>     
+                                </div>
                             </div>
-                        </div>
-                    </div>                        
+                        </div>                     
                     </div>
                 </div>
             </div>

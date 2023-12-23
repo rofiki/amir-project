@@ -31,6 +31,7 @@ import { PersonnelEditComponent } from './personnel/personnel-edit/personnel-edi
 
 // ngx-bootstrap
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { PersonnelResetPasswordComponent } from './personnel/personnel-reset-password/personnel-reset-password.component';
 
 
 
@@ -49,6 +50,7 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
     PersonnelComponent,
     PersonnelAddComponent,
     PersonnelEditComponent,
+    PersonnelResetPasswordComponent,
     
   ],
   imports: [

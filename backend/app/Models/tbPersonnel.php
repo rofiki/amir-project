@@ -41,7 +41,7 @@ class tbPersonnel extends Model
 
     protected $hidden = [
         // 'idcard',
-        'user_id',
+        // 'user_id',
         'deleted_at',
     ];
 

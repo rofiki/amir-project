@@ -57,7 +57,8 @@ export class PersonnelService {
 
   // จะไปใช้ updatePassword ของ auth
   public updatePassword(params: {}, id:any, headers:any): Observable<any> {
-    return this.http.put(this.apiUrl + '/reset/password/' + id, params, {
+
+    return this.http.put(this.dbService.getServiceURL() + '/auth/reset/password/' + id, params, {
       headers: {
         'content-type': 'application/json',
         'Authorization': 'Bearer ' + headers
@@ -66,7 +67,7 @@ export class PersonnelService {
   }
 
   public delete(id: any, headers:any): Observable<any> {
-    return this.http.delete<any>(this.apiUrl + '/homemaker/' + id,{
+    return this.http.delete<any>(this.apiUrl + '/' + id,{
       headers: {
         'content-type': 'application/json',
         'Authorization': 'Bearer ' + headers
