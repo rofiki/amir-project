@@ -3,15 +3,35 @@
 namespace App\Http\Controllers\Api\HomeMaker;
 
 use App\Http\Controllers\Controller;
+use App\Models\HomeMaker\tbHomemaker;
+use App\Models\HomeMaker\tbRoom;
 use App\Models\Homemaker\tbRoomAddHomemaker;
+use App\Models\Prename;
 use Illuminate\Http\Request;
 
 class RoomAddHomemakerController extends Controller
 {
     public function index(Request $request)
     {
-        
-        $items = tbRoomAddHomemaker::whereNull('deleted_at')->get();
+        $room = new tbRoom();
+        $homemaker = new tbHomemaker();
+        $prename = new Prename();
+        $db = new tbRoomAddHomemaker();
+
+        $tbHomeMaker = $homemaker->getTable();
+        $tbRoom = $room->getTable();
+        $tbRoomAddHomemaker = $db->getTable();
+        $tbPrename = $prename->getTable();
+
+        $items = $db->leftJoin($tbHomeMaker, $tbRoomAddHomemaker. '.homemaker_id', $tbHomeMaker.'.id' )
+        ->leftJoin($tbRoom, $tbRoomAddHomemaker. '.room_id', $tbRoom.'.roomId' )
+        ->leftJoin($tbPrename, $tbHomeMaker. '.prename_id', $tbPrename.'.id' )
+        ->select($tbRoomAddHomemaker.'.*', )
+        ->select($tbRoom.'.type_id', $tbRoom.'.roomName')
+        ->select($tbHomeMaker.'.*')
+        // ->select($tbPrename.'.*')
+        ->whereNull($tbRoomAddHomemaker.'.deleted_at')->get();
+
         try {
             return response()->json(['status' => true, 'data' => $items], 200);
         } catch (\Exception $e) {
@@ -21,7 +41,23 @@ class RoomAddHomemakerController extends Controller
 
     public function show($id) //show by id
     {
-        $item = tbRoomAddHomemaker::where('room_id', $id)->get();
+        $room = new tbRoom();
+        $homemaker = new tbHomemaker();
+        $db = new tbRoomAddHomemaker();
+
+        $tbHomeMaker = $homemaker->getTable();
+        $tbRoom = $room->getTable();
+        $tbRoomAddHomemaker = $db->getTable();
+
+        $item = $db->leftJoin($tbHomeMaker, $tbRoomAddHomemaker. '.homemaker_id', $tbHomeMaker.'.id' )
+        ->leftJoin($tbRoom, $tbRoomAddHomemaker. '.room_id', $tbRoom.'.roomId' )
+        ->select($tbRoomAddHomemaker.'.*', )
+        ->select($tbRoom.'.type_id', $tbRoom.'.roomName')
+        ->select($tbHomeMaker.'.*')
+        ->where($tbRoomAddHomemaker . '.room_id', $id)
+        ->whereNull($tbRoomAddHomemaker.'.deleted_at')->get();
+
+        // $item = tbRoomAddHomemaker::where('room_id', $id)->get();
         if ($item) {
             return response()->json(['status' => true, 'data' => $item, 'statusCode' => 200]);
         }

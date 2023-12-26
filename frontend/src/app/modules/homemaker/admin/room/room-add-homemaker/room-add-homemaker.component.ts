@@ -20,7 +20,6 @@ import { RoomAddHomemakerService } from 'src/app/services/homemaker/room-add-hom
 })
 export class RoomAddHomemakerComponent implements OnInit {
 
-  // @Input() title:string = 'test room-add-homemaker';
   modalRef?: BsModalRef;
 
   public BASE_URL: string = this.appService.BASE_URL;
@@ -33,18 +32,6 @@ export class RoomAddHomemakerComponent implements OnInit {
   public itemRef: any;
   public homeMakerRef: any;
   public personnelRef: any;
-
-  public overlay = false;
-  // public value1 = 'CA';
-  public data1: any = [
-    {
-      label: 'AAAAA',
-      options: [
-        { value: 'AK', label: 'Alaska' },
-        { value: 'AK222', label: 'Alaska222' }
-      ],
-    }
-  ]
 
   constructor(
     private appService: AppService,
@@ -62,14 +49,6 @@ export class RoomAddHomemakerComponent implements OnInit {
 
   ) { }
 
-
-  title?: string;
-  closeBtnName?: string;
-  list: string[] = [];
-  roomId?: any;
-
-
-
   ngOnInit(): void {
 
     this.formGroup();
@@ -77,11 +56,20 @@ export class RoomAddHomemakerComponent implements OnInit {
     this.getHomemaker();
   }
 
+  formGroup()
+  {
+    this.frm = this.fb.group({
+      homemaker: this.fb.control('', [Validators.required]),
+      // roomId: this.fb.control(this.roomId),
+    });
+  }
+
   async getHomemaker() {
     const token = this.auth.getToken();
     this.homeMakerRef = await lastValueFrom(this.homeMakerService.findAll(token));
   }
 
+  public  roomId?: any;
   getData() {
     const token = this.auth.getToken();
     this.roomAddHomemakerService.findById(this.roomId, token).subscribe(res => {
@@ -96,17 +84,6 @@ export class RoomAddHomemakerComponent implements OnInit {
     if (confirm('ยืนยันการทำรายการ!')) {
       console.log(id)
     }
-  }
-
-  // onSubmit(id:any){
-
-  // }
-  formGroup()
-  {
-    this.frm = this.fb.group({
-      homemaker: this.fb.control('', [Validators.required]),
-      // roomId: this.fb.control(this.roomId),
-    });
   }
 
   onSubmit() {
@@ -127,20 +104,5 @@ export class RoomAddHomemakerComponent implements OnInit {
 
     }
   }
-
-  // change(key: string, event: Event) {
-  //   console.log(key, event);
-  // }
-  // search(text: string) {
-  //   this.data1 = text
-  //       ? (JSON.parse(JSON.stringify(this.data1)) as Select2Option[]).filter(
-  //             option => option.label.toLowerCase().indexOf(text.toLowerCase()) > -1,
-  //         )
-  //       : JSON.parse(JSON.stringify(this.data1));
-  // }
-  // update(key: string, event: Select2UpdateEvent<any>) {
-  //   console.log(event.value);
-  // }
-  // value1 = 'CA';
 
 }

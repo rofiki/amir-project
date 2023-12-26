@@ -20,5 +20,7 @@ class tbRoomAddHomemaker extends Model
         'homemaker_id'
     ];
 
-    protected $hidden = [];
+    protected $hidden = [
+        'deleted_at'
+    ];
 }

@@ -78,14 +78,14 @@
         </div>
         <div class="col-md-12">
             <div class="row pt-3">
-                <div class="col-md-6 h6"><i class="fa-solid fa-trash"></i> ลบแม่บ้าน</div>
+                <div class="col-md-6 h6"><i class="fa-solid fa-user"></i> รายชื่อแม่บ้านที่รับผิดชอบ</div>
             </div>
         </div>
         <div class="col-md-12">
             <div class="row">
                 <div class="col-md-12">
                     <!-- <div *ngIf="!itemRef" class="text-center" >- ยังไม่มีแม่บ้าน -</div> -->
-                    <table class="table table-striped table-hover border-top" *ngIf="itemRef && itemRef.data">
+                    <table class="table table-bordered table-hover border" *ngIf="itemRef && itemRef.data">
                         <!-- <thead>
                             <tr class="table-secondary">
                                 <th>ชื่อผู้ดูแล</th>
@@ -94,12 +94,16 @@
                         </thead> -->
                         <tbody>
                             <tr *ngFor="let element of itemRef.data">
-                                <td>sss</td>
-                                <td><button type="button" class="btn btn-xs btn-danger"><i
-                                            class="fa-solid fa-trash-can"
-                                            (click)="delHomeMaker(11)"></i></button></td>
+                                <td style="width: 5px;">
+                                    <button type="button" class="btn btn-outline-danger btn-xs">
+                                        <i class="fa-solid fa-trash-can" (click)="delHomeMaker(11)"></i>
+                                    </button>
+                                </td>
+                                <td>
+
+                                    {{element.prename_id}}{{element.firstname}} {{element.lastname}} ({{element.nickname}})
+                                </td>
                             </tr>
-                          
                         </tbody>
                     </table>
                 </div>
@@ -108,5 +112,5 @@
     </div>
 </div>
 <div class="modal-footer">
-    <button type="button" class="btn btn-secondary btn-sm" (click)="bsModalRef.hide()"><i class="fa-regular fa-circle-xmark"></i> ปิด</button>
+    <button type="button" class="btn btn-outline-secondary btn-sm" (click)="bsModalRef.hide()"><i class="fa-regular fa-circle-xmark"></i> ปิด</button>
   </div>
