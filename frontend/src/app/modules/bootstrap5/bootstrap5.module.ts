@@ -25,6 +25,7 @@ defineLocale('th', thLocale);
     ToastrModule.forRoot(),
     BsDatepickerModule.forRoot(),
     BrowserAnimationsModule,
+    ModalModule.forRoot(),
     
   ],
   exports: [

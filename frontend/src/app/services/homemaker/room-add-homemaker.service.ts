@@ -7,9 +7,9 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class RoomService {
+export class RoomAddHomemakerService {
 
-  private apiUrl: string = this.dbService.getServiceURL() + '/homemaker';
+  private apiUrl: string = this.dbService.getServiceURL() + '/homemaker/roomhomemaker';
 
   constructor(
     private http: HttpClient,
@@ -18,7 +18,7 @@ export class RoomService {
 
   public create(params: {}, token:any): Observable<any> {
 
-    return this.http.post(this.apiUrl + '/room',params, {
+    return this.http.post(this.apiUrl + '',params, {
       headers: {
         'content-type': 'application/json',
         'Authorization': 'Bearer ' + token
@@ -27,7 +27,7 @@ export class RoomService {
   }
 
   public findAll(token:any): Observable<any> {
-    return this.http.get(this.apiUrl + '/room', {
+    return this.http.get(this.apiUrl + '', {
       headers: {
         'content-type': 'application/json',
         'Authorization': 'Bearer ' + token
@@ -36,7 +36,7 @@ export class RoomService {
   }
 
   public findById(id:any, token:any): Observable<any> {
-    return this.http.get(this.apiUrl + '/room/' + id, {
+    return this.http.get(this.apiUrl + '/' + id, {
       headers: {
         'content-type': 'application/json',
         'Authorization': 'Bearer ' + token
@@ -45,7 +45,7 @@ export class RoomService {
   }
 
   public update(params: {}, id:any, token:any): Observable<any> {
-    return this.http.put(this.apiUrl + '/room/' + id, params, {
+    return this.http.put(this.apiUrl + '/' + id, params, {
       headers: {
         'content-type': 'application/json',
         'Authorization': 'Bearer ' + token
@@ -54,7 +54,7 @@ export class RoomService {
   }
 
   public delete(id: any, token:any): Observable<any> {
-    return this.http.delete<any>(this.apiUrl + '/room/' + id,{
+    return this.http.delete<any>(this.apiUrl + '/' + id,{
       headers: {
         'content-type': 'application/json',
         'Authorization': 'Bearer ' + token

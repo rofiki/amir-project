@@ -1,0 +1,112 @@
+<div class="modal-header">
+    <h4 class="modal-title pull-left"><i class="fa-solid fa-gear"></i> จัดการแม่บ้าน</h4>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <div class="col-md-12">
+
+
+        </div>
+        <div class="col-md-12">
+            <form [formGroup]="frm" (ngSubmit)="onSubmit()" >
+                <div class="mb-3">
+                    <label for="homemaker" class="form-label h6"><i class="fa-solid fa-file-circle-plus"></i>
+                        เพิ่มแม่บ้าน</label>
+                        <select *ngIf="homeMakerRef && homeMakerRef.data" name="homemaker" id="homemaker" class="form-control" formControlName="homemaker"
+                       [class.is-invalid]="(frm.get('homemaker')?.invalid && (frm.get('homemaker')?.dirty || frm.get('homemaker')?.touched))"
+                       [class.is-valid]="(frm.get('homemaker')?.valid && (frm.get('homemaker')?.dirty || frm.get('homemaker')?.touched))"
+                       >
+                           <option value="">- เลือก -</option>
+                           <ng-container *ngFor="let element of homeMakerRef.data">
+                               <option value="{{ element.id }}"> {{ element.name }}{{ element.firstname }} {{ element.lastname }}</option>
+                           </ng-container>
+                       </select>     
+
+                       <div *ngIf="frm.get('homemaker')?.invalid && (frm.get('homemaker')?.dirty || frm.get('homemaker')?.touched)">
+                           <small class="text-danger m-2" *ngIf="frm.get('homemaker')?.hasError('required')">กรุณาเลือกแม่บ้าน</small>
+                       </div>
+                       <!-- <select2
+                        [overlay]="overlay",
+                        [data]="data1",
+                        [value]="value1",
+                        resettable,
+                        id="select2-1"></select2> -->
+                        <!-- <select2
+        [overlay]="overlay"
+        [data]="data1"
+        [value]="value1"
+        (update)="update('value1', $event)"
+        (change)="change('change1', $event)"
+        (search)="search('search1')"
+        resettable
+        id="selec2-1"
+    >
+    </select2> -->
+                </div>
+                <!-- <div class="row">
+                    <div class="">
+                        <div class="card border-primary mb-3">
+                            <div class="card-body text-primary">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <span><strong>มูฮำหมัดรอฟีกี หะรง</strong></span>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <span><strong>ที่อยู่:</strong> 23 หมู่ 5 ต.กาตอง อ.ยะหา จ.ยะลา</span><br>
+                                        <span><strong>โทรศัพท์:</strong> 0819090456 <strong>อีเมล์:</strong> vidocq&#64;gmail.com <strong>Line ID:</strong> vidocqhrg</span>
+                                    </div>
+                                </div>
+                            </div>
+                          </div>
+                    </div>
+                </div> -->
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="mb-3">
+                            <button type="submit" class="btn btn-primary btn-sm me-1 ps-3 pe-3" [disabled]="frm.invalid" *ngIf="!isProcess"><i class="fa-regular fa-floppy-disk"></i> บันทึก</button>
+                            <button type="button" class="btn btn-primary btn-sm me-1 ps-3 pe-3" [disabled]="true"  *ngIf="isProcess"><i class="fa-solid fa-spinner fa-spin"></i></button>
+                            <button type="button" class="btn btn-secondary btn-sm" (click)="bsModalRef.hide()"><i class="fa-regular fa-circle-xmark"></i> ยกเลิก</button>
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+
+        </div>
+        <div class="col-md-12">
+
+        </div>
+        <div class="col-md-12">
+            <div class="row pt-3">
+                <div class="col-md-6 h6"><i class="fa-solid fa-trash"></i> ลบแม่บ้าน</div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- <div *ngIf="!itemRef" class="text-center" >- ยังไม่มีแม่บ้าน -</div> -->
+                    <table class="table table-striped table-hover border-top" *ngIf="itemRef && itemRef.data">
+                        <!-- <thead>
+                            <tr class="table-secondary">
+                                <th>ชื่อผู้ดูแล</th>
+                                <th style="width: 5px;"></th>
+                            </tr>
+                        </thead> -->
+                        <tbody>
+                            <tr *ngFor="let element of itemRef.data">
+                                <td>sss</td>
+                                <td><button type="button" class="btn btn-xs btn-danger"><i
+                                            class="fa-solid fa-trash-can"
+                                            (click)="delHomeMaker(11)"></i></button></td>
+                            </tr>
+                          
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-secondary btn-sm" (click)="bsModalRef.hide()"><i class="fa-regular fa-circle-xmark"></i> ปิด</button>
+  </div>

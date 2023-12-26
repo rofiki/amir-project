@@ -21,6 +21,8 @@ import { HomemakerEditComponent } from './admin/homemaker/homemaker-edit/homemak
 import { HomemakerResetPasswordComponent } from './admin/homemaker/homemaker-reset-password/homemaker-reset-password.component';
 import { RoomAddComponent } from './admin/room/room-add/room-add.component';
 import { RoomEditComponent } from './admin/room/room-edit/room-edit.component';
+import { RoomAddHomemakerComponent } from './admin/room/room-add-homemaker/room-add-homemaker.component';
+import { Select2Module } from 'ng-select2-component';
 
 
 
@@ -37,7 +39,8 @@ import { RoomEditComponent } from './admin/room/room-edit/room-edit.component';
     HomemakerEditComponent,
     HomemakerResetPasswordComponent,
     RoomAddComponent,
-    RoomEditComponent
+    RoomEditComponent,
+    RoomAddHomemakerComponent
   ],
   imports: [
     CommonModule,
@@ -50,6 +53,8 @@ import { RoomEditComponent } from './admin/room/room-edit/room-edit.component';
 
     HttpClientModule,
     ReactiveFormsModule,
+
+    Select2Module
   ]
 })
 export class HomemakerModule { }

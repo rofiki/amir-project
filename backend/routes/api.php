@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\DepartmentController;
 use App\Http\Controllers\Api\JobPositionController;
 use App\Http\Controllers\Api\ProvinceController;
 use App\Http\Controllers\Api\HomeMaker\HomemakerController;
+use App\Http\Controllers\Api\HomeMaker\RoomAddHomemakerController;
 use App\Http\Controllers\Api\HomeMaker\RoomController;
 use App\Http\Controllers\Api\HomeMaker\RoomTypeController;
 use App\Http\Controllers\Api\PersonnelController;
@@ -82,6 +83,8 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::apiResource('room', RoomController::class);
     });
 });
+
+Route::apiResource('homemaker/roomhomemaker', RoomAddHomemakerController::class);
 
 //Login เข้าสู่ระบบ สำหรับ Admin และ บุคลากร
 Route::post('login', [AuthController::class, 'login']);

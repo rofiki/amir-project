@@ -18,33 +18,54 @@
                     <div class="row border-bottom pt-1 pb-1">
                         <div class="col-md-6 h5">รายการห้อง</div>
                         <div class="col-md-6 text-md-end">
-                            <a class="btn btn-primary btn-sm" href="javascript:void(0)" [routerLink]="[BASE_URL + '/homemaker/admin/room/add']">เพิ่มห้อง</a></div>
+                            <a class="btn btn-primary btn-sm" href="javascript:void(0)"
+                                [routerLink]="[BASE_URL + '/homemaker/admin/room/add']"><i class="fa-solid fa-file-circle-plus"></i> เพิ่มห้อง</a>
+                        </div>
                     </div>
                 </div>
                 <div class="col-md-12 pt-2">
                     <div class="row">
                         <div class="col-md-12">
-                            <table class="table table-striped border mt-1" *ngIf="itemRef && itemRef.data">
+                            <table class="table table-striped table-bordered mt-1" *ngIf="itemRef && itemRef.data">
                                 <thead>
                                     <tr>
-                                        <th>ชื่อ-นามสกุล</th>
-                                        <th>แม่บ้าน</th>
-                                        <th>ผู้ดูแลห้อง</th>
+                                        <th class="w-50">ชื่อ-นามสกุล</th>
+                                        <th class="w-auto">แม่บ้าน</th>
+                                        <th class="w-auto">ผู้ดูแลห้อง</th>
+                                        <th class="w-auto">แบบฟอร์มตรวจห้อง</th>
                                     </tr>
                                 </thead>
                                 <div *ngIf="(itemRef.meta.total == 0); then showDataZero else showData"></div>
-                                <ng-template #showDataZero><tbody><tr><td colspan="25"><p class="text-center p-2"> - ไม่พบข้อมูล - </p></td></tr></tbody></ng-template>
+                                <ng-template #showDataZero>
+                                    <tbody>
+                                        <tr>
+                                            <td colspan="25">
+                                                <p class="text-center p-2"> - ไม่พบข้อมูล - </p>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </ng-template>
                                 <ng-template #showData>
-                                <tbody >
-                                    <tr *ngIf="loadingData"><td colspan="10"><i class="fa-solid fa-spinner fa-spin"></i> Loading...</td></tr>
-                                    <tr *ngFor="let element of itemRef.data">
-                                        <td class="w-auto">
-                                            <a [routerLink]="[BASE_URL + '/homemaker/admin/room/edit', element.roomId]" class="link-underline link-underline-opacity-0">{{element.roomName}}</a>
-                                        </td>
-                                        <td class="w-auto">Comming soon...</td>
-                                        <td class="w-auto">Comming soon...</td>
-                                    </tr>
-                                </tbody>
+                                    <tbody>
+                                        <tr *ngIf="loadingData">
+                                            <td colspan="10"><i class="fa-solid fa-spinner fa-spin"></i> Loading...</td>
+                                        </tr>
+                                        <tr *ngFor="let element of itemRef.data">
+                                            <td class="w-auto">
+                                                <a [routerLink]="[BASE_URL + '/homemaker/admin/room/edit', element.roomId]"
+                                                    class="link-underline link-underline-opacity-0">{{element.roomName}}</a>
+                                            </td>
+                                            <td class="w-auto"><button type="button" class="btn btn-primary btn-xs"
+                                                    (click)="openModalHomeMaker(element.roomId)"><i
+                                                        class="fa-solid fa-gear"></i> จัดการ</button></td>
+                                            <td class="w-auto"><button type="button" class="btn btn-primary btn-xs"
+                                                    (click)="openModalPersonnel(templateAddPersonnel)"><i
+                                                        class="fa-solid fa-gear"></i> จัดการ</button></td>
+                                            <td class="w-auto"><button type="button" class="btn btn-primary btn-xs"
+                                                    (click)="openModalChecklist(templateAddChecklist)"><i
+                                                        class="fa-solid fa-gear"></i> จัดการ</button></td>
+                                        </tr>
+                                    </tbody>
                                 </ng-template>
                             </table>
                         </div>
@@ -52,5 +73,160 @@
                 </div>
             </div>
         </div>
-</div>
-<app-footer></app-footer>
+    </div>
+
+    <ng-template #templateAddPersonnel>
+        <div class="modal-header">
+            <h4 class="modal-title pull-left"><i class="fa-solid fa-gear"></i> จัดการผู้ดูแลห้อง</h4>
+            <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="modalRef?.hide()">
+                <span aria-hidden="true" class="visually-hidden">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-md-12">
+
+
+                </div>
+                <div class="col-md-12">
+                    <form [formGroup]="frm2"  >
+                        <div class="mb-3">
+                            <label for="personnel" class="form-label h6"><i class="fa-solid fa-circle-plus"></i>
+                                เพิ่มบุคลากร</label>
+                                <select *ngIf="personnelRef && personnelRef.data" name="personnel" id="personnel" class="form-control" formControlName="personnel"
+                               [class.is-invalid]="(frm2.get('personnel')?.invalid && (frm2.get('personnel')?.dirty || frm2.get('personnel')?.touched))"
+                               [class.is-valid]="(frm2.get('personnel')?.valid && (frm2.get('personnel')?.dirty || frm2.get('personnel')?.touched))"
+                               >
+                                   <option value="">- เลือก -</option>
+                                   <ng-container *ngFor="let element of personnelRef.data">
+                                       <option value="{{ element.id }}"> {{ element.name }}{{ element.firstname }} {{ element.lastname }}</option>
+                                   </ng-container>
+                               </select>     
+   
+                               <div *ngIf="frm2.get('personnel')?.invalid && (frm2.get('personnel')?.dirty || frm2.get('personnel')?.touched)">
+                                   <small class="text-danger m-2" *ngIf="frm2.get('personnel')?.hasError('required')">กรุณาเลือกแม่บ้าน</small>
+                               </div>  
+                        </div>
+                        <div class="mb-3">
+                            <div class="card border-primary mb-3">
+                                <div class="card-body text-primary">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <span><strong>มูฮำหมัดรอฟีกี หะรง</strong></span>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <span><strong>ที่อยู่:</strong> 23 หมู่ 5 ต.กาตอง อ.ยะหา จ.ยะลา</span><br>
+                                            <span><strong>โทรศัพท์:</strong> 0819090456 <strong>อีเมล์:</strong> vidocq&#64;gmail.com <strong>Line ID:</strong> vidocqhrg</span>
+                                        </div>
+                                    </div>
+                                </div>
+                              </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-md-12">
+                    <div class="row pt-3">
+                        <div class="col-md-12 h6"><i class="fa-solid fa-trash-can"></i> ลบผู้ดูแลห้อง</div>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <table class="table table-striped table-hover border-top">
+                                <!-- <thead>
+                                    <tr class="table-secondary">
+                                        <th>ชื่อผู้ดูแล</th>
+                                        <th style="width: 5px;"></th>
+                                    </tr>
+                                </thead> -->
+                                <tbody>
+                                    <tr>
+                                        <td>มูฮำหมัดรอฟีกี หะรง</td>
+                                        <td><button type="button" class="btn btn-xs btn-danger"><i
+                                                    class="fa-solid fa-trash-can"
+                                                    (click)="delPersonnel(99)"></i></button></td>
+                                    </tr>
+                                    <tr>
+                                        <td>มูฮำหมัดรอฟีกี หะรง</td>
+                                        <td style="width: 5px;">
+                                            <button type="button" class="btn btn-xs btn-danger"><i
+                                                    class="fa-solid fa-trash-can"
+                                                    (click)="delPersonnel(99)"></i></button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+    <ng-template #templateAddChecklist>
+        <div class="modal-header">
+            <h4 class="modal-title pull-left"><i class="fa-solid fa-gear"></i> จัดการแบบฟอร์มตรวจห้อง</h4>
+            <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="modalRef?.hide()">
+                <span aria-hidden="true" class="visually-hidden">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-md-12">
+
+
+                </div>
+                <div class="col-md-12">
+                    <form>
+                        <div class="mb-3">
+                            <label for="province" class="form-label h6"><i class="fa-solid fa-circle-plus"></i>
+                                เพิ่มแบบฟอร์มตรวจห้อง</label>
+                            <select name="province" id="province" class="form-control">
+                                <option value="">- เลือกแบบฟอร์มตรวจห้อง -</option>
+                                <option value="">แบบฟอร์มที่ 1</option>
+                            </select>
+                        </div>
+                    </form>
+
+                </div>
+                <div class="col-md-12">
+                    <div class="row pt-3">
+                        <div class="col-md-12 h6"><i class="fa-solid fa-trash-can"></i> ลบแบบฟอร์มตรวจห้อง</div>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <table class="table table-striped table-hover border-top">
+                                <!-- <thead>
+                                    <tr class="table-secondary">
+                                        <th>ชื่อผู้ดูแล</th>
+                                        <th style="width: 5px;"></th>
+                                    </tr>
+                                </thead> -->
+                                <tbody>
+                                    <tr>
+                                        <td>แบบฟอร์มที่ 1</td>
+                                        <td><button type="button" class="btn btn-xs btn-danger"><i
+                                                    class="fa-solid fa-trash-can"
+                                                    (click)="delChecklist(99)"></i></button></td>
+                                    </tr>
+                                    <tr>
+                                        <td>แบบฟอร์มที่ 2</td>
+                                        <td style="width: 5px;">
+                                            <button type="button" class="btn btn-xs btn-danger"><i
+                                                    class="fa-solid fa-trash-can"
+                                                    (click)="delChecklist(99)"></i></button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+
+    <app-footer></app-footer>
