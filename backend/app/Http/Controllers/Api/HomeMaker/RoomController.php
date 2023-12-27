@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Api\HomeMaker;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\HomeMaker\RoomCollection;
 use App\Http\Resources\HomeMaker\RoomResource;
+use App\Models\HomeMaker\tbHomemaker;
 use App\Models\HomeMaker\tbRoom;
+use App\Models\Homemaker\tbRoomAddHomemaker;
 use App\Models\HomeMaker\tbRoomType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -30,6 +32,7 @@ class RoomController extends Controller
             ->whereNull($tbRoom.'.deleted_at')
             ->paginate((int)$limit);
 
+        // $homemaker = tbRoomAddHomemaker::where('room_id','');
         try {
             return new RoomCollection($items);
         } catch (\Exception $e) {

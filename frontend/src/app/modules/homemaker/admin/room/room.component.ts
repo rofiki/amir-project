@@ -12,6 +12,9 @@ import { HomemakerService } from 'src/app/services/homemaker/homemaker.service';
 import { PersonnelService } from 'src/app/services/app/personnel.service';
 import { RoomAddHomemakerComponent } from './room-add-homemaker/room-add-homemaker.component';
 
+import { combineLatest, Subscription } from 'rxjs';
+import { RoomAddHomemakerService } from 'src/app/services/homemaker/room-add-homemaker.service';
+
 @Component({
   selector: 'app-room',
   templateUrl: './room.component.html',
@@ -20,6 +23,7 @@ import { RoomAddHomemakerComponent } from './room-add-homemaker/room-add-homemak
 export class RoomComponent implements OnInit {
 
   modalRef?: BsModalRef;
+  subscriptions = new Subscription();
 
   public BASE_URL: string = this.appService.BASE_URL;
   public isProcess: boolean = false;
@@ -39,6 +43,7 @@ export class RoomComponent implements OnInit {
     private service: RoomService,
     private homeMakerService: HomemakerService,
     private personnelService: PersonnelService,
+    private roomAddHomemakerService: RoomAddHomemakerService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private fb: FormBuilder,
@@ -48,37 +53,85 @@ export class RoomComponent implements OnInit {
 
   ngOnInit(): void {
 
-    // this.frm = this.fb.group({
-    //   homemaker: this.fb.control('', [Validators.required]),
-    // });
-
-    // this.frm2 = this.fb.group({
-    //   personnel: this.fb.control('', [Validators.required]),
-    // });
-
     this.getData();
+    // this.getRoomAddHomemakerData();
     // this.getPersonnel();
   }
 
+  // ดึงข้อมูลห้อง
   async getData() {
 
     this.loadingData = true;
     const token = this.auth.getToken();
     this.service.findAll(token).subscribe(r => {
       this.itemRef = r;
+      console.log('itemRef',this.itemRef.data)
+
+      const fromDb = undefined;
+      const arr:any = fromDb || [];
+      let i=0;
+      this.itemRef.data.forEach((data:any, index:any) => {
+        let homemaker = lastValueFrom(this.roomAddHomemakerService.findById(1, token));
+
+        data.homemaker = homemaker;
+        arr[i] = data;
+        i++;
+      });
+      console.log('arr',arr);
+
+      // let a:any;
+      // let b: any;
+      // a = this.itemRef.data;
+      // let i=0;
+      // a.forEach(function(data:any, index:any) {
+      //   b[0] = {ss:'55555'
+      //   };
+      //   console.log(i);
+      //   i++;
+      // });
+
+      // this.itemRef.data.homemaker = lastValueFrom(this.homeMakerService.findById(this.itemRef, token));
       this.loadingData = false;
-      // console.log(this.itemRef)
+      // this.homeMakerRef
     });
 
   }
 
   del(id: any) { }
 
-  openModalHomeMaker(roomId:any) {
-    const initialState: ModalOptions = { initialState: { roomId: roomId,}};
+  // ##### function แม่บ้าน
+  openModalHomeMaker(roomId: any) {
+    const initialState: ModalOptions = { initialState: { roomId: roomId, } };
     this.modalRef = this.modalService.show(RoomAddHomemakerComponent, initialState);
     this.modalRef.setClass('modal-lg');
+
+    this.subscriptions.add(
+      this.modalService.onHide.subscribe((reason: string | any) => {
+        console.log('reason');
+        // if (typeof reason !== 'string') {
+        //   reason = `onHide(), modalId is : ${reason.id}`;
+        // }
+        // const _reason = reason ? `, dismissed by ${reason}` : '';
+        // this.messages.push(`onHide event has been fired${_reason}`);
+      })
+    );
   }
+  // getHomeMakerData(roomId: any) {
+  //   const token = this.auth.getToken();
+  //   // let getData = lastValueFrom(this.homeMakerService.findById(roomId, token));
+  //   // this.homeMakerRef = lastValueFrom(this.homeMakerService.findById(roomId, token));
+  //   return roomId;
+  // }
+
+  // getRoomAddHomemakerData() {
+  //   const token = this.auth.getToken();
+  //   this.roomAddHomemakerService.findById(1, token).subscribe(res => {
+  //     this.itemRef = res;
+  //     console.log('roomAddHomemaker Data',this.itemRef.data)
+  //   }, error =>{
+  //     console.log('error',error.status)
+  //   });
+  // }
 
   openModalPersonnel(template: TemplateRef<void>) {
     this.modalRef = this.modalService.show(template, Object.assign({}, { class: 'gray modal-lg' }));
@@ -99,6 +152,8 @@ export class RoomComponent implements OnInit {
       console.log(id)
     }
   }
+
+
 
   // async getPersonnel() {
   //   const token = this.auth.getToken();
