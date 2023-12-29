@@ -51,9 +51,11 @@ class RoomAddHomemakerController extends Controller
 
         $item = $db->leftJoin($tbHomeMaker, $tbRoomAddHomemaker. '.homemaker_id', $tbHomeMaker.'.id' )
         ->leftJoin($tbRoom, $tbRoomAddHomemaker. '.room_id', $tbRoom.'.roomId' )
-        ->select($tbRoomAddHomemaker.'.*', )
-        ->select($tbRoom.'.type_id', $tbRoom.'.roomName')
-        ->select($tbHomeMaker.'.*')
+
+        // ->select($tbRoom.'.type_id', $tbRoom.'.roomName')
+        // ->select($tbHomeMaker.'.*')
+        // ->select($tbRoomAddHomemaker.'.*')
+
         ->where($tbRoomAddHomemaker . '.room_id', $id)
         ->whereNull($tbRoomAddHomemaker.'.deleted_at')->get();
 

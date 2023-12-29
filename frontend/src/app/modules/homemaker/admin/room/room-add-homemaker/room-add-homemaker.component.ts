@@ -81,17 +81,30 @@ export class RoomAddHomemakerComponent implements OnInit {
   }
 
   delHomeMaker(id: any) {
-    if (confirm('ยืนยันการทำรายการ!')) {
-      console.log(id)
+
+    if (confirm('ยืนยันการลบข้อมูล!')) {
+      this.isProcess = true;
+      const token = this.auth.getToken();
+      this.roomAddHomemakerService.delete(id, token).subscribe(res => {
+        if(res.status) {
+          this.toastr.success('บันทึกข้อมูล', 'บันทึกข้อมูลเรียบร้อย', { timeOut: 1000, progressBar: true, });
+          this.getData();
+          this.isProcess = false;
+        }else{
+          this.toastr.error('ผลการทำรายการ', 'ลบข้อมูลไม่สำเร็จ กรุณาติดต่อผู้ดูแลระบบ', { timeOut: 1500, progressBar: true, });
+          this.isProcess = false;
+        }
+      });
     }
   }
 
   onSubmit() {
-    this.isProcess = true;
+    
     let params = this.frm.value;
     params.roomId = this.roomId;
 
     if (confirm('ยืนยันการทำรายการ!')) {
+      this.isProcess = true;
       const token = this.auth.getToken();
       this.roomAddHomemakerService.create(params, token).subscribe(res => {
         if (res.status) {
