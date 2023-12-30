@@ -1,5 +1,5 @@
 <div class="modal-header">
-    <h4 class="modal-title pull-left"><i class="fa-solid fa-gear"></i> จัดการแม่บ้าน</h4>
+    <h4 class="modal-title pull-left"><i class="fa-solid fa-gear"></i> จัดการผู้ดูแล</h4>
 </div>
 <div class="modal-body">
     <div class="row">
@@ -10,20 +10,20 @@
         <div class="col-md-12">
             <form [formGroup]="frm" (ngSubmit)="onSubmit()" >
                 <div class="mb-3">
-                    <label for="homemaker" class="form-label h6"><i class="fa-solid fa-file-circle-plus"></i>
-                        เพิ่มแม่บ้าน</label>
-                        <select *ngIf="homeMakerRef && homeMakerRef.data" name="homemaker" id="homemaker" class="form-control" formControlName="homemaker"
-                       [class.is-invalid]="(frm.get('homemaker')?.invalid && (frm.get('homemaker')?.dirty || frm.get('homemaker')?.touched))"
-                       [class.is-valid]="(frm.get('homemaker')?.valid && (frm.get('homemaker')?.dirty || frm.get('homemaker')?.touched))"
+                    <label for="personnel" class="form-label h6"><i class="fa-solid fa-file-circle-plus"></i>
+                        เพิ่มผู้ดูแล</label>
+                        <select *ngIf="personnelRef && personnelRef.data" name="personnel" id="personnel" class="form-control" formControlName="personnel"
+                       [class.is-invalid]="(frm.get('personnel')?.invalid && (frm.get('personnel')?.dirty || frm.get('personnel')?.touched))"
+                       [class.is-valid]="(frm.get('personnel')?.valid && (frm.get('personnel')?.dirty || frm.get('personnel')?.touched))"
                        >
                            <option value="">- เลือก -</option>
-                           <ng-container *ngFor="let element of homeMakerRef.data">
-                                <option value="{{ element?.id }}" *ngIf="element?.id"> {{ element?.name }}{{ element?.firstname }} {{ element?.lastname }}</option>
+                           <ng-container *ngFor="let element of personnelRef.data">
+                               <option value="{{ element?.id }}" *ngIf="element?.id"> {{ element?.prename_id }}{{ element?.firstname }} {{ element?.lastname }}</option>
                            </ng-container>
                        </select>     
 
-                       <div *ngIf="frm.get('homemaker')?.invalid && (frm.get('homemaker')?.dirty || frm.get('homemaker')?.touched)">
-                           <small class="text-danger m-2" *ngIf="frm.get('homemaker')?.hasError('required')">กรุณาเลือกแม่บ้าน</small>
+                       <div *ngIf="frm.get('personnel')?.invalid && (frm.get('personnel')?.dirty || frm.get('personnel')?.touched)">
+                           <small class="text-danger m-2" *ngIf="frm.get('personnel')?.hasError('required')">กรุณาเลือกผู้ดูแล</small>
                        </div>
                 </div>
                 <div class="row">
@@ -44,13 +44,13 @@
         </div>
         <div class="col-md-12">
             <div class="row pt-3">
-                <div class="col-md-6 h6"><i class="fa-solid fa-user"></i> รายชื่อแม่บ้านที่รับผิดชอบ</div>
+                <div class="col-md-6 h6"><i class="fa-solid fa-user"></i> รายชื่อผู้ดูแล</div>
             </div>
         </div>
         <div class="col-md-12">
             <div class="row">
                 <div class="col-md-12">
-                    <div *ngIf="(itemRef?.data.length == 0)" class="text-center" >- ยังไม่มีแม่บ้าน -</div>
+                    <div *ngIf="(itemRef?.data.length == 0)" class="text-center" >- ยังไม่มีผู้ดูแล -</div>
                     <table class="table table-bordered table-hover border" *ngIf="itemRef && itemRef.data">
                         <!-- <thead>
                             <tr class="table-secondary">
@@ -62,7 +62,7 @@
                             <tr *ngFor="let element of itemRef.data">
                                 <td style="width: 5px;">
                                     <button type="button" class="btn btn-outline-danger btn-xs">
-                                        <i class="fa-solid fa-trash-can" (click)="delHomeMaker(element.roomAddHomemaker_id)"></i>
+                                        <i class="fa-solid fa-trash-can" (click)="delPersonnel(element.roomAddPersonnel_id)"></i>
                                     </button>
                                 </td>
                                 <td>

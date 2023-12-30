@@ -1,22 +1,22 @@
 <?php
 
-namespace App\Models\Homemaker;
+namespace App\Models\HomeMaker;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class tbRoomAddHomemaker extends Model
+class tbRoomAddPersonnel extends Model
 {
     use HasFactory;
     use SoftDeletes;
 
-    protected $primaryKey = "roomAddHomemaker_id";
-    protected $table = "homemaker_tbRoomAddHomemaker";
+    protected $primaryKey = "roomAddPersonnel_id";
+    protected $table = "homemaker_tbRoomAddPersonnel";
 
     protected $fillable = [
         'room_id',
-        'homemaker_id'
+        'personnel_id'
     ];
 
     protected $hidden = [

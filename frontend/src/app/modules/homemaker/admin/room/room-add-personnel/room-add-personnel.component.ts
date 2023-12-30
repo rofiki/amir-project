@@ -12,22 +12,21 @@ import { PersonnelService } from 'src/app/services/app/personnel.service';
 
 import { Select2Option, Select2UpdateEvent } from 'ng-select2-component';
 import { RoomAddHomemakerService } from 'src/app/services/homemaker/room-add-homemaker.service';
+import { RoomAddPersonnelService } from 'src/app/services/homemaker/room-add-personnel.service';
 
 @Component({
-  selector: 'app-room-add-homemaker',
-  templateUrl: './room-add-homemaker.component.html',
-  styleUrls: ['./room-add-homemaker.component.css']
+  selector: 'app-room-add-personnel',
+  templateUrl: './room-add-personnel.component.html',
+  styleUrls: ['./room-add-personnel.component.css']
 })
-export class RoomAddHomemakerComponent implements OnInit, OnDestroy {
+export class RoomAddPersonnelComponent implements OnInit, OnDestroy {
 
   public BASE_URL: string = this.appService.BASE_URL;
   public isProcess: boolean = false;
   public loadingData: boolean = false;
   private destroySubject: Subject<void> = new Subject(); // รวม subscribe เพื่อ unsub ทีเดียว
-  public roomId?: any;
 
   public frm!: FormGroup;
-  public frm2!: FormGroup;
   public getToken: any;
   public itemRef: any;
   public homeMakerRef: any;
@@ -39,7 +38,7 @@ export class RoomAddHomemakerComponent implements OnInit, OnDestroy {
     private auth: AuthService,
     private service: RoomService,
     private homeMakerService: HomemakerService,
-    private roomAddHomemakerService: RoomAddHomemakerService,
+    private roomAddPersonnelService: RoomAddPersonnelService,
     private personnelService: PersonnelService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
@@ -53,43 +52,14 @@ export class RoomAddHomemakerComponent implements OnInit, OnDestroy {
 
     this.formGroup();
     this.getData();
-    this.getHomemaker();
+    this.getPersonnel();
+
   }
 
-  formGroup() {
-    this.frm = this.fb.group({
-      homemaker: this.fb.control('', [Validators.required]),
-      // roomId: this.fb.control(this.roomId),
-    });
-  }
-
-  async getHomemaker() {
-    const token = this.auth.getToken();
-    this.homeMakerService.findAll(token)
-      .pipe(takeUntil(this.destroySubject))
-      .subscribe(r => {
-
-        this.roomAddHomemakerService.findById(this.roomId, token)
-          .pipe(takeUntil(this.destroySubject))
-          .subscribe(s => {
-
-            // กรองเอารายชื่อที่เป็นแม่บ้านแล้ว ออก
-            for (let i = 0; i < r.data.length; i++) {
-              s.data.forEach((dataS: any) => {
-                if (r?.data[i]?.id == dataS.homemaker_id) {
-                  r.data[i] = null;
-                }
-              });
-            }
-          });
-
-        this.homeMakerRef = r;
-      });
-  }
-
+  public roomId?: any;
   getData() {
     const token = this.auth.getToken();
-    this.roomAddHomemakerService.findById(this.roomId, token)
+    this.roomAddPersonnelService.findById(this.roomId, token)
       .pipe(takeUntil(this.destroySubject))
       .subscribe(res => {
         this.itemRef = res;
@@ -98,18 +68,52 @@ export class RoomAddHomemakerComponent implements OnInit, OnDestroy {
       });
   }
 
-  delHomeMaker(id: any) {
+  formGroup() {
+    this.frm = this.fb.group({
+      personnel: this.fb.control('', [Validators.required]),
+      // roomId: this.fb.control(this.roomId),
+    });
+  }
+
+  async getPersonnel() {
+    const token = this.auth.getToken();
+    // this.personnelRef = await lastValueFrom(this.personnelService.findAll(token));
+    this.personnelService.findAll(token)
+      .pipe()
+      .subscribe( r => {
+
+        this.roomAddPersonnelService.findById(this.roomId, token)
+          .pipe(takeUntil(this.destroySubject))
+          .subscribe(s => {
+
+            // กรองเอารายชื่อที่เป็นแม่บ้านแล้ว ออก
+            for (let i = 0; i < r.data.length; i++) {
+              s.data.forEach((dataS: any) => {
+                if (r?.data[i]?.id == dataS.personnel_id) {
+                  r.data[i] = null;
+                }
+              });
+            }
+          });
+
+        this.personnelRef = r;
+
+      });
+
+  }
+
+  delPersonnel(id: any) {
 
     if (confirm('ยืนยันการลบข้อมูล!')) {
       this.isProcess = true;
       const token = this.auth.getToken();
-      this.roomAddHomemakerService.delete(id, token)
+      this.roomAddPersonnelService.delete(id, token)
         .pipe(takeUntil(this.destroySubject))
         .subscribe(res => {
           if (res.status) {
             this.toastr.success('บันทึกข้อมูล', 'บันทึกข้อมูลเรียบร้อย', { timeOut: 1000, progressBar: true, });
-            this.getHomemaker();
             this.formGroup();
+            this.getPersonnel();
             this.getData();
             this.isProcess = false;
           } else {
@@ -128,23 +132,19 @@ export class RoomAddHomemakerComponent implements OnInit, OnDestroy {
     if (confirm('ยืนยันการทำรายการ!')) {
       this.isProcess = true;
       const token = this.auth.getToken();
-      this.roomAddHomemakerService.create(params, token)
+      this.roomAddPersonnelService.create(params, token)
         .pipe(takeUntil(this.destroySubject))
         .subscribe(res => {
           if (res.status) {
             this.toastr.success('บันทึกข้อมูล', 'บันทึกข้อมูลเรียบร้อย', { timeOut: 1000, progressBar: true, });
             this.isProcess = false;
-            this.getHomemaker();
             this.formGroup();
+            this.getPersonnel();
             this.getData();
           }
         });
 
     }
-  }
-
-  dropdown() {
-    console.log('dropdown', this.itemRef)
   }
 
   ngOnDestroy() {

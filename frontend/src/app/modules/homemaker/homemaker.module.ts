@@ -23,6 +23,7 @@ import { RoomAddComponent } from './admin/room/room-add/room-add.component';
 import { RoomEditComponent } from './admin/room/room-edit/room-edit.component';
 import { RoomAddHomemakerComponent } from './admin/room/room-add-homemaker/room-add-homemaker.component';
 import { Select2Module } from 'ng-select2-component';
+import { RoomAddPersonnelComponent } from './admin/room/room-add-personnel/room-add-personnel.component';
 
 
 
@@ -40,7 +41,8 @@ import { Select2Module } from 'ng-select2-component';
     HomemakerResetPasswordComponent,
     RoomAddComponent,
     RoomEditComponent,
-    RoomAddHomemakerComponent
+    RoomAddHomemakerComponent,
+    RoomAddPersonnelComponent
   ],
   imports: [
     CommonModule,

@@ -3,13 +3,12 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { DbService } from '../db.service';
 import { Observable } from 'rxjs';
-
 @Injectable({
   providedIn: 'root'
 })
-export class PersonnelService {
+export class RoomAddPersonnelService {
 
-  private apiUrl: string = this.dbService.getServiceURL() + '/personnel';
+  private apiUrl: string = this.dbService.getServiceURL() + '/homemaker/roompersonnel';
 
   constructor(
     private http: HttpClient,
@@ -27,7 +26,6 @@ export class PersonnelService {
   }
 
   public findAll(token:any): Observable<any> {
-
     return this.http.get(this.apiUrl + '', {
       headers: {
         'content-type': 'application/json',
@@ -35,7 +33,6 @@ export class PersonnelService {
       }
     });
   }
-
 
   public findById(id:any, token:any): Observable<any> {
     return this.http.get(this.apiUrl + '/' + id, {
@@ -55,17 +52,6 @@ export class PersonnelService {
     });
   }
 
-  // จะไปใช้ updatePassword ของ auth
-  public updatePassword(params: {}, id:any, token:any): Observable<any> {
-
-    return this.http.put(this.dbService.getServiceURL() + '/auth/reset/password/' + id, params, {
-      headers: {
-        'content-type': 'application/json',
-        'Authorization': 'Bearer ' + token
-      }
-    });
-  }
-
   public delete(id: any, token:any): Observable<any> {
     return this.http.delete<any>(this.apiUrl + '/' + id,{
       headers: {
@@ -74,4 +60,5 @@ export class PersonnelService {
       }
     });
   }
+
 }
