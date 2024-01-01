@@ -6,6 +6,8 @@ import { HeaderComponent } from './layout/header/header.component';
 import { FooterComponent } from './layout/footer/footer.component';
 import { SidebarComponent } from './layout/sidebar/sidebar.component';
 
+import { PaginationModule } from '../pagination/pagination/pagination.module';
+
 import { HomemakerRoutingModule } from './homemaker-routing.module';
 import { HomeComponent } from './home/home.component';
 import { RoomtypeComponent } from './admin/roomtype/roomtype.component';
@@ -24,6 +26,8 @@ import { RoomEditComponent } from './admin/room/room-edit/room-edit.component';
 import { RoomAddHomemakerComponent } from './admin/room/room-add-homemaker/room-add-homemaker.component';
 import { Select2Module } from 'ng-select2-component';
 import { RoomAddPersonnelComponent } from './admin/room/room-add-personnel/room-add-personnel.component';
+import { ChecklistAddComponent } from './admin/checklist/checklist-add/checklist-add.component';
+import { ChecklistEditComponent } from './admin/checklist/checklist-edit/checklist-edit.component';
 
 
 
@@ -42,7 +46,9 @@ import { RoomAddPersonnelComponent } from './admin/room/room-add-personnel/room-
     RoomAddComponent,
     RoomEditComponent,
     RoomAddHomemakerComponent,
-    RoomAddPersonnelComponent
+    RoomAddPersonnelComponent,
+    ChecklistAddComponent,
+    ChecklistEditComponent
   ],
   imports: [
     CommonModule,
@@ -56,7 +62,9 @@ import { RoomAddPersonnelComponent } from './admin/room/room-add-personnel/room-
     HttpClientModule,
     ReactiveFormsModule,
 
-    Select2Module
+    Select2Module,
+
+    PaginationModule
   ]
 })
 export class HomemakerModule { }

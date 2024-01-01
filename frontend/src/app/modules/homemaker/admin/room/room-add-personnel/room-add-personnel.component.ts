@@ -1,17 +1,11 @@
 import { Component, Input, OnDestroy, OnInit, TemplateRef } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { AppService } from 'src/app/services/app.service';
 import { AuthService } from 'src/app/services/app/auth.service';
 import { Subject, lastValueFrom, takeUntil } from 'rxjs';
-import { RoomService } from 'src/app/services/homemaker/room.service';
 import { BsModalRef, BsModalService, ModalOptions } from 'ngx-bootstrap/modal';
-import { HomemakerService } from 'src/app/services/homemaker/homemaker.service';
 import { PersonnelService } from 'src/app/services/app/personnel.service';
-
-import { Select2Option, Select2UpdateEvent } from 'ng-select2-component';
-import { RoomAddHomemakerService } from 'src/app/services/homemaker/room-add-homemaker.service';
 import { RoomAddPersonnelService } from 'src/app/services/homemaker/room-add-personnel.service';
 
 @Component({
@@ -36,14 +30,9 @@ export class RoomAddPersonnelComponent implements OnInit, OnDestroy {
     private appService: AppService,
     private toastr: ToastrService,
     private auth: AuthService,
-    private service: RoomService,
-    private homeMakerService: HomemakerService,
     private roomAddPersonnelService: RoomAddPersonnelService,
     private personnelService: PersonnelService,
-    private router: Router,
-    private activatedRoute: ActivatedRoute,
     private fb: FormBuilder,
-    // private modalService: BsModalService,
     public bsModalRef: BsModalRef
 
   ) { }
@@ -58,7 +47,9 @@ export class RoomAddPersonnelComponent implements OnInit, OnDestroy {
 
   public roomId?: any;
   getData() {
+
     const token = this.auth.getToken();
+    
     this.roomAddPersonnelService.findById(this.roomId, token)
       .pipe(takeUntil(this.destroySubject))
       .subscribe(res => {
@@ -71,13 +62,13 @@ export class RoomAddPersonnelComponent implements OnInit, OnDestroy {
   formGroup() {
     this.frm = this.fb.group({
       personnel: this.fb.control('', [Validators.required]),
-      // roomId: this.fb.control(this.roomId),
     });
   }
 
   async getPersonnel() {
+
     const token = this.auth.getToken();
-    // this.personnelRef = await lastValueFrom(this.personnelService.findAll(token));
+
     this.personnelService.findAll(token)
       .pipe()
       .subscribe( r => {
@@ -105,11 +96,14 @@ export class RoomAddPersonnelComponent implements OnInit, OnDestroy {
   delPersonnel(id: any) {
 
     if (confirm('ยืนยันการลบข้อมูล!')) {
+
       this.isProcess = true;
       const token = this.auth.getToken();
+
       this.roomAddPersonnelService.delete(id, token)
         .pipe(takeUntil(this.destroySubject))
         .subscribe(res => {
+
           if (res.status) {
             this.toastr.success('บันทึกข้อมูล', 'บันทึกข้อมูลเรียบร้อย', { timeOut: 1000, progressBar: true, });
             this.formGroup();
@@ -120,6 +114,7 @@ export class RoomAddPersonnelComponent implements OnInit, OnDestroy {
             this.toastr.error('ผลการทำรายการ', 'ลบข้อมูลไม่สำเร็จ กรุณาติดต่อผู้ดูแลระบบ', { timeOut: 1500, progressBar: true, });
             this.isProcess = false;
           }
+
         });
     }
   }
@@ -130,11 +125,14 @@ export class RoomAddPersonnelComponent implements OnInit, OnDestroy {
     params.roomId = this.roomId;
 
     if (confirm('ยืนยันการทำรายการ!')) {
+
       this.isProcess = true;
       const token = this.auth.getToken();
+
       this.roomAddPersonnelService.create(params, token)
         .pipe(takeUntil(this.destroySubject))
         .subscribe(res => {
+
           if (res.status) {
             this.toastr.success('บันทึกข้อมูล', 'บันทึกข้อมูลเรียบร้อย', { timeOut: 1000, progressBar: true, });
             this.isProcess = false;
@@ -142,6 +140,7 @@ export class RoomAddPersonnelComponent implements OnInit, OnDestroy {
             this.getPersonnel();
             this.getData();
           }
+
         });
 
     }
@@ -150,6 +149,7 @@ export class RoomAddPersonnelComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     // Unsubscribe from all observables
     this.destroySubject.next();
+    this.destroySubject.unsubscribe();
   }
 
 }

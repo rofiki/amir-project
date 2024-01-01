@@ -10,21 +10,49 @@
         <app-header></app-header>
         <!-- Page content-->
         <div class="container-fluid ps-md-5 pe-md-5">
-            <h1 class="mt-4">Check List สำหรับแม่บ้าน</h1>
+            <h1 class="mt-4">แบบฟอร์มตรวจห้อง</h1>
             <p>ระบบติดตามงานแม่บ้าน</p>
 
             <div class="row border shadow-sm bg-body-tertiary p-md-3">
                 <div class="col-md-12">
-                    <div class="row border-bottom pt-3 pb-3">
-เนื้อหา
-                </div>
-
-                <div class="col-md-12">
-                    <div class="row pt-3">
-
+                    <div class="row border-bottom pt-1 pb-1">
+                        <div class="col-md-6 h5">รายการแบบฟอร์มตรวจห้อง</div>
+                        <div class="col-md-6 text-md-end">
+                            <a class="btn btn-primary btn-sm" href="javascript:void(0)"
+                                [routerLink]="[BASE_URL + '/homemaker/admin/checklist/add']"><i class="fa-solid fa-file-circle-plus"></i> สร้างแบบฟอร์มตรวจห้อง</a>
+                        </div>
                     </div>
                 </div>
-            </div>
+                <div class="col-md-12 pt-2">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <table class="table table-striped mt-1 border" *ngIf="itemRef && itemRef.data">
+                                <thead>
+                                    <tr>
+                                        <th>รายการแบบฟอร์ม</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <div *ngIf="(itemRef.meta.total == 0); then showDataZero else showData"></div>
+                                <ng-template #showDataZero><tbody><tr><td colspan="25"><p class="text-center p-2"> - ไม่พบข้อมูล - </p></td></tr></tbody></ng-template>
+                                <ng-template #showData>
+                                <tbody >
+                                    <tr *ngIf="loadingData"><td colspan="10"><i class="fa-solid fa-spinner fa-spin"></i> Loading...</td></tr>
+                                    <tr *ngFor="let element of itemRef.data">
+                                        <td class="w-auto">
+                                            {{element.checklistName}}
+                                        </td>
+                                        <td class="w-auto text-end">
+                                            <a [routerLink]="[BASE_URL + '/homemaker/admin/checklist/detail', element.checklist_id]" class="btn btn-primary btn-xs me-1 pe-2 ps-2"><i class="fa-solid fa-file"></i> ดูตัวอย่าง</a>
+                                            <a [routerLink]="[BASE_URL + '/homemaker/admin/checklist/edit', element.checklist_id]" class="btn btn-primary btn-xs pe-2 ps-2"><i class="fa-solid fa-pen"></i> แก้ไข</a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                </ng-template>
+                            </table>
+                        </div>
+                    </div>
+                </div>
         </div>
     </div>
 </div>

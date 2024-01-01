@@ -1,14 +1,9 @@
-import { Component, Input, OnDestroy, OnInit, Output, TemplateRef } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { AfterViewInit, Component, Input, OnDestroy, OnInit, Output, TemplateRef } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { AppService } from 'src/app/services/app.service';
 import { AuthService } from 'src/app/services/app/auth.service';
-import { jwtDecode } from 'jwt-decode';
 import { RoomService } from 'src/app/services/homemaker/room.service';
 import { BsModalRef, BsModalService, ModalOptions } from 'ngx-bootstrap/modal';
-import { HomemakerService } from 'src/app/services/homemaker/homemaker.service';
-import { PersonnelService } from 'src/app/services/app/personnel.service';
 import { RoomAddHomemakerComponent } from './room-add-homemaker/room-add-homemaker.component';
 
 import { combineLatest, Subscription, lastValueFrom, take, takeUntil, Subject } from 'rxjs';
@@ -31,9 +26,6 @@ export class RoomComponent implements OnInit, OnDestroy {
   public isProcess: boolean = false;
   public loadingData: boolean = false;
 
-  public frm!: FormGroup;
-  public frm2!: FormGroup;
-  public getToken: any;
   public itemRef: any;
   public roomAddHomemakerRef: any;
   public roomAddHomemakerRefTest: any;
@@ -45,13 +37,8 @@ export class RoomComponent implements OnInit, OnDestroy {
     private toastr: ToastrService,
     private auth: AuthService,
     private service: RoomService,
-    private homeMakerService: HomemakerService,
-    private personnelService: PersonnelService,
     private roomAddHomemakerService: RoomAddHomemakerService,
     private roomAddPersonnelService:RoomAddPersonnelService,
-    private router: Router,
-    private activatedRoute: ActivatedRoute,
-    private fb: FormBuilder,
     private modalService: BsModalService
 
   ) { }
@@ -71,9 +58,6 @@ export class RoomComponent implements OnInit, OnDestroy {
     .pipe(takeUntil(this.destroySubject))
     .subscribe(r => {
       this.itemRef = r;
-
-      const fromDb = undefined;
-      const arr:any = fromDb || [];
 
       this.itemRef.data.forEach((data:any) => {
         
@@ -133,17 +117,10 @@ export class RoomComponent implements OnInit, OnDestroy {
     }
   }
 
-
-
-  // async getPersonnel() {
-  //   const token = this.auth.getToken();
-  //   this.personnelRef = await lastValueFrom(this.personnelService.findAll(token));
-  //   console.log('personnel', this.personnelRef)
-  // }
-
   ngOnDestroy() {
     // Unsubscribe from all observables
     this.destroySubject.next();
+    this.destroySubject.unsubscribe();
   }
   
 

@@ -1,0 +1,85 @@
+<!-- <mat-toolbar *ngIf=" length > 0">
+    <span style="margin-left: 20%" class="responsive-view"> {{ 1 + (pageOffset * (pageIndex - 1)) }}
+      - {{ (pageOffset * pageIndex) <= length ? pageOffset * pageIndex : length }}
+      of {{ length }}</span>
+    <span style="margin-left: 20%" class="responsive-view margin-for-mobile">
+      <button [disabled]="pageIndex <= 1" (click)="getFirstPage()">
+        <i class="material-icons">first_page</i>
+      </button>
+      <button [disabled]="pageIndex <= 1" (click)="getPreviousPage()">
+        <i class="material-icons">chevron_left</i>
+      </button>
+      <button [disabled]="this.pageOffset * this.pageIndex > length" (click)="getNextPage()">
+        <i class="material-icons">chevron_right</i>
+      </button>
+      <button matTooltip="Info about the action" [disabled]="this.pageOffset * this.pageIndex > length" (click)="getLastPage()">
+        <i class="material-icons">last_page</i>
+      </button>
+    </span>
+  </mat-toolbar> -->
+
+  <nav aria-label="Page navigation example">
+    <ul class="pagination">
+      <li class="page-item">
+        <button class="page-link btn btn-primary" [disabled]="pageIndex <= 1" (click)="getFirstPage()">
+            <i class="fa-solid fa-angles-left"></i>
+        </button>
+      </li>
+      <li class="page-item">
+        <button class="page-link btn btn-primary" [disabled]="pageIndex <= 1" (click)="getPreviousPage()">
+            <i class="fa-solid fa-angle-left"></i>
+          </button>
+      </li>
+      <li class="page-item">
+        <button class="page-link btn btn-primary" [disabled]="this.pageOffset * this.pageIndex > length" (click)="getNextPage()">
+            <i class="fa-solid fa-angle-right"></i>
+          </button>
+      </li>
+      <li class="page-item">
+        <button class="page-link btn btn-primary" [disabled]="this.pageOffset * this.pageIndex > length" (click)="getLastPage()">
+            <i class="fa-solid fa-angles-right"></i>
+          </button>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- <div class="btn-group" role="group" *ngIf=" length > 0">
+    <button type="button" aria-label="Previous"  [disabled]="pageIndex <= 1" (click)="getFirstPage()" class="btn btn-outline-primary">
+        หน้าแรก
+    </button>
+    <button type="button" aria-label="Previous" [disabled]="pageIndex <= 1" (click)="getPreviousPage()" class="btn btn-outline-primary">
+        <span aria-hidden="true">&laquo;</span>
+    </button>
+    <button type="button" aria-label="Previous" [disabled]="pageIndex <= 1" (click)="getPreviousPage()" class="btn btn-outline-primary">
+        <span aria-hidden="true">&laquo;</span>
+    </button>
+    <button type="button" class="btn btn-outline-primary">Middle</button>
+    <button type="button" class="btn btn-outline-primary" [disabled]="this.pageOffset * this.pageIndex > length" (click)="getLastPage()">
+    
+    </button>
+  </div> -->
+
+  <div class="btn-group" role="group" *ngIf="meta?.total > meta?.per_page">
+
+<div *ngFor="let page of meta.links">
+    <button type="button" class="btn btn-outline-primary">
+        {{page.label}}
+    </button>
+    </div>
+
+    <!-- <button type="button" aria-label="Previous"  [disabled]="pageIndex <= 1" (click)="getFirstPage()" class="btn btn-outline-primary">
+        หน้าแรก
+    </button>
+    <button type="button" aria-label="Previous" [disabled]="pageIndex <= 1" (click)="getPreviousPage()" class="btn btn-outline-primary">
+        <span aria-hidden="true">&laquo;</span>
+    </button>
+    <button type="button" aria-label="Previous" [disabled]="pageIndex <= 1" (click)="getPreviousPage()" class="btn btn-outline-primary">
+        <span aria-hidden="true">&laquo;</span>
+    </button>
+    <button type="button" class="btn btn-outline-primary">Middle</button>
+    <button type="button" class="btn btn-outline-primary" [disabled]="this.pageOffset * this.pageIndex > length" (click)="getLastPage()">
+    
+    </button> -->
+  </div>
+
+  {{meta?.links?.length}}

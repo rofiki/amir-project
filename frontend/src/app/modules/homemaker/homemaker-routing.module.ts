@@ -10,18 +10,23 @@ import { HomemakerAddComponent } from './admin/homemaker/homemaker-add/homemaker
 import { HomemakerEditComponent } from './admin/homemaker/homemaker-edit/homemaker-edit.component';
 import { RoomAddComponent } from './admin/room/room-add/room-add.component';
 import { RoomEditComponent } from './admin/room/room-edit/room-edit.component';
+import { ChecklistAddComponent } from './admin/checklist/checklist-add/checklist-add.component';
+import { ChecklistEditComponent } from './admin/checklist/checklist-edit/checklist-edit.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
 
-  //ประเภทห้อง
+  // ประเภทห้อง
   { path: 'admin/roomtype', component: RoomtypeComponent },
   { path: 'admin/roomtype/edit/:id', component: EditComponent },
 
+  // checklsit
   { path: 'admin/checklist', component: ChecklistComponent },
+  { path: 'admin/checklist/add', component: ChecklistAddComponent },
+  { path: 'admin/checklist/edit/:id', component: ChecklistEditComponent },
 
-  //ห้อง
+  // ห้อง
   { path: 'admin/room', component: RoomComponent },
   { path: 'admin/room/add', component: RoomAddComponent },
   { path: 'admin/room/edit/:id', component: RoomEditComponent },

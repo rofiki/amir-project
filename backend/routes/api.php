@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\AuthAdminController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CompanyController;
 use App\Http\Controllers\Api\DepartmentController;
+use App\Http\Controllers\Api\HomeMaker\ChecklistController;
 use App\Http\Controllers\Api\JobPositionController;
 use App\Http\Controllers\Api\ProvinceController;
 use App\Http\Controllers\Api\HomeMaker\HomemakerController;
@@ -85,15 +86,18 @@ Route::middleware('auth:sanctum')->group(function () {
     });
 });
 
+// ห้อง เพิ่มแม่บ้าน
 Route::apiResource('homemaker/roomhomemaker', RoomAddHomemakerController::class);
+
+// ห้อง เพิ่มผู้ดูแล
 Route::apiResource('homemaker/roompersonnel', RoomAddPersonnelController::class);
+
+// checklist
+Route::apiResource('homemaker/checklist', ChecklistController::class);
 
 //Login เข้าสู่ระบบ สำหรับ Admin และ บุคลากร
 Route::post('login', [AuthController::class, 'login']);
-// Http::post('login', [AuthController::class, 'login']);
 // Route::post('loginadmin', [AuthAdminController::class, 'login']);
-
-// Http::withOptions(['version' => 2.0])->post('login', [AuthController::class, 'login']);
 
 // คำนำหน้าชื่อ
 Route::apiResource('prename', PrenameController::class);

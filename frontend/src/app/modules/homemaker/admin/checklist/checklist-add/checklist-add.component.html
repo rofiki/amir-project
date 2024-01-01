@@ -1,0 +1,65 @@
+<div class="d-flex bg-content" id="wrapper">
+    <!-- Sidebar-->
+    <div class="shadow bg-body-tertiary " id="sidebar-wrapper">
+        <app-sidebar></app-sidebar>
+    </div>
+
+    <!-- Page content wrapper-->
+    <div id="page-content-wrapper">
+        <!-- Top navigation-->
+        <app-header></app-header>
+        <!-- Page content-->
+        <div class="container-fluid ps-md-5 pe-md-5 pb-5">
+            <h1 class="mt-4">แบบฟอร์มตรวจห้อง</h1>
+            <p>ระบบติดตามงานแม่บ้าน</p>
+
+            <div class="row border shadow-sm bg-body-tertiary p-md-3">
+                <div class="col-md-12">
+                    <div class="row border-bottom pt-1 pb-1">
+                        <div class="col-md-6 h5">สร้างแบบฟอร์มตรวจห้อง</div>
+                    </div>
+                    <div class="col-md-12 pt-2">
+
+                        <form [formGroup]="frm" (ngSubmit)="onSubmit()" >
+
+                            <div class="row">
+
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="mb-3">
+                                                <label for="name" class="form-label">ชื่อแบบฟอร์ม</label>
+                                                <input type="text" class="form-control" id="name" placeholder="ชื่อแบบฟอร์ม" maxlength="255"
+                                                formControlName="name"
+                                                [class.is-invalid]="(frm.get('name')?.invalid && (frm.get('name')?.dirty || frm.get('name')?.touched))"
+                                                [class.is-valid]="(frm.get('name')?.valid && (frm.get('name')?.dirty || frm.get('name')?.touched))"
+                                                >
+                                                <div *ngIf="frm.get('name')?.invalid && (frm.get('name')?.dirty || frm.get('name')?.touched)">
+                                                    <small class="text-danger m-2" *ngIf="frm.get('name')?.hasError('required')">กรุณากรอกชื่อฟอร์ม</small>
+                                                </div> 
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="mb-3">
+                                                <button type="submit" class="btn btn-primary btn-sm me-1 ps-3 pe-3" [disabled]="frm.invalid" *ngIf="!isProcess"><i class="fa-regular fa-floppy-disk"></i> บันทึก</button>
+                                            <button type="submit" class="btn btn-primary btn-sm me-1 ps-3 pe-3" [disabled]="true"  *ngIf="isProcess">
+                                                <i class="fa-solid fa-spinner fa-spin"></i>
+                                            </button>
+                                                <a class="btn btn-secondary btn-sm ps-3 pe-3"
+                                                    [routerLink]="[BASE_URL + '/homemaker/admin/checklist']"><i class="fa-regular fa-circle-xmark"></i> ยกเลิก</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <app-footer></app-footer>

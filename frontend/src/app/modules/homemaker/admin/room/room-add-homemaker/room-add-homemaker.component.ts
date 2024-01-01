@@ -1,6 +1,5 @@
 import { Component, Input, OnDestroy, OnInit, TemplateRef } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { AppService } from 'src/app/services/app.service';
 import { AuthService } from 'src/app/services/app/auth.service';
@@ -8,9 +7,7 @@ import { Subject, lastValueFrom, takeUntil } from 'rxjs';
 import { RoomService } from 'src/app/services/homemaker/room.service';
 import { BsModalRef, BsModalService, ModalOptions } from 'ngx-bootstrap/modal';
 import { HomemakerService } from 'src/app/services/homemaker/homemaker.service';
-import { PersonnelService } from 'src/app/services/app/personnel.service';
 
-import { Select2Option, Select2UpdateEvent } from 'ng-select2-component';
 import { RoomAddHomemakerService } from 'src/app/services/homemaker/room-add-homemaker.service';
 
 @Component({
@@ -27,8 +24,6 @@ export class RoomAddHomemakerComponent implements OnInit, OnDestroy {
   public roomId?: any;
 
   public frm!: FormGroup;
-  public frm2!: FormGroup;
-  public getToken: any;
   public itemRef: any;
   public homeMakerRef: any;
   public personnelRef: any;
@@ -40,9 +35,6 @@ export class RoomAddHomemakerComponent implements OnInit, OnDestroy {
     private service: RoomService,
     private homeMakerService: HomemakerService,
     private roomAddHomemakerService: RoomAddHomemakerService,
-    private personnelService: PersonnelService,
-    private router: Router,
-    private activatedRoute: ActivatedRoute,
     private fb: FormBuilder,
     // private modalService: BsModalService,
     public bsModalRef: BsModalRef
@@ -51,6 +43,7 @@ export class RoomAddHomemakerComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
 
+    this.loadingData = true;
     this.formGroup();
     this.getData();
     this.getHomemaker();
@@ -150,6 +143,7 @@ export class RoomAddHomemakerComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     // Unsubscribe from all observables
     this.destroySubject.next();
+    this.destroySubject.unsubscribe();
   }
 
 }
