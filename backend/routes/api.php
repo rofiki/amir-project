@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\HomeMaker\ChecklistController;
 use App\Http\Controllers\Api\JobPositionController;
 use App\Http\Controllers\Api\ProvinceController;
 use App\Http\Controllers\Api\HomeMaker\HomemakerController;
+use App\Http\Controllers\Api\HomeMaker\RoomAddChecklistController;
 use App\Http\Controllers\Api\HomeMaker\RoomAddHomemakerController;
 use App\Http\Controllers\Api\HomeMaker\RoomAddPersonnelController;
 use App\Http\Controllers\Api\HomeMaker\RoomController;
@@ -91,6 +92,9 @@ Route::apiResource('homemaker/roomhomemaker', RoomAddHomemakerController::class)
 
 // ห้อง เพิ่มผู้ดูแล
 Route::apiResource('homemaker/roompersonnel', RoomAddPersonnelController::class);
+
+// ห้อง เพิ่ม checklist
+Route::apiResource('homemaker/roomchecklist', RoomAddChecklistController::class);
 
 // checklist
 Route::apiResource('homemaker/checklist', ChecklistController::class);
