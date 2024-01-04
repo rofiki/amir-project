@@ -28,6 +28,7 @@ import { Select2Module } from 'ng-select2-component';
 import { RoomAddPersonnelComponent } from './admin/room/room-add-personnel/room-add-personnel.component';
 import { ChecklistAddComponent } from './admin/checklist/checklist-add/checklist-add.component';
 import { ChecklistEditComponent } from './admin/checklist/checklist-edit/checklist-edit.component';
+import { RoomAddChecklistComponent } from './admin/room/room-add-checklist/room-add-checklist.component';
 
 
 
@@ -48,7 +49,8 @@ import { ChecklistEditComponent } from './admin/checklist/checklist-edit/checkli
     RoomAddHomemakerComponent,
     RoomAddPersonnelComponent,
     ChecklistAddComponent,
-    ChecklistEditComponent
+    ChecklistEditComponent,
+    RoomAddChecklistComponent
   ],
   imports: [
     CommonModule,

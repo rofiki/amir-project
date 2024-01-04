@@ -34,7 +34,6 @@ export class RoomAddChecklistService {
       }
     });
   }
-
   public findById(id:any, token:any): Observable<any> {
     return this.http.get(this.apiUrl + '/' + id, {
       headers: {

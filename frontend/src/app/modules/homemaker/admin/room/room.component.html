@@ -85,10 +85,20 @@
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <!-- <button type="button" class="btn btn-primary btn-xs"
-                                                        (click)="openModalChecklist(templateAddChecklist)"><i
-                                                            class="fa-solid fa-gear"></i> จัดการ</button> -->
-                                                        </td>
+                                                    <div>
+                                                        <button type="button" class="btn btn-primary btn-xs"(click)="openModalChecklist(element.roomId)">
+                                                            <i class="fa-solid fa-gear"></i> จัดการ
+                                                        </button>
+                                                    </div>
+                                                    <div *ngIf="(element?.personnel?.length == 0)" class="text-secondary" >- ยังไม่มีแบบฟอร์มตรวจห้อง</div>
+                                                    <div *ngIf="element.personnel">
+                                                        <div  *ngFor="let personnel of element.personnel">
+                                                            <div>
+                                                                <i class="fa-solid fa-user"></i> {{ personnel.prename_id }}{{ personnel.firstname }} {{ personnel.lastname }}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
                                             </tr>
                                         </tbody>
                                     </ng-template>

@@ -10,6 +10,7 @@ import { combineLatest, Subscription, lastValueFrom, take, takeUntil, Subject } 
 import { RoomAddHomemakerService } from 'src/app/services/homemaker/room-add-homemaker.service';
 import { RoomAddPersonnelComponent } from './room-add-personnel/room-add-personnel.component';
 import { RoomAddPersonnelService } from 'src/app/services/homemaker/room-add-personnel.service';
+import { RoomAddChecklistComponent } from './room-add-checklist/room-add-checklist.component';
 
 @Component({
   selector: 'app-room',
@@ -104,17 +105,20 @@ export class RoomComponent implements OnInit, OnDestroy {
       this.modalService.onHide.subscribe((reason: string | any) => {
         this.getData();
       })
-    );  }
-
-  // ##### modal check list
-  openModalChecklist(template: TemplateRef<void>) {
-    this.modalRef = this.modalService.show(template, Object.assign({}, { class: 'gray modal-lg' }));
+    );  
   }
 
-  delChecklist(id: any) {
-    if (confirm('ยืนยันการทำรายการ!')) {
-      console.log(id)
-    }
+  // ##### modal check list
+  openModalChecklist(roomId:any) {
+    const initialState: ModalOptions = { initialState: { roomId: roomId, } };
+    this.modalRef = this.modalService.show(RoomAddChecklistComponent, initialState);
+    this.modalRef.setClass('modal-lg');
+
+    this.subscriptions.add(
+      this.modalService.onHide.subscribe((reason: string | any) => {
+        this.getData();
+      })
+    );  
   }
 
   ngOnDestroy() {
