@@ -11,6 +11,7 @@ import { RoomAddHomemakerService } from 'src/app/services/homemaker/room-add-hom
 import { RoomAddPersonnelComponent } from './room-add-personnel/room-add-personnel.component';
 import { RoomAddPersonnelService } from 'src/app/services/homemaker/room-add-personnel.service';
 import { RoomAddChecklistComponent } from './room-add-checklist/room-add-checklist.component';
+import { RoomAddChecklistService } from 'src/app/services/homemaker/room-add-checklist.service';
 
 @Component({
   selector: 'app-room',
@@ -40,6 +41,7 @@ export class RoomComponent implements OnInit, OnDestroy {
     private service: RoomService,
     private roomAddHomemakerService: RoomAddHomemakerService,
     private roomAddPersonnelService:RoomAddPersonnelService,
+    private roomAddChecklistService: RoomAddChecklistService,
     private modalService: BsModalService
 
   ) { }
@@ -72,6 +74,12 @@ export class RoomComponent implements OnInit, OnDestroy {
         .pipe(takeUntil(this.destroySubject))
         .subscribe(roomAddPersonnel => {
           data.personnel = roomAddPersonnel.data;
+        });
+
+        this.roomAddChecklistService.findById(data.roomId, token)
+        .pipe(takeUntil(this.destroySubject))
+        .subscribe(RoomAddChecklist => {
+          data.checklist = RoomAddChecklist.data;
         });
 
       });

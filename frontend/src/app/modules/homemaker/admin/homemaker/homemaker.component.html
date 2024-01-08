@@ -18,7 +18,7 @@
                     <div class="row border-bottom pt-1 pb-1">
                         <div class="col-md-6 h5">รายชื่อแม่บ้าน</div>
                         <div class="col-md-6 text-md-end">
-                            <a class="btn btn-primary btn-sm" href="javascript:void(0)" [routerLink]="[BASE_URL + '/homemaker/admin/homemaker/add']">เพิ่มแม่บ้าน</a></div>
+                            <a class="btn btn-primary btn-sm" href="javascript:void(0)" [routerLink]="[BASE_URL + '/homemaker/admin/homemaker/add']"><i class="fa-solid fa-plus"></i> เพิ่มแม่บ้าน</a></div>
                     </div>
                 </div>
                 <div class="col-md-12 pt-2">
@@ -38,7 +38,7 @@
                                     <tr *ngIf="loadingData"><td colspan="10"><i class="fa-solid fa-spinner fa-spin"></i> Loading...</td></tr>
                                     <tr *ngFor="let element of itemRef.data">
                                         <td class="w-auto">
-                                            <a [routerLink]="[BASE_URL + '/homemaker/admin/homemaker/edit', element.checklist_id]" class="link-underline link-underline-opacity-0">{{element.name}}{{element.firstname}} {{element.lastname}}</a>
+                                            <a [routerLink]="[BASE_URL + '/homemaker/admin/homemaker/edit', element.id]" class="link-underline link-underline-opacity-0">{{element.name}}{{element.firstname}} {{element.lastname}}</a>
                                         </td>
                                         <td class="w-auto"></td>
                                     </tr>

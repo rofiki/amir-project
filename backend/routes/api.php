@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CompanyController;
 use App\Http\Controllers\Api\DepartmentController;
 use App\Http\Controllers\Api\HomeMaker\ChecklistController;
+use App\Http\Controllers\Api\HomeMaker\ChecklistSubController;
 use App\Http\Controllers\Api\JobPositionController;
 use App\Http\Controllers\Api\ProvinceController;
 use App\Http\Controllers\Api\HomeMaker\HomemakerController;
@@ -98,6 +99,8 @@ Route::apiResource('homemaker/roomchecklist', RoomAddChecklistController::class)
 
 // checklist
 Route::apiResource('homemaker/checklist', ChecklistController::class);
+Route::apiResource('homemaker/checklistsub', ChecklistSubController::class);
+Route::get('/homemaker/checklistsubbychecklist/{id}', [ChecklistSubController::class, 'showByChecklistId']);
 
 //Login เข้าสู่ระบบ สำหรับ Admin และ บุคลากร
 Route::post('login', [AuthController::class, 'login']);

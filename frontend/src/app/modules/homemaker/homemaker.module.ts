@@ -29,6 +29,8 @@ import { RoomAddPersonnelComponent } from './admin/room/room-add-personnel/room-
 import { ChecklistAddComponent } from './admin/checklist/checklist-add/checklist-add.component';
 import { ChecklistEditComponent } from './admin/checklist/checklist-edit/checklist-edit.component';
 import { RoomAddChecklistComponent } from './admin/room/room-add-checklist/room-add-checklist.component';
+import { ChecklistDetailComponent } from './admin/checklist/checklist-detail/checklist-detail.component';
+import { ChecklistAddChoiceComponent } from './admin/checklist/checklist-add-choice/checklist-add-choice.component';
 
 
 
@@ -50,7 +52,9 @@ import { RoomAddChecklistComponent } from './admin/room/room-add-checklist/room-
     RoomAddPersonnelComponent,
     ChecklistAddComponent,
     ChecklistEditComponent,
-    RoomAddChecklistComponent
+    RoomAddChecklistComponent,
+    ChecklistDetailComponent,
+    ChecklistAddChoiceComponent
   ],
   imports: [
     CommonModule,

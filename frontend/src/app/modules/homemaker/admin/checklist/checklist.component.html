@@ -19,7 +19,7 @@
                         <div class="col-md-6 h5">รายการแบบฟอร์มตรวจห้อง</div>
                         <div class="col-md-6 text-md-end">
                             <a class="btn btn-primary btn-sm" href="javascript:void(0)"
-                                [routerLink]="[BASE_URL + '/homemaker/admin/checklist/add']"><i class="fa-solid fa-file-circle-plus"></i> สร้างแบบฟอร์มตรวจห้อง</a>
+                                [routerLink]="[BASE_URL + '/homemaker/admin/checklist/add']"><i class="fa-solid fa-plus"></i> สร้างแบบฟอร์มตรวจห้อง</a>
                         </div>
                     </div>
                 </div>
@@ -40,11 +40,11 @@
                                     <tr *ngIf="loadingData"><td colspan="10"><i class="fa-solid fa-spinner fa-spin"></i> Loading...</td></tr>
                                     <tr *ngFor="let element of itemRef.data">
                                         <td class="w-auto">
-                                            {{element.checklistName}}
+                                            <!-- <a [routerLink]="[BASE_URL + '/homemaker/admin/checklist/detail', element.checklist_id]">{{element.checklistName}}</a> -->
+                                            <a href="javascript:void(0)" (click)="openModalChecklist(element.checklist_id)" class="link-underline link-underline-opacity-0">{{element.checklistName}}</a>
                                         </td>
                                         <td class="w-auto text-end">
-                                            <a [routerLink]="[BASE_URL + '/homemaker/admin/checklist/detail', element.checklist_id]" class="btn btn-primary btn-xs me-1 pe-2 ps-2"><i class="fa-solid fa-file"></i> ดูตัวอย่าง</a>
-                                            <a [routerLink]="[BASE_URL + '/homemaker/admin/checklist/edit', element.checklist_id]" class="btn btn-primary btn-xs pe-2 ps-2"><i class="fa-solid fa-pen"></i> แก้ไข</a>
+                                            <a [routerLink]="[BASE_URL + '/homemaker/admin/checklist/edit', element.checklist_id]" class="btn btn-primary btn-xs pe-2 ps-2"><i class="fa-solid fa-gear"></i> จัดการแบบฟอร์ม</a>
                                         </td>
                                     </tr>
                                 </tbody>

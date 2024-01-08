@@ -1,1 +1,178 @@
-<p>checklist-edit works!</p>
+<div class="d-flex bg-content" id="wrapper">
+    <!-- Sidebar-->
+    <div class="shadow bg-body-tertiary " id="sidebar-wrapper">
+        <app-sidebar></app-sidebar>
+    </div>
+
+    <!-- Page content wrapper-->
+    <div id="page-content-wrapper">
+        <!-- Top navigation-->
+        <app-header></app-header>
+        <!-- Page content-->
+        <div class="container-fluid ps-md-5 pe-md-5 pb-5">
+            <h1 class="mt-4">แบบฟอร์มตรวจห้อง</h1>
+            <p>ระบบติดตามงานแม่บ้าน</p>
+
+            <div class="row border shadow-sm bg-body-tertiary p-md-3" >
+                <div class="col-md-12">
+                    <div class="row border-bottom pt-1 pb-1">
+                        <div class="col-md-6 h5">สร้างแบบฟอร์มตรวจห้อง</div>
+                    </div>
+                    <div class="col-md-12 pt-2" *ngIf="(itemRef)">
+
+                        <form [formGroup]="frm" (ngSubmit)="onSubmit()"  >
+
+                            <div class="row">
+
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div>
+                                                <label for="name" class="form-label">ชื่อแบบฟอร์ม</label>
+                                                <input type="text" class="form-control" id="name" placeholder="ชื่อแบบฟอร์ม" maxlength="255"
+                                                formControlName="name" [(ngModel)]="itemRef.checklistName"
+                                                [class.is-invalid]="(frm.get('name')?.invalid && (frm.get('name')?.dirty || frm.get('name')?.touched))"
+                                                [class.is-valid]="(frm.get('name')?.valid && (frm.get('name')?.dirty || frm.get('name')?.touched))"
+                                                >
+                                                <div *ngIf="frm.get('name')?.invalid && (frm.get('name')?.dirty || frm.get('name')?.touched)">
+                                                    <small class="text-danger m-2" *ngIf="frm.get('name')?.hasError('required')">กรุณากรอกชื่อฟอร์ม</small>
+                                                </div> 
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="mb-3 pt-3">
+                                        <button type="submit" class="btn btn-primary btn-sm me-1 ps-3 pe-3" [disabled]="frm.invalid" *ngIf="!isProcess"><i class="fa-solid fa-check"></i> แก้ไขชื่อแบบฟอร์ม</button>
+                                        <button type="submit" class="btn btn-primary btn-sm me-1 ps-3 pe-3" [disabled]="true"  *ngIf="isProcess">
+                                            <i class="fa-solid fa-spinner fa-spin"></i>
+                                        </button>
+                                        <a class="btn btn-secondary btn-sm ps-3 pe-3"
+                                            [routerLink]="[BASE_URL + '/homemaker/admin/checklist']"><i class="fa-solid fa-arrow-left"></i> ยกเลิก</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <!-- <div class="card"> -->
+                                        <!-- <div class="card-body"> -->
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                    <div class="row border-top">
+                                                                        <div class="col-md-6">
+                                                                            <div class="mb-2 mt-3 h4">หัวข้อ</div>
+                                                                            <div *ngIf="(itemSubRef.meta.total == 0); then showDataZero else showData"></div>
+                                                                            <ng-template #showData>
+                                                                                <div *ngIf="formEditSub; then showFormEdit else data"></div>
+                                                                                <ng-template #data>
+                                                                                    <table class="table table-hover table-bordered" *ngIf="itemSubRef">
+                                                                                        <tbody>
+                                                                                            <tr *ngFor="let element of itemSubRef.data">
+                                                                                                <td class="w-100"> - {{element.checklistSubName}}</td>
+                                                                                                <td class="w-1">
+                                                                                                    <a href="javascript:void(0)" class="text-primary" (click)="showEditSub(element.checklistSub_id);"><i class="fa-solid fa-pencil"></i></a>
+                                                                                                    
+                                                                                                </td>
+                                                                                                <td class="w-1">
+                                                                                                    <a href="javascript:void(0)" class="text-danger" (click)="delSub(element.checklistSub_id);"><i class="fa-regular fa-trash-can"></i></a>
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                        </tbody>
+                                                                                    </table>
+                                                                                </ng-template>
+
+                                                                            </ng-template>
+    
+                                                                        </div>
+                                                                    <form [formGroup]="frm2" (ngSubmit)="onSubmit2()" *ngIf="!formEditSub" >
+                                                                        <div class="col-md-12" >
+                                                                            <div class="row align-items-center mb-2">
+                                                                                <div class="col-md-6">
+                                                                                    <input type="text" id="checklistSubName" class="form-control form-control-sm" placeholder="เพิ่มหัวข้อ"
+                                                                                        formControlName="checklistSubName"
+                                                                                        [class.is-invalid]="(frm2.get('checklistSubName')?.invalid && (frm2.get('checklistSubName')?.dirty || frm2.get('checklistSubName')?.touched))"
+                                                                                        [class.is-valid]="(frm2.get('checklistSubName')?.valid && (frm2.get('checklistSubName')?.dirty || frm2.get('checklistSubName')?.touched))"
+                                                                                    >
+                                                                                    <div *ngIf="frm2.get('checklistSubName')?.invalid && (frm2.get('checklistSubName')?.dirty || frm2.get('checklistSubName')?.touched)">
+                                                                                        <small class="text-danger m-2" *ngIf="frm2.get('checklistSubName')?.hasError('required')">กรุณากรอกหัวข้อ</small>
+                                                                                    </div> 
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-md-12">
+                                                                            <div class="row">
+                                                                                <div class="col-md-6">
+                                                                                    <div class="mb-3">
+                                                                                        <button type="submit" class="btn btn-primary btn-sm me-1 ps-3 pe-3" [disabled]="frm2.invalid" *ngIf="!isProcess2"><i class="fa-solid fa-check"></i> บันทึกหัวข้อ</button>
+                                                                                    <button type="submit" class="btn btn-primary btn-sm me-1 ps-3 pe-3" [disabled]="true"  *ngIf="isProcess2">
+                                                                                        <i class="fa-solid fa-spinner fa-spin"></i>
+                                                                                    </button>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="row">
+                                                                                <div class="col-md-12">
+                                                                                    <div class="row">
+                                                                                        <div class="col-md-12 bg-danger-subtle border border-danger">
+                                                                                            <button type="button" class="btn btn-danger btn-sm mt-2 mb-2" (click)="del(id)" *ngIf="!loadingDel">ลบแบบฟอร์มตรวจห้องนี้</button>
+                                                                                            <button type="button" class="btn btn-danger btn-sm mt-2 mb-2" disabled  *ngIf="loadingDel"><i class="fa-solid fa-spinner fa-spin"></i></button>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div> 
+                                                                            </div>
+                                                                        </div>
+                                                                    </form>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                </div>
+                                            </div>
+                                        <!-- </div> -->
+                                    <!-- </div> -->
+                                </div>
+                            </div>
+                        
+
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <ng-template #showFormEdit>
+            <form [formGroup]="frmEditSub" (ngSubmit)="onSubmit3(itemSubEditRef?.data.checklistSub_id)" *ngIf="(itemSubEditRef)" >
+                <div class="col-md-12" >
+                    <div class="row align-items-center mb-2">
+                        <div class="col-md-12">
+                            <input type="text" id="checklistSubName" class="form-control form-control-sm" placeholder="แก้ไขหัวข้อ"
+                                formControlName="checklistSubName" [(ngModel)]="itemSubEditRef?.data.checklistSubName"
+                                [class.is-invalid]="(frmEditSub.get('checklistSubName')?.invalid && (frmEditSub.get('checklistSubName')?.dirty || frmEditSub.get('checklistSubName')?.touched))"
+                                [class.is-valid]="(frmEditSub.get('checklistSubName')?.valid && (frmEditSub.get('checklistSubName')?.dirty || frmEditSub.get('checklistSubName')?.touched))"
+                            >
+                            <div *ngIf="frmEditSub.get('checklistSubName')?.invalid && (frmEditSub.get('checklistSubName')?.dirty || frmEditSub.get('checklistSubName')?.touched)">
+                                <small class="text-danger m-2" *ngIf="frmEditSub.get('checklistSubName')?.hasError('required')">กรุณากรอกหัวข้อ</small>
+                            </div> 
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <button type="submit" class="btn btn-primary btn-sm me-1 ps-3 pe-3" [disabled]="frmEditSub.invalid" *ngIf="!isProcess2"><i class="fa-solid fa-check"></i> แก้ไขหัวข้อ</button>
+                                <button type="submit" class="btn btn-primary btn-sm me-1 ps-3 pe-3" [disabled]="true"  *ngIf="isProcess2"><i class="fa-solid fa-spinner fa-spin"></i></button>
+                                <button type="submit" class="btn btn-secondary btn-sm me-1 ps-3 pe-3" (click)="hideEditSub();" ><i class="fa-solid fa-arrow-left"></i> ยกเลิก</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </ng-template>
+        <ng-template #showDataZero><p> - ยังไม่มีหัวข้อ -</p></ng-template>
+        <app-footer></app-footer>

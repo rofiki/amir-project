@@ -45,8 +45,8 @@ class RoomAddChecklistController extends Controller
 
         $item = $db->leftJoin($tbChecklist, $tbRoomAddChecklist.'.checklist_id', $tbChecklist.'.checklist_id')
         ->leftJoin($tbRoom, $tbRoomAddChecklist. '.room_id', $tbRoom.'.roomId' )
-        ->select($tbRoomAddChecklist.'.*', )
-        ->select($tbRoom.'.type_id', $tbRoom.'.roomName')
+       // ->select($tbRoomAddChecklist.'.*', )
+       // ->select($tbRoom.'.type_id', $tbRoom.'.roomName')
         ->where($tbRoomAddChecklist . '.room_id', $id)
         ->whereNull($tbRoomAddChecklist.'.deleted_at')->get();
 

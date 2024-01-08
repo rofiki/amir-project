@@ -1,8 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
-import { Subject } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { AppService } from 'src/app/services/app.service';
 import { AuthService } from 'src/app/services/app/auth.service';
 import { ChecklistService } from 'src/app/services/homemaker/checklist.service';
@@ -23,8 +23,7 @@ export class RoomAddChecklistComponent implements OnInit, OnDestroy {
   public frm!: FormGroup;
   public getToken: any;
   public itemRef: any;
-  public homeMakerRef: any;
-  public personnelRef: any;
+  public checklistRef: any;
 
   constructor(
     private appService: AppService,
@@ -45,12 +44,12 @@ export class RoomAddChecklistComponent implements OnInit, OnDestroy {
 
   }
 
-  public roomId?: any;
+  public roomId?: any;  // @input จาก room.component
   getData() {
 
     const token = this.auth.getToken();
     
-    this.roomAddPersonnelService.findById(this.roomId, token)
+    this.roomAddChecklistService.findById(this.roomId, token)
       .pipe(takeUntil(this.destroySubject))
       .subscribe(res => {
         this.itemRef = res;
@@ -61,7 +60,7 @@ export class RoomAddChecklistComponent implements OnInit, OnDestroy {
 
   formGroup() {
     this.frm = this.fb.group({
-      personnel: this.fb.control('', [Validators.required]),
+      checklist: this.fb.control('', [Validators.required]),
     });
   }
 
@@ -69,28 +68,79 @@ export class RoomAddChecklistComponent implements OnInit, OnDestroy {
 
     const token = this.auth.getToken();
 
-    this.personnelService.findAll(token)
+    this.checklistService.findAll(token)
       .pipe()
       .subscribe( r => {
-
-        this.roomAddPersonnelService.findById(this.roomId, token)
+        this.roomAddChecklistService.findById(this.roomId, token)
           .pipe(takeUntil(this.destroySubject))
           .subscribe(s => {
-
-            // กรองเอารายชื่อที่เป็นแม่บ้านแล้ว ออก
+            // กรองเอารายชื่อที่เลือกแล้วออก
             for (let i = 0; i < r.data.length; i++) {
               s.data.forEach((dataS: any) => {
-                if (r?.data[i]?.id == dataS.personnel_id) {
+                if (r?.data[i]?.checklist_id == dataS.checklist_id) {
                   r.data[i] = null;
                 }
               });
             }
           });
 
-        this.personnelRef = r;
+        this.checklistRef = r;
 
       });
 
+  }
+
+  delChecklist(id: any) {
+
+    if (confirm('ยืนยันการลบข้อมูล!')) {
+
+      this.isProcess = true;
+      const token = this.auth.getToken();
+
+      this.roomAddChecklistService.delete(id, token)
+        .pipe(takeUntil(this.destroySubject))
+        .subscribe(res => {
+
+          if (res.status) {
+            this.toastr.success('บันทึกข้อมูล', 'บันทึกข้อมูลเรียบร้อย', { timeOut: 1000, progressBar: true, });
+            this.formGroup();
+            this.getChecklist();
+            this.getData();
+            this.isProcess = false;
+          } else {
+            this.toastr.error('ผลการทำรายการ', 'ลบข้อมูลไม่สำเร็จ กรุณาติดต่อผู้ดูแลระบบ', { timeOut: 1500, progressBar: true, });
+            this.isProcess = false;
+          }
+
+        });
+    }
+  }
+
+  onSubmit() {
+
+    let params = this.frm.value;
+    params.roomId = this.roomId; // @input จาก room.component
+
+    if (confirm('ยืนยันการทำรายการ!')) {
+
+      this.isProcess = true;
+      const token = this.auth.getToken();
+
+      this.roomAddChecklistService.create(params, token)
+        .pipe(takeUntil(this.destroySubject))
+        .subscribe(res => {
+
+          if (res.status) {
+            this.toastr.success('บันทึกข้อมูล', 'บันทึกข้อมูลเรียบร้อย', { timeOut: 1000, progressBar: true, });
+            this.isProcess = false;
+            this.formGroup();
+            this.getChecklist();
+            this.getData();
+          }
+
+        });
+
+    }
   }
 
   ngOnDestroy() {

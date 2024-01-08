@@ -19,7 +19,7 @@
                         <div class="col-md-6 h5">รายการห้อง</div>
                         <div class="col-md-6 text-md-end">
                             <a class="btn btn-primary btn-sm" href="javascript:void(0)"
-                                [routerLink]="[BASE_URL + '/homemaker/admin/room/add']"><i class="fa-solid fa-file-circle-plus"></i> เพิ่มห้อง</a>
+                                [routerLink]="[BASE_URL + '/homemaker/admin/room/add']"><i class="fa-solid fa-plus"></i> เพิ่มห้อง</a>
                         </div>
                     </div>
                 </div>
@@ -60,11 +60,11 @@
                                                     <div>
                                                         <button type="button" class="btn btn-primary btn-xs"(click)="openModalHomeMaker(element.roomId)"><i class="fa-solid fa-gear"></i> จัดการ</button>
                                                     </div>
-                                                    <div *ngIf="(element?.homemaker?.length == 0)" class="text-secondary" >- ยังไม่มีแม่บ้าน</div>
+                                                    <div *ngIf="(element?.homemaker?.length == 0)" class="text-secondary border-top m-1" >- ยังไม่มีแม่บ้าน</div>
                                                     <div *ngIf="element.homemaker">
                                                         <div  *ngFor="let homemaker of element.homemaker">
-                                                            <div>
-                                                                <i class="fa-solid fa-user"></i> {{ homemaker.prename_id }}{{ homemaker.firstname }} {{ homemaker.lastname }}
+                                                            <div class="m-1">
+                                                                <i class="fa-regular fa-user text-primary"></i> {{ homemaker.prename_id }}{{ homemaker.firstname }} {{ homemaker.lastname }}
                                                             </div>
                                                         </div>
                                                     </div>
@@ -75,11 +75,11 @@
                                                             <i class="fa-solid fa-gear"></i> จัดการ
                                                         </button>
                                                     </div>
-                                                    <div *ngIf="(element?.personnel?.length == 0)" class="text-secondary" >- ยังไม่มีผู้ดูแล</div>
+                                                    <div *ngIf="(element?.personnel?.length == 0)" class="text-secondary border-top m-1" >- ยังไม่มีผู้ดูแล</div>
                                                     <div *ngIf="element.personnel">
                                                         <div  *ngFor="let personnel of element.personnel">
-                                                            <div>
-                                                                <i class="fa-solid fa-user"></i> {{ personnel.prename_id }}{{ personnel.firstname }} {{ personnel.lastname }}
+                                                            <div class="m-1">
+                                                                <i class="fa-regular fa-user text-primary"></i> {{ personnel.prename_id }}{{ personnel.firstname }} {{ personnel.lastname }}
                                                             </div>
                                                         </div>
                                                     </div>
@@ -90,11 +90,11 @@
                                                             <i class="fa-solid fa-gear"></i> จัดการ
                                                         </button>
                                                     </div>
-                                                    <div *ngIf="(element?.personnel?.length == 0)" class="text-secondary" >- ยังไม่มีแบบฟอร์มตรวจห้อง</div>
-                                                    <div *ngIf="element.personnel">
-                                                        <div  *ngFor="let personnel of element.personnel">
-                                                            <div>
-                                                                <i class="fa-solid fa-user"></i> {{ personnel.prename_id }}{{ personnel.firstname }} {{ personnel.lastname }}
+                                                    <div *ngIf="(element?.checklist?.length == 0)" class="text-secondary border-top m-1" >- ยังไม่มีแบบฟอร์มตรวจห้อง</div>
+                                                    <div *ngIf="element.checklist">
+                                                        <div  *ngFor="let checklist of element.checklist">
+                                                            <div class="m-1">
+                                                                <i class="fa-regular fa-clipboard text-primary"></i> {{ checklist.checklistName }}
                                                             </div>
                                                         </div>
                                                     </div>

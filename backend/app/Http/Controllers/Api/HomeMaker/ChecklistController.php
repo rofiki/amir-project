@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\HomeMaker\ChecklistCollection;
 use App\Http\Resources\HomeMaker\ChecklistResource;
 use App\Models\HomeMaker\tbChecklist;
+use App\Models\HomeMaker\tbChecklistSub;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -75,7 +76,7 @@ class ChecklistController extends Controller
         } else {
             $update = tbChecklist::where('checklist_id', $id);
             $update->update([
-                'name' => $request->name,
+                'checklistName' => $request->name,
             ]);
             return response()->json([
                 'status' => true,
@@ -94,8 +95,8 @@ class ChecklistController extends Controller
                 'log' => 1
             ], 404);
         }
-
-        $item = tbChecklist::where('checklist_id', $id)->get()->first();
+        $itemSub = tbChecklistSub::where('checklist_id', $id)->delete(); // ลบหัวข้อย่อย
+        $item = tbChecklist::where('checklist_id', $id)->get()->first(); // ลบแบบฟอร์ม
 
         if (!$item->delete()) {
             return response()->json([

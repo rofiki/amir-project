@@ -1,1 +1,81 @@
-<p>room-add-checklist works!</p>
+<div class="modal-header">
+    <h4 class="modal-title pull-left"><i class="fa-solid fa-gear"></i> แบบฟอร์มตรวจห้อง</h4>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <div class="col-md-12">
+
+
+        </div>
+        <div class="col-md-12">
+            <form [formGroup]="frm" (ngSubmit)="onSubmit()" >
+                <div class="mb-3">
+                    <label for="checklist" class="form-label h6"><i class="fa-solid fa-file-circle-plus"></i>
+                        เพิ่มแบบฟอร์มตรวจสอบ</label>
+                        <select *ngIf="checklistRef && checklistRef.data" name="checklist" id="checklist" class="form-control" formControlName="checklist"
+                       [class.is-invalid]="(frm.get('checklist')?.invalid && (frm.get('checklist')?.dirty || frm.get('checklist')?.touched))"
+                       [class.is-valid]="(frm.get('checklist')?.valid && (frm.get('checklist')?.dirty || frm.get('checklist')?.touched))"
+                       >
+                           <option value="">- เลือก -</option>
+                           <ng-container *ngFor="let element of checklistRef.data">
+                               <option value="{{ element?.checklist_id}}" *ngIf="element?.checklist_id"> {{ element?.checklistName }}</option>
+                           </ng-container>
+                       </select>     
+
+                       <div *ngIf="frm.get('checklist')?.invalid && (frm.get('checklist')?.dirty || frm.get('checklist')?.touched)">
+                           <small class="text-danger m-2" *ngIf="frm.get('checklist')?.hasError('required')">กรุณาเลือกแบบฟอร์มตรวจห้อง</small>
+                       </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="mb-3">
+                            <button type="submit" class="btn btn-primary btn-sm me-1 ps-3 pe-3" [disabled]="frm.invalid" *ngIf="!isProcess"><i class="fa-regular fa-floppy-disk"></i> บันทึก</button>
+                            <button type="button" class="btn btn-primary btn-sm me-1 ps-3 pe-3" [disabled]="true"  *ngIf="isProcess"><i class="fa-solid fa-spinner fa-spin"></i></button>
+                            <button type="button" class="btn btn-secondary btn-sm" (click)="bsModalRef.hide()"><i class="fa-regular fa-circle-xmark"></i> ยกเลิก</button>
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+
+        </div>
+        <div class="col-md-12">
+
+        </div>
+        <div class="col-md-12">
+            <div class="row pt-3">
+                <div class="col-md-6 h6"><i class="fa-solid fa-user"></i> รายการแบบฟอร์มตรวจห้อง</div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-12">
+                    <div *ngIf="(itemRef?.data.length == 0)" class="text-center" >- ยังไม่มมีข้อมูล -</div>
+                    <table class="table table-bordered table-hover border" *ngIf="itemRef && itemRef.data">
+                        <!-- <thead>
+                            <tr class="table-secondary">
+                                <th>ชื่อผู้ดูแล</th>
+                                <th style="width: 5px;"></th>
+                            </tr>
+                        </thead> -->
+                        <tbody>
+                            <tr *ngFor="let element of itemRef.data">
+                                <td style="width: 5px;">
+                                    <button type="button" class="btn btn-outline-danger btn-xs">
+                                        <i class="fa-solid fa-trash-can" (click)="delChecklist(element.roomAddChecklist_id)"></i>
+                                    </button>
+                                </td>
+                                <td>
+                                    {{element.checklistName}}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-outline-secondary btn-sm" (click)="bsModalRef.hide()"><i class="fa-regular fa-circle-xmark"></i> ปิด</button>
+  </div>

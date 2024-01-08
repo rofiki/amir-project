@@ -1,11 +1,13 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { BsModalRef, BsModalService, ModalOptions } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
-import { Subject, takeUntil } from 'rxjs';
+import { Subject, Subscription, takeUntil } from 'rxjs';
 import { AppService } from 'src/app/services/app.service';
 import { AuthService } from 'src/app/services/app/auth.service';
 import { ChecklistService } from 'src/app/services/homemaker/checklist.service';
+import { ChecklistAddChoiceComponent } from '../checklist-add-choice/checklist-add-choice.component';
 
 @Component({
   selector: 'app-checklist-add',
@@ -13,6 +15,9 @@ import { ChecklistService } from 'src/app/services/homemaker/checklist.service';
   styleUrls: ['./checklist-add.component.css']
 })
 export class ChecklistAddComponent implements OnInit, OnDestroy {
+
+  modalRef?: BsModalRef;
+  subscriptions = new Subscription(); // modal
 
   public BASE_URL: string = this.appService.BASE_URL;
   public isProcess: boolean = false;
@@ -23,7 +28,9 @@ export class ChecklistAddComponent implements OnInit, OnDestroy {
   public frm!: FormGroup;
   public getToken: any;
   public itemRef: any;
-  public roomTypeRef: any;
+  // public roomTypeRef: any;
+  public choiceRef: any;
+  public randomId: any = Math.floor(Math.random() * 10001);
 
   constructor(
     private appService: AppService,
@@ -33,12 +40,14 @@ export class ChecklistAddComponent implements OnInit, OnDestroy {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private fb: FormBuilder,
+    private modalService: BsModalService
 
   ) { }
 
   ngOnInit(): void {
 
     this.formGroup();
+    console.log(this.randomId)
 
   }
 
@@ -60,16 +69,33 @@ export class ChecklistAddComponent implements OnInit, OnDestroy {
 
       this.service.create(params, token)
         .pipe(takeUntil(this.destroySubject))
-        .subscribe(res => {
+        .subscribe((res:any) => {
           // console.log(res)
           if (res.status) {
             this.toastr.success('บันทึกข้อมูล', 'บันทึกข้อมูลเรียบร้อย', { timeOut: 1000, progressBar: true, });
             this.isProcess = false;
-            this.router.navigate([this.BASE_URL + '/homemaker/admin/checklist'], { relativeTo: this.activatedRoute });
+            this.choiceRef = res.data;
+            console.log(this.choiceRef);
+
+            this.router.navigate([this.BASE_URL + '/homemaker/admin/checklist/edit',res.data.checklist_id], { relativeTo: this.activatedRoute });
           }
         });
-
     }
+  }
+
+  // ##### modal
+  openModalAddChoice(randomId:any) {
+    // let randomId:any;
+    // Math.floor(Math.random() * 10);
+    const initialState: ModalOptions = { initialState: { randomId: randomId } };
+    this.modalRef = this.modalService.show(ChecklistAddChoiceComponent, initialState);
+    this.modalRef.setClass('modal-lg');
+
+    // this.subscriptions.add(
+    //   this.modalService.onHide.subscribe((reason: string | any) => {
+    //     this.getData();
+    //   })
+    // );
   }
 
   ngOnDestroy() {
